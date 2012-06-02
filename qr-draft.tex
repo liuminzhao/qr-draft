@@ -29,16 +29,6 @@
 \DeclareMathOperator{\pr}{Pr}
 \DeclareMathOperator{\pt}{PT}
 
-% \newcommand{\add}[1]{{\color{blue} \uline{#1}}}
-% \newcommand{\remove}[1]{{\color{red} \sout{#1}}}
-% \newcommand{\note}[1]{{\color{green} \bf \uline{#1} }}
-% \newcommand{\change}[2]{{\color{red} \sout{#1} \color{blue} \uline{#2}}}
-
-%\newcommand{\add}[1]{#1}
-%\newcommand{\remove}[1]{}
-%\newcommand{\note}[1]{}
-%\newcommand{\change}[2]{#2}
-
 \begin{document}
 % \setlength\parindent{0pt}
 
@@ -52,21 +42,22 @@ regression when one (or several)
 quantiles are of interest.  The dependence
 between upper or lower quantiles of the response variable and the
 covariates are expected to vary differently relative to that of the
-average. This kind of situation is often seen in econometrics,
-educational studies, health, biomedical studies, and environment
-studies. A comprehensive review was presented in Koenker
-2005. Furthermore, while conditional mean regression only provides a
+average. This is often of interest in econometrics,
+educational studies, biomedical studies, and environment
+studies {\bf probably include some references for these}. 
+A comprehensive review was presented in Koenker (2005). 
+Furthermore, while conditional mean regression only provides a
 limited information about relationship of the average with linear
 combination of covariates,  quantile regression can offer a more
 complete description of the conditional distribution of the response. 
 
 The traditional frequentist approach was proposed by Koenker and
-Bassett in 1978 for a single $\tau$ quantile regression using
+Bassett (1978) for a single quantile, $\tau$ regression using
 minimization of a loss function (Koenker and Bassett 1978). The
 popularity of the method is due 
 to its computational efficiency by linear programming, well-developed
-asymptotic properties of estimation, and many extensions to
-simultaneous quantile regression, random effect models. However,
+asymptotic properties of estimation, and extensions to
+simultaneous quantile regression and random effect models. However,
 the asymptotic inference may not be accurate  for small sample
 sizes. 
 
@@ -81,7 +72,8 @@ for the error term (Walker and Mallick 1999). Kottas and Gelfand
 modeled the error by two families of median zero distribution using a 
 mixture Dirichlet process priors, which is very useful for unimodal
 error distribution (Kottas and Gelfand, 2001). Hanson and Johnson
-adopted mixture of Polya Trees prior in the regression model, which is
+adopted mixture of Polya Trees prior in the regression model {\bf was
+  this only for median regression??}, which is
 more robust in terms of multimodality and skewness. Other approaches
 include quantile pyramid priors, mixture of Dirichlet process priors
 of multivariate normal distribution and infinite mixture of Gaussian
@@ -90,7 +82,7 @@ Petrone 2007, Hjort and
 Walker 2009, Kottas and Krnjajic 2009, Taddy and Kottas 2007, Reich et
 al 2010). 
 
-Like the asymmetric Laplace distribution, those single semiparametric
+Like the asymmetric Laplace distribution, single semiparametric
 quantile regression  methods
 have some limitations. The densities keep their restrictive mode at
 the quantile of interest, which is not appropriate when extreme
@@ -191,21 +183,23 @@ As we can see from equation (\ref{eq:1}), if the model is homogeneous
 corresponding quantile regression parameters only vary in the
 first component, the intercept. The rest of the quantile regression
 parameters stay the same. Therefore, quantile lines for different quantiles are
-just parallel to each other. See the next figure for a single quantile
+just parallel to each other. See the Figure~\ref{fig:homo} for a single quantile
 regression as example. 
 
 \begin{figure}[h]
 \centerline{\includegraphics[scale=0.4]{homo}}
-\caption[]{\label{fig:homo} A Single Quantile Regression: sample
+\caption[]{\label{fig:homo} A Single Quantile Regression: True 
   distribution is $1+3x + \epsilon$, where $\epsilon \sim
-  \mathrm{N}(0,1)$. The scatter plot of 500 samples and true quantile
+  \mathrm{N}(0,1)$. The scatter plot contains 500 samples and true quantile
   lines for quantiles $\tau=0.1,0.25,0.5,0.75,0.9$ are shown in the
   left panel. The middle and right panel show how the true quantile
   regression parameter, intercept and slope, change with different
   quantiles in a homogeneous model. Only the intercept changes in such
-  a case ($\beta_0+\gamma_0 F^{-1}_{\tau}(\epsilon)$) , while other slope
-  stays the same.}
+  a case ($\beta_0+\gamma_0 F^{-1}_{\tau}(\epsilon)$) , while the slopes
+  stay the same.}
+\label{fig:homo}
 \end{figure}
+
 
 Consider the heterogeneous linear regression model  from He (1997) 
 \begin{displaymath}
@@ -226,20 +220,21 @@ since
 & = \pr (\epsilon \le F^{-1}_{\epsilon}(\tau)) \\
 & = \tau .
 \end{align*}
-The following figure shows a single $\tau$th quantile regression under
-heterogeneous linear model:
+Figure~\ref{fig:hetero} shows a single $\tau$th quantile regression under
+heterogeneous linear model.  
 
 \begin{figure}[h]
 \centerline{\includegraphics[scale=0.4]{heter}}
-\caption[]{ \label{fig:heter} A Single Quantile Regression: sample
+\caption[]{ \label{fig:heter} A Single Quantile Regression: True
   distribution is $1+3x + (1+0.5x)\epsilon$, where $\epsilon \sim
   \mathrm{N}(0,1)$. The scatter plot of 500 samples and true quantile
   lines for quantiles $\tau=0.1,0.25,0.5,0.75,0.9$ are shown in the
   left panel. The middle and right panel show how the true quantile
   regression parameter, intercept and slope, change with different
-  quantiles in this heterogeneous model. Slope is no longer unchanged
-  for different quantiles since the heterogeneity parameter $\bm{\gamma}
+  quantiles in this heterogeneous model. The slope is now changes 
+  for different quantiles via the heterogeneity parameter $\bm{\gamma}
   \neq \bm{e}_1$.  }
+\label{fig:hetero}
 \end{figure}
 
 Seen from the Figure \ref{fig:heter} and equation (\ref{eq:2}), quantile lines
@@ -250,10 +245,10 @@ needed.
 Traditional single quantile regression makes different assumptions on
 the error term. The frequentist approach of  Koenker and Basset (1978) does not
 assign distributions for the residual, and uses linear
-programming technique to minimize the check function :$\sum_{i=1}^n
+programming technique to minimize the check function $\sum_{i=1}^n
 \rho_{\tau}(y_i - \bm{x_i'\beta})$, where $\rho_{\tau}(\epsilon) =
 \epsilon (\tau- \mathrm{I}(\epsilon < 0))$. 
-   Some Bayesian 
+Some Bayesian 
 approaches specify the error distribution as an asymmetric Laplace
 distribution (Yu and Moyeed 2001), or Dirichlet process prior (Kottas
 and Gelfand 2001, Kottas and Krnjajic 2009, Taddy and Kottas 2007) or
@@ -269,7 +264,7 @@ $\tau_1$th quantile regression is not even the same as that in
 $\tau_2$th quantile regression.
 
 We use a mixture of \polya{} trees prior for the error term and
-combine with the heterogeneity linear regression model, derive the
+combine with the heterogeneity linear regression model and derive the
 close form for posterior quantile regression parameter. Since \polya{}
 trees are a very flexible way to model the unknown distribution, our
 approach makes fewer assumptions. Under Bayesian framework, our method
@@ -333,7 +328,7 @@ $G_0$. A simple example is to choose $B_{\epsilon 0} $ and
 $B_{\epsilon 1}$ in level $m$ by setting them as $G^{-1}_0 \left(
   (k/2^m, (k+1)/2^m] \right)$ , for $k=0, \ldots, 2^m-1$. 
 
-\subsubsection{Expectation of \polya{} Trees}
+\subsubsection{Some properties of \polya{} Trees}
 Suppose $G \sim \pt (\Pi, \mathcal{A})$ is a random probability
 measure and $\epsilon_1, \epsilon_2, \ldots$ are a random sample from $G$. 
 
@@ -359,7 +354,7 @@ data.
 \begin{deff}[Density Function]
 Suppose $F=E(G), G|\Pi, \mathcal{A} \sim \pt (\Pi, \mathcal{A})$,
 where $G_0 $ is the baseline measure. Then, using the canonical
-construction, $F=G_0$ (as shown above) and furthermore 
+construction, $F=G_0$ (as shown above) and the density function is 
 \begin{equation}\label{eq:3}
 f(x) = \left[ \prod_{j=1}^m \frac{ \alpha_{\epsilon_1, \ldots,
       \epsilon_j}(x)}{\alpha_{\epsilon_1, \ldots, \epsilon_{j-1},0}(x)
@@ -369,7 +364,7 @@ where $g_0$ is the pdf of $G_0$.
 \end{deff}
 
 \begin{rmk}
-When using the canonical construction way with no data,
+When using the canonical construction with no data,
 $\alpha_{\epsilon_0 } = \alpha_{\epsilon_1}$, equation (\ref{eq:3})
 simplifies to 
 \begin{displaymath}
@@ -401,13 +396,13 @@ $G_{\theta} | \theta=\theta \sim \pt (\Pi_{\theta},
 \begin{emp}
 Suppose $G_0 = \mathrm{N}(\mu, \sigma^2)$ is the baseline measure, and
 for $\epsilon \in E^{*}, \alpha_{\epsilon_m} = cm^2 $, then
-$\bm{\theta}= (\mu, \sigma^2, c)$ is the mixing index, the
+$\bm{\theta}= (\mu, \sigma^2, c)$ is the mixing index and the
 distribution on $\Theta = (\mu, \sigma^2, c) $ is the mixing
 distribution. 
 \end{emp}
-With the mixture of \polya{} trees, the critical effect of partition
-smoothed out. The inference will not be affected greatly by a single
-\polya{} trees distribution. 
+With the mixture of \polya{} trees, the influence of the partition
+is lessened. Thus, inference will not be affected greatly by a single
+\polya{} tree distribution. 
 
 \subsubsection{Predictive Error Density, Cumulative Density Function
   and Quantiles}
@@ -446,8 +441,7 @@ $j$. Notice that, if  we restrict the first level weight as
 $\alpha_0=\alpha_1=1$, then we only need to update levels other than
 the first level.
 
-{\bf should this be a remark?}
-\begin{deff}[Finite \polya{} Trees]
+\begin{deff}[The predictive density for Finite \polya{} Trees]
 In practice, a finite $M$ level \polya{} Tree is usually adopted to
 approximate the full \polya{} trees, in which, only up to $M$ levels are
 updated. The corresponding predictive density becomes 
@@ -468,7 +462,7 @@ Hanson and Johnson (2002) showed the approximation to (4) given in
 \begin{thm}
 Based on the predictive density function (\ref{eq:5}) of a
 finite \polya{} trees distribution, 
-predictive cumulative density function is 
+the predictive cumulative density function is 
 \begin{equation}
 \label{eq:6}
 F^{\theta,M}_X(x|x_1, \ldots, x_n) = \sum_{i=1}^{N-1} P_{i} + P_N
@@ -481,12 +475,11 @@ P_i &= \frac{1}{2} \left\{\prod_{j=2}^M \frac{cj^2 + n_{j,\lceil i2^{j-M}
   i2^{j-1-M} \rceil}(x_{1 },\ldots, x_n)} \right\} \mbox{ and}\\
 N & = \left[ 2^{M } G_{\theta}(x)   +1\right],
 \end{align*}
-
 in which $n_{j,\lceil i2^{j-M}
   \rceil}(x_1, \ldots, x_n)$ denotes the number of observations $x_1,
 \ldots, x_n$ in the $\lceil i2^{j-M}
-  \rceil$ slot at level $j$, and $\lceil \cdot
-  \rceil$ is the ceiling function, $[ \cdot ]$ is the floor function. 
+  \rceil$ slot at level $j$, $\lceil \cdot
+  \rceil$ is the ceiling function, and $[ \cdot ]$ is the floor function. 
 \end{thm}
 
 \begin{proof}
@@ -576,21 +569,18 @@ Under Bayesian framework, the posterior distribution of $(\beta,
 \pi_{\beta}(\beta)
 \pi_{\gamma}(\gamma) \pi_{\sigma^2}(\sigma^2) \pi_c(c) \\
 \end{align*}
-{\bf should be using p or Pr in the above}
+{\bf should be using p or Pr in the above.  Pr implies discrete so
+  maybe just do p above}
 
-\section{Simulations and Examples}
-
-We proposed simulated and real life examples to demonstrate the
-application of our linear quantile regression method.  We
+\section{Simulations}
+We
 conduct a simulation study to compare our approach with other existing
-methods , such as 'rq' function in the 'quantreg' package in R, which
-is the standard frequentist quantile regression method ('rq'), and
+methods, specifically, the 'rq' function in the 'quantreg' package in
+R 
+(the standard frequentist quantile regression method) and 
 flexible Bayesian quantile regression approach by Reich
-('BQR'). And the 'tours' data was analyzed by our quantile
-  regression methods. 
-
-\subsection{Simulation Study}
-We conducted a simulation study to compare quantile regression approaches
+('BQR'). 
+We compare quantile regression approaches
 for both homogeneous and heterogeneous models. 
 
 \subsubsection{Design}
@@ -601,20 +591,18 @@ We generated data from the following 3 models,
 \item [M3:]  $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 +
   (1-0.5x_{i1}+0.5x_{i2}) \epsilon_{2i}$
 \end{itemize}
-{\bf maybe label these as M1-M3 and heterogenous versions as M1H-M3H}
 where $x_{i1} , x_{i2} \stackrel{\text{iid}}{\sim} \mathrm{N}(0,1),
 \epsilon_{1i} \sim \mathrm{N}(0,1), \epsilon_{2i} 
 \stackrel{\text{iid}}{\sim} 0.5 \times \mathrm{N}(-2,1) + 
 0.5 \times \mathrm{N}(2,1)
 $. All covariates and error terms are mutually independent. All
 coefficients are set to be 1. For each model, we generate 100 data
-sets with the sample size $n=100$. $\tau=0.5, 0.9$ are of interest for
-quantile regression. 
+sets with the sample size $n=100$. $\tau=0.5, 0.9$ are the quantiles
+of interest.  
 
-Each simulated data set is analyzed using 3 models. We use the proposed
+Each simulated data set is analyzed using the three methods. For the proposed
 Bayesian linear quantile regression with \polya{} Trees prior (PT),
-adopting the following prior specifications : The prior
-  parameters we are using are: $\mu_{\beta} = (0,0,0)^T, 
+we adopt the following prior specifications: $\mu_{\beta} = (0,0,0)^T, 
 \Sigma_{\beta}=\text{diag} (\sqrt{1000},\sqrt{1000},\sqrt{1000}), $
 $\mu_{\gamma} = (0,0,0)^T,  
 \Sigma_{\gamma}=\text{diag} (\sqrt{1000},\sqrt{1000},\sqrt{1000}),
@@ -624,9 +612,9 @@ iterations of a single Markov chain were used, during which, 20,000
 samples were saved through every 40 steps after a burn-in period of
 20,000 samples. Acceptance rates for $\bm{\beta}$ and $\bm{\gamma}$ candidates
 during the adaptive Metropolis-Hastings algorithm were set to approach
-25\%. 
-We also use the method proposed by Reich (BQR)  , which conducts a
-single $\tau$ 
+25\%. } 
+We also use the method proposed by Reich (BQR),
+which conducts a single $\tau$
   quantile regression for linear model and assigns an infinite mixture
 of Gaussian densities for the error term and the
 standard frequentist quantile regression approach , 'rq' function in
@@ -640,30 +628,28 @@ where $p$ is the number of covariates except the intercept (so here, $p=2$). $\b
 $j-$component of the true quantile regression
 parameters. $\hat{\beta}_j(\tau)$ is the  $j$th component of estimated
 quantile regression parameters. (we use the posterior median for
-the Bayesian approaches). We report the mean (standard error) of the 100
+the Bayesian approaches) {\bf why the posterior median?  is that what
+  is typically used??}. We report the mean (standard error) of the 100
 MSEs for each model in Table 1. 
 \subsubsection{Results}
-
-{\bf use labels for models from section 3.2.1}
-
-  The simulation results are shown in table \ref{tab:1}. Our
+The simulation results are shown in Table \ref{tab:1}. Our
   Bayesian quantile regression method with \polya{} trees prior (PT)
-  dominates Reich's method (BQR) and traditional frequentist approach
-  (rq) in most cases except Model 3 with $\tau = 0.9$ in terms of
-  smaller MSE. The difference becomes critical especially in
-  non-unimodal case and heterogeneous model. 
+  does very well (in terms of MSE) relative to Reich's method (BQR) and traditional frequentist approach
+  (rq) in most cases except Model 3 with $\tau = 0.9$.
+The difference becomes critical especially in
+the  non-unimodal case (M2) and heterogeneous model (M3). 
 
-  In Model 2 and Model 3 with $\tau=0.5$, where the error is
+In Model 2 and Model 3 with $\tau=0.5$, where the error is
   distributed as a bimodal distribution (mixture of normal
-  distributions), the rq method performs has tremendous MSE in those
-  cases  since the mode of the error is no longer the quantile of
-  interest. In contrast, our method (PT) can detect any kind of
-  distribution and heterogeneity property and provide more information
+  distributions), the rq method performs poorly in terms of MSE
+since the mode of the error is no longer the quantile of
+  interest. In contrast, our method (PT) is not impacted my lack of
+  unimodality and heterogeneity and provides more information
   for the relationship between responses and covariates. In Model 3
   with $\tau=0.9$, Reich's method (BQR) outperforms our approach (PT),
   since in his model, the error is assigned an infinite mixture of
   normal distribution with mode at $\tau=0.9$, which is very close to
-  the true distribution. However, less information is collected by our
+  the true distribution. Less information is available from our
   approach to detect the shape at a particular quantile of the
   distribution since there are few observations at extreme quantiles. 
 
@@ -691,16 +677,13 @@ M3    &          & 25.1(2.66) & 12.4(1.44) & 14.06(1.39) \\
 \end{table}
 \end{center}
 
-{\bf discuss results -.e.g, why bad behavior of rq and why PT better
-  than BQR and vice versa}
-
 \subsection{TOURS Data}
 % \includepdf[page={1,2,3}]{m1-0501}
 % \includepdf[page={1,2,3}]{m2-0501}
-
+{\bf using 6 month change with age and race as covariates}
 \section{Discussion}
 {\bf conclusions, discussion of correlated data, and whether R
-  function to do this}
+  function to do this and shrinking of heterogeneity coefficients to zero}
 
 \end{document}
 %%% Local Variables: 
