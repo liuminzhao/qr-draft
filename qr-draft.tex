@@ -1,16 +1,18 @@
 \documentclass[12pt]{article}
-\usepackage{amsmath}
+\usepackage{amsmath} 
+\usepackage[round]{natbib}
 \usepackage{geometry}
+%\usepackage{times}
 \usepackage{graphicx}
 \usepackage{palatino}
 \usepackage{mathrsfs}
 \usepackage{bm}
-\usepackage[colorlinks,linkcolor=red,anchorcolor=blue,citecolor=green]{hyperref}
+\usepackage[colorlinks,linkcolor=red,anchorcolor=blue,citecolor=blue]{hyperref}
 \usepackage{amsthm}
 \usepackage{ulem}
 \geometry{verbose,letterpaper,tmargin=1in,bmargin=.75in,lmargin=.75in,rmargin=1in}
 
-\title{Bayesian Quantile Regression using a  Mixture of P\'{o}lya Trees Prior}
+\title{Bayesian Quantile Regression using a  Mixture of P\'{o}lya Tree Prior}
 \date{\today}
 \author{Minzhao Liu, Mike Daniels}
 
@@ -18,7 +20,7 @@
 \newtheorem{thm}{Theorem}[subsection]
 \newtheorem{deff}[thm]{Definition}
 \newtheorem{rmk}[thm]{Remark}
-%\newtheorem{prf}[thm]{Proof}
+% \newtheorem{prf}[thm]{Proof}
 \newtheorem{cor}[thm]{Corollary}
 \newtheorem{emp}[thm]{Example}
 \newtheorem{lem}[thm]{Lemma}
@@ -26,8 +28,9 @@
 
 \newcommand{\polya}{P\'{o}lya}
 \newcommand{\iid}{\stackrel{\text{i.i.d}}{\sim}}
-\DeclareMathOperator{\pr}{Pr}
+\DeclareMathOperator{\pr}{p}
 \DeclareMathOperator{\pt}{PT}
+
 
 \begin{document}
 % \setlength\parindent{0pt}
@@ -44,43 +47,50 @@ between upper or lower quantiles of the response variable and the
 covariates are expected to vary differently relative to that of the
 average. This is often of interest in econometrics,
 educational studies, biomedical studies, and environment
-studies {\bf probably include some references for these}. 
-A comprehensive review was presented in Koenker (2005). 
+studies {\bf probably include some references for these .  {\it
+    Minzhao: \citet{yu2001}, \citet{buchinsky1994},
+    \citet{buchinsky1998}, \citet{he1998}, \citet{koenker1999},
+    \citet{wei2006}, \citet{yu2003}. }
+}.   
+A comprehensive review was presented in \citet{koenker2005}.  
 Furthermore, while conditional mean regression only provides a
 limited information about relationship of the average with linear
 combination of covariates,  quantile regression can offer a more
 complete description of the conditional distribution of the response. 
 
-The traditional frequentist approach was proposed by Koenker and
-Bassett (1978) for a single quantile, $\tau$ regression using
-minimization of a loss function (Koenker and Bassett 1978). The
+The traditional frequentist approach was proposed by
+\citet{koenker1978} for a single quantile, $\tau$ regression using 
+minimization of a loss function \citet{koenker1978}. The
 popularity of the method is due 
 to its computational efficiency by linear programming, well-developed
 asymptotic properties of estimation, and extensions to
 simultaneous quantile regression and random effect models. However,
 the asymptotic inference may not be accurate  for small sample
 sizes. 
-
+ 
 Bayesian approaches offer exact
-inference. Motivated by the loss (check) function, Yu and Moyeed (Yu and Moyeed
-2001) proposed an asymmetric Laplace distribution for the error term,
+inference. Motivated by the loss (check) function, \citet{yu2001}
+proposed an asymmetric Laplace distribution for the error term,
 such that maximizing the posterior likelihood  is equivalent to
 minimizing the check function. Other than parametric Bayesian
 approaches, some semiparametric methods have been proposed for median
-regression. Walker and Mallick used a diffuse finite Polya Tree prior
-for the error term (Walker and Mallick 1999). Kottas and Gelfand
+regression. \citet{walker1999}  used a diffuse finite Polya Tree prior
+for the error term. \citet{kottas2001}
 modeled the error by two families of median zero distribution using a 
 mixture Dirichlet process priors, which is very useful for unimodal
-error distribution (Kottas and Gelfand, 2001). Hanson and Johnson
-adopted mixture of Polya Trees prior in the regression model {\bf was
-  this only for median regression??}, which is
+error distribution. \citet{hanson2002}
+adopted mixture of \polya{} Tree prior in the regression model {\bf was
+  this only for median regression?? Minzhao: 'in particular, we
+  present a median regression model in whith the rror is modeled as a
+  mixture of PT centered about a standard parametric family of prob
+  distribution. '. They also did censored data, regression models to
+  survival data}, which is
 more robust in terms of multimodality and skewness. Other approaches
 include quantile pyramid priors, mixture of Dirichlet process priors
 of multivariate normal distribution and infinite mixture of Gaussian
-densities which put quantile constraints on the residuals (Hjort and
-Petrone 2007, Hjort and 
-Walker 2009, Kottas and Krnjajic 2009, Taddy and Kottas 2007, Reich et
-al 2010). 
+densities which put quantile constraints on the residuals
+(\citet{hjort2007}, \citet{hjort2009}, \citet{kottas2009},
+\citet{reich2010}). 
 
 Like the asymmetric Laplace distribution, single semiparametric
 quantile regression  methods
@@ -96,37 +106,41 @@ of response for $\tau_1$ might not be the same as that under $\tau_2$
 quantile regression.
 
 In order to solve those problems, simultaneous linear quantile
-regression was proposed by Tokdar and Kadane (2011). 
+regression was proposed by \citet{tokdar2011}. 
 Another popular approach is to assign a nonparametric model for the
-error term to avoid the monotonicity problem (Scaccia and Green 2003,
-Geweke and Keane 2007, Taddy and Kottas 2010).
+error term to avoid the monotonicity problem (\citet{scaccia2003},
+\citet{geweke2007}, \citet{taddy2010}).
 
-We use Polya Tree (PT) priors in our approach. PT priors were introduced
-decades ago (Freedman 1963, Fabius 1964, Ferguson 1984) and  Lavine
-extended them to Polya Tree models (Lavine 1992, 1994, MSW 1992). The
+We use \polya{} Tree (PT) priors in our approach. PT priors were introduced
+decades ago (\citet{freedman1963}, \citet{fabius1964},
+\citet{ferguson1974})  and  Lavine
+extended them to \polya{} Tree models (\citet{lavine1992, lavine1994}). The
 major advantage of 
-Polya Tree over Dirichlet process is that it can be absolutely
+\polya{} Tree over Dirichlet process is that it can be absolutely
 continuous with probability 1 and it can be easily tractable. In
-regression context, Walker and Mallick assigned a finite Polya Tree
-prior to the random effects in a generalized linear mixed model
-(Walker and Mallick 1997, 1999). Berger and Guglielmi used a mixture
-of Polya Tree comparing data distribution coming from parametric
-distribution or mixture of Polya Tree (Berger and Guglielmi 2001)
-. Hanson and Johnson modeled the error term as a mixture of Polya tree
-prior (Hanson and Johnson 2002). 
+regression context, \citet{walker1997, walker1999} assigned a finite
+\polya{} Tree 
+prior to the random effects in a generalized linear mixed
+model. \citet{berger2001}  used a mixture
+of \polya{} Tree comparing data distribution coming from parametric
+distribution or mixture of \polya{} Tree.
+\citet{hanson2002} modeled the error term as a mixture of \polya{} tree
+prior. 
 
-Multivariate regression is also possible with Polya Trees. Paddock
-studied multivariate Polya Trees in k dimensional hypercube (Paddock 1999,
-2002). Hanson constructed a general framework for multivariate random
-variable with Polya Tree distribution, along with some data
-illustrations (Hanson 2006). Jara supplemented the multivariate
-mixture of Polya Trees prior with directional orthogonal matrix based
-on Hanson's work (Jara et al 2009). He also demonstrated how to fit a
+Multivariate regression is also possible with \polya{}
+Tree. \citet{paddock1999, paddock2002}
+studied multivariate \polya{} Tree in k dimensional
+hypercube. \citet{hanson2006} 
+constructed a general framework for multivariate random 
+variable with \polya{} Tree distribution, along with some data
+illustrations. \citet{jara2009} supplemented the multivariate
+mixture of \polya{} Tree prior with directional orthogonal matrix based
+on Hanson's work. He also demonstrated how to fit a
 generalized mixed effect model by modeling multivariate random effects
-with multivariate mixture of Polya Trees priors. 
+with multivariate mixture of \polya{} Tree priors. 
 
 In our framework, we present a Bayesian approach by adopting mixture
-of Polya Trees prior for the regression error term, and we contribute
+of \polya{} Tree prior for the regression error term, and we contribute
 the change of quantile regression parameter to heterogeneity of the
 error term. By our settings, several quantile regression can be fit
 simultaneously and there is closed form for  posterior quantile
@@ -138,7 +152,7 @@ traditional frequentist quantile regressions.
 The rest of the paper is organized as follows. In Section 2, we
 introduce the heterogeneity model and derive a closed form for
 marginalized posterior quantile regression parameter with mixture of
-\polya{} trees prior. We conduct some simulation studies and one real
+\polya{} tree prior. We conduct some simulation studies and one real
 data example to illustrate our approach. Finally, conclusions are
 presented in section 4. 
 
@@ -167,94 +181,94 @@ Consider a location shift model,
 where $\epsilon_i \stackrel{\text{i.i.d}}{\sim} F$. Then, the $\tau$th
 quantile regression parameter can be expressed as 
 \begin{equation}
-\label{eq:1}
+  \label{eq:1}
   \bm{\beta}(\tau) = \bm{\beta} + F^{-1}_{\epsilon}(\tau) \bm{e}_1,
 \end{equation}
 where $\bm{e}_1 = [1, 0, \ldots, 0]^T$, $F^{-1}_{\epsilon}(\tau)$ is
 the $\tau$th quantile for error $\epsilon$, since 
 \begin{align*}
-\pr (Y \le \bm{X'\beta}(\tau)) & = \pr \left( \bm{x'\beta} + \epsilon
-  \le \bm{x'\beta} + F^{-1}_{\epsilon}(\tau) \right) \\
-& = \pr (\epsilon \le F^{-1}_{\epsilon}(\tau)) \\
-& = \tau. 
+  \pr (Y \le \bm{X'\beta}(\tau)) & = \pr \left( \bm{x'\beta} + \epsilon
+    \le \bm{x'\beta} + F^{-1}_{\epsilon}(\tau) \right) \\
+  & = \pr (\epsilon \le F^{-1}_{\epsilon}(\tau)) \\
+  & = \tau. 
 \end{align*}
 As we can see from equation (\ref{eq:1}), if the model is homogeneous
 , i.e., i.i.d case, then for different quantile $\tau$, the
 corresponding quantile regression parameters only vary in the
 first component, the intercept. The rest of the quantile regression
-parameters stay the same. Therefore, quantile lines for different quantiles are
-just parallel to each other. See the Figure~\ref{fig:homo} for a single quantile
-regression as example. 
+parameters stay the same. Therefore, quantile lines for different
+quantiles are just parallel to each other. See the
+Figure~\ref{fig:homo} for a single quantile regression as example. 
 
 \begin{figure}[h]
-\centerline{\includegraphics[scale=0.4]{homo}}
-\caption[]{\label{fig:homo} A Single Quantile Regression: True 
-  distribution is $1+3x + \epsilon$, where $\epsilon \sim
-  \mathrm{N}(0,1)$. The scatter plot contains 500 samples and true quantile
-  lines for quantiles $\tau=0.1,0.25,0.5,0.75,0.9$ are shown in the
-  left panel. The middle and right panel show how the true quantile
-  regression parameter, intercept and slope, change with different
-  quantiles in a homogeneous model. Only the intercept changes in such
-  a case ($\beta_0+\gamma_0 F^{-1}_{\tau}(\epsilon)$) , while the slopes
-  stay the same.}
-\label{fig:homo}
+  \centerline{\includegraphics[scale=0.4]{homo}}
+  \caption[]{\label{fig:homo} A Single Quantile Regression: True 
+    distribution is $1+3x + \epsilon$, where $\epsilon \sim
+    \mathrm{N}(0,1)$. The scatter plot contains 500 samples and true quantile
+    lines for quantiles $\tau=0.1,0.25,0.5,0.75,0.9$ are shown in the
+    left panel. The middle and right panel show how the true quantile
+    regression parameter, intercept and slope, change with different
+    quantiles in a homogeneous model. Only the intercept changes in such
+    a case ($\beta_0+\gamma_0 F^{-1}_{\tau}(\epsilon)$) , while the slopes
+    stay the same.}
+  \label{fig:homo}
 \end{figure}
 
-
-Consider the heterogeneous linear regression model  from He (1997) 
+Consider the heterogeneous linear regression model  from \citet{he1998}  
 \begin{displaymath}
-y_i = \bm{x}_i'\bm{\beta} + (\bm{x}_i'\bm{\gamma}) \epsilon_i, 
+  y_i = \bm{x}_i'\bm{\beta} + (\bm{x}_i'\bm{\gamma}) \epsilon_i, 
 \end{displaymath}
 where $\bm{x_i'\gamma}$ is positive  for all
 $i$. Under this model, the $\tau$th quantile regression parameter is 
 \begin{equation}\label{eq:2}
-\bm{\beta}(\tau) = \bm{\beta} + F^{-1}_{\epsilon}(\tau) \bm{\gamma},
+  \bm{\beta}(\tau) = \bm{\beta} + F^{-1}_{\epsilon}(\tau) \bm{\gamma},
 \end{equation}
 since 
 \begin{align*}
-\pr (Y \le \bm{x'\beta}(\tau)) & = \pr \left( \bm{x'\beta} +
-  (\bm{x}'\gamma) \epsilon \le \bm{x'\beta} + (\bm{x'\gamma})
-  F^{-1}_{\epsilon}(\tau) \right) \\
-& = \pr \left( (\bm{x'\gamma}) \epsilon \le  (\bm{x'\gamma})
-  F^{-1}_{\epsilon}(\tau)  \right)\\
-& = \pr (\epsilon \le F^{-1}_{\epsilon}(\tau)) \\
-& = \tau .
+  \pr (Y \le \bm{x'\beta}(\tau)) & = \pr \left( \bm{x'\beta} +
+    (\bm{x}'\gamma) \epsilon \le \bm{x'\beta} + (\bm{x'\gamma})
+    F^{-1}_{\epsilon}(\tau) \right) \\
+  & = \pr \left( (\bm{x'\gamma}) \epsilon \le  (\bm{x'\gamma})
+    F^{-1}_{\epsilon}(\tau)  \right)\\
+  & = \pr (\epsilon \le F^{-1}_{\epsilon}(\tau)) \\
+  & = \tau .
 \end{align*}
 Figure~\ref{fig:hetero} shows a single $\tau$th quantile regression under
 heterogeneous linear model.  
 
 \begin{figure}[h]
-\centerline{\includegraphics[scale=0.4]{heter}}
-\caption[]{ \label{fig:heter} A Single Quantile Regression: True
-  distribution is $1+3x + (1+0.5x)\epsilon$, where $\epsilon \sim
-  \mathrm{N}(0,1)$. The scatter plot of 500 samples and true quantile
-  lines for quantiles $\tau=0.1,0.25,0.5,0.75,0.9$ are shown in the
-  left panel. The middle and right panel show how the true quantile
-  regression parameter, intercept and slope, change with different
-  quantiles in this heterogeneous model. The slope is now changes 
-  for different quantiles via the heterogeneity parameter $\bm{\gamma}
-  \neq \bm{e}_1$.  }
-\label{fig:hetero}
+  \centerline{\includegraphics[scale=0.4]{heter}}
+  \caption[]{ \label{fig:heter} A Single Quantile Regression: True
+    distribution is $1+3x + (1+0.5x)\epsilon$, where $\epsilon \sim
+    \mathrm{N}(0,1)$. The scatter plot of 500 samples and true quantile
+    lines for quantiles $\tau=0.1,0.25,0.5,0.75,0.9$ are shown in the
+    left panel. The middle and right panel show how the true quantile
+    regression parameter, intercept and slope, change with different
+    quantiles in this heterogeneous model. The slope is now changes 
+    for different quantiles via the heterogeneity parameter $\bm{\gamma}
+    \neq \bm{e}_1$.  }
+  \label{fig:hetero}
 \end{figure}
 
 Seen from the Figure \ref{fig:heter} and equation (\ref{eq:2}), quantile lines
-are no longer parallel , which makes more sense. Therefore, focusing on the heterogeneous linear model, estimates
+are no longer parallel , which makes more sense. Therefore, focusing
+on the heterogeneous linear model, estimates 
 for quantile regression parameter in equation (\ref{eq:2}) are strongly
 needed. 
 
 Traditional single quantile regression makes different assumptions on
-the error term. The frequentist approach of  Koenker and Basset (1978) does not
+the error term. The frequentist approach of \citet{koenker1978} does not 
 assign distributions for the residual, and uses linear
 programming technique to minimize the check function $\sum_{i=1}^n
 \rho_{\tau}(y_i - \bm{x_i'\beta})$, where $\rho_{\tau}(\epsilon) =
 \epsilon (\tau- \mathrm{I}(\epsilon < 0))$. 
 Some Bayesian 
 approaches specify the error distribution as an asymmetric Laplace
-distribution (Yu and Moyeed 2001), or Dirichlet process prior (Kottas
-and Gelfand 2001, Kottas and Krnjajic 2009, Taddy and Kottas 2007) or
-\polya{} trees prior (Walker and Mallick 1999, Hanson and Johnson
-2002). Reich uses an infinite mixture of Gaussian densities on the
-residual (Reich et al 2010). However, all these densities keep their
+distribution (\citet{yu2001}), or Dirichlet process prior
+(\citet{kottas2001}, \citet{kottas2009},  \citet{taddy2010}) or
+\polya{} tree prior (\citet{walker1999}, \citet{hanson2002}). \citet{reich2010}
+uses an infinite mixture of Gaussian densities on the 
+residual. However, all these densities keep their
 restrictive mode at the quantile of interest, i.e., in equation
 (\ref{eq:2}), $\bm{\beta}(\tau) \equiv \beta$. Other limitations exist
 as well such as crossing quantile lines, monotonicity constraints,
@@ -263,21 +277,21 @@ quantile regression. The sampling distribution of response in
 $\tau_1$th quantile regression is not even the same as that in
 $\tau_2$th quantile regression.
 
-We use a mixture of \polya{} trees prior for the error term and
+We use a mixture of \polya{} tree prior for the error term and
 combine with the heterogeneity linear regression model and derive the
 close form for posterior quantile regression parameter. Since \polya{}
-trees are a very flexible way to model the unknown distribution, our
+tree are a very flexible way to model the unknown distribution, our
 approach makes fewer assumptions. Under Bayesian framework, our method
 can obtain sample of $F^{-1}_{\epsilon}(\tau)$ in equation
 (\ref{eq:2}) through predictive distribution function of errors. Exact
 inference can be made through MCMC and functional of posterior
-samples. The next subsection introduces the \polya{} trees priors and
+samples. The next subsection introduces the \polya{} tree priors and
 its properties.
 
-\subsection{\polya{} Trees}
-Lavine (1992, 1994) and MSW (1992) developed theory for
+\subsection{\polya{} Tree}
+\citet{lavine1992, lavine1994} and \citet{mauldin1992} developed theory for
 \polya{} tress priors as a generalization of the Dirichlet
-process(Ferguson 1974). Denote $E=\{0,1\}$ and $E^m$ as the m-fold
+process (\citet{ferguson1974}). Denote $E=\{0,1\}$ and $E^m$ as the m-fold
 product of $E$, $E^0= \emptyset$, $E^{*} = \cup_0^{\infty} E^m$ and $\Omega$ be a separable
 measurable space , $\pi_0 = \Omega$, $\Pi= \{ \pi_m: m=0,1, \ldots \}
 $ be a separating binary tree of partitions of $\Omega$. In addition,
@@ -285,40 +299,40 @@ define $B_{\emptyset} = \Omega$ and $\forall \epsilon=\epsilon_1\cdots
 \epsilon_m \in E^{*}$, $B_{\epsilon 0}$ and $B_{\epsilon 1}$ are the
 two partition of $B_{\epsilon}$.  
 \begin{deff}
-A random probability measure $G$ on $(\Omega, \mathcal{F})$ is said to
-have a \polya{} tree distribution, or a \polya{} tree prior with
-parameter $(\Pi, \mathcal{A})$, written as $G|\Pi, \mathcal{A} \sim
-\pt (\Pi, \mathcal{A})$, if there exist nonnegative numbers
-$\mathcal{A}= \left\{ \alpha_{\epsilon}, \epsilon \in E^{*} \right\}$
-and random vectors $\mathcal{Y} = \left\{ Y_{\epsilon} : \epsilon \in
-  E^{*} \right\}$ such that the following hold:
-\begin{enumerate}
-\item\label{item:1} all the random variables in $\mathcal{Y}$ are independent;
-\item $Y_{\epsilon}= (Y_{\epsilon 0} , Y_{\epsilon 1}) \sim
-  \mathrm{Dirichlet}(\alpha_{\epsilon 0 }, \alpha_{\epsilon 1}),
-  \forall \epsilon \in E^{*}$;
-\item $\forall m=1,2, \ldots$, and $\forall \epsilon \in E^{*},
-  G(B_{\epsilon_{1}, \ldots, \epsilon_m}) = \prod_{j=1}^m Y_{\epsilon_1
-    \cdots \epsilon_j}$.
-\end{enumerate} 
+  A random probability measure $G$ on $(\Omega, \mathcal{F})$ is said to
+  have a \polya{} tree distribution, or a \polya{} tree prior with
+  parameter $(\Pi, \mathcal{A})$, written as $G|\Pi, \mathcal{A} \sim
+  \pt (\Pi, \mathcal{A})$, if there exist nonnegative numbers
+  $\mathcal{A}= \left\{ \alpha_{\epsilon}, \epsilon \in E^{*} \right\}$
+  and random vectors $\mathcal{Y} = \left\{ Y_{\epsilon} : \epsilon \in
+    E^{*} \right\}$ such that the following hold:
+  \begin{enumerate}
+  \item\label{item:1} all the random variables in $\mathcal{Y}$ are independent;
+  \item $Y_{\epsilon}= (Y_{\epsilon 0} , Y_{\epsilon 1}) \sim
+    \mathrm{Dirichlet}(\alpha_{\epsilon 0 }, \alpha_{\epsilon 1}),
+    \forall \epsilon \in E^{*}$;
+  \item $\forall m=1,2, \ldots$, and $\forall \epsilon \in E^{*},
+    G(B_{\epsilon_{1}, \ldots, \epsilon_m}) = \prod_{j=1}^m Y_{\epsilon_1
+      \cdots \epsilon_j}$.
+  \end{enumerate} 
 \end{deff}
 
-\subsubsection{\polya{} Trees Parameters}
-There are two parameters in \polya{} trees distribution $(\Pi,
+\subsubsection{\polya{} Tree Parameters}
+There are two parameters in \polya{} tree distribution $(\Pi,
 \mathcal{A})$. The $\mathcal{A}$ family determines how much $G$ can
-deviate from $G_0$ , the baseline measure. Ferguson (1974) pointed out
+deviate from $G_0$ , the baseline measure. \citet{ferguson1974} pointed out
 $\alpha_{\epsilon = 1} $ yields a $G$ that is continuous singular with
 probability 1, and $\alpha_{\epsilon_1, \ldots, \epsilon_m} = m^2$
-yields $G$ that is absolutely continuous with probability 1. Walker
-and Mallick 1999 and Paddock 1999 considered $\alpha_{\epsilon_1,
-  \ldots, \epsilon_m} = cm^2$, where $c > 0$. Berger and  Guglielmi
-(2001) considered $\alpha_{\epsilon_1, \ldots, \epsilon_m} = c
+yields $G$ that is absolutely continuous with probability 1. \citet{walker1999}
+and \citet{paddock1999} considered $\alpha_{\epsilon_1,
+  \ldots, \epsilon_m} = cm^2$, where $c > 0$. \citet{berger2001}
+considered $\alpha_{\epsilon_1, \ldots, \epsilon_m} = c 
 \rho(m)$. In general, any $\rho(m) $ such that $\sum_{m=1}^{\infty}
 \rho(m)^{-1} < \infty$ guarantees $G$ to be absolutely continuous. In
 our case, we adopt $\alpha_{\epsilon_1, \ldots, \epsilon_m} = cm^2$.
 
 As to the partition parameter $\Pi$, the canonical way of constructing
-a \polya{} trees distribution $G$ centering on $G_0$, a continuous CDF
+a \polya{} tree distribution $G$ centering on $G_0$, a continuous CDF
 is to choose $B_0 = G^{-1}_0 ([0, 1/2]), B_1 = G^{-1}_0 ((1/2,1])$,
 such that $G(B_0) = G(B_1)= 1/2$. Furthermore, for all $\epsilon \in
 E^{*}$, choose $B_{\epsilon 0 }$ and $B_{\epsilon 1}$ to satisfy 
@@ -328,79 +342,79 @@ $G_0$. A simple example is to choose $B_{\epsilon 0} $ and
 $B_{\epsilon 1}$ in level $m$ by setting them as $G^{-1}_0 \left(
   (k/2^m, (k+1)/2^m] \right)$ , for $k=0, \ldots, 2^m-1$. 
 
-\subsubsection{Some properties of \polya{} Trees}
+\subsubsection{Some properties of \polya{} Tree}
 Suppose $G \sim \pt (\Pi, \mathcal{A})$ is a random probability
 measure and $\epsilon_1, \epsilon_2, \ldots$ are a random sample from $G$. 
 
-\begin{deff}[Expectation of \polya{} Trees]
-$F= E(G)$ as a probability measure is defined by $F(B) = E(G(B)),
-\forall B \in \mathcal{B}$. By the definition of \polya{} trees, for any
-$\epsilon \in E^{*}$, 
-\begin{displaymath}
-F(B_{\epsilon})  = E(G(B_{\epsilon})) = \prod_{j=1}^m
-\frac{\alpha_{\epsilon_1, \ldots, \epsilon_j}}{\alpha_{\epsilon_1,
-    \ldots, \epsilon_{j-1},0} + \alpha_{\epsilon_1, \ldots, \epsilon_{j-1},1}}
-\end{displaymath}
+\begin{deff}[Expectation of \polya{} Tree]
+  $F= E(G)$ as a probability measure is defined by $F(B) = E(G(B)),
+  \forall B \in \mathcal{B}$. By the definition of \polya{} tree, for any
+  $\epsilon \in E^{*}$, 
+  \begin{displaymath}
+    F(B_{\epsilon})  = E(G(B_{\epsilon})) = \prod_{j=1}^m
+    \frac{\alpha_{\epsilon_1, \ldots, \epsilon_j}}{\alpha_{\epsilon_1,
+        \ldots, \epsilon_{j-1},0} + \alpha_{\epsilon_1, \ldots, \epsilon_{j-1},1}}.
+  \end{displaymath}
 \end{deff}
 
 \begin{rmk}
-If $G$ is constructed based on baseline measure $G_0$ and set
-$\alpha_{\epsilon_1, \ldots, \epsilon_m} = cm^2 $,
-$\epsilon_{\epsilon_0 }= \alpha_{\epsilon_1}$, then $\forall B \in
-\mathcal{B}, F(B) = G_0(B)$, thus $F=G_0$, if there is no
-data.
+  If $G$ is constructed based on baseline measure $G_0$ and set
+  $\alpha_{\epsilon_1, \ldots, \epsilon_m} = cm^2 $,
+  $\epsilon_{\epsilon_0 }= \alpha_{\epsilon_1}$, then $\forall B \in
+  \mathcal{B}, F(B) = G_0(B)$, thus $F=G_0$, if there is no
+  data.
 \end{rmk}
 
 \begin{deff}[Density Function]
-Suppose $F=E(G), G|\Pi, \mathcal{A} \sim \pt (\Pi, \mathcal{A})$,
-where $G_0 $ is the baseline measure. Then, using the canonical
-construction, $F=G_0$ (as shown above) and the density function is 
-\begin{equation}\label{eq:3}
-f(x) = \left[ \prod_{j=1}^m \frac{ \alpha_{\epsilon_1, \ldots,
-      \epsilon_j}(x)}{\alpha_{\epsilon_1, \ldots, \epsilon_{j-1},0}(x)
-   + \alpha_{\epsilon_1, \ldots, \epsilon_{j-1},1}(x)} \right] 2^{m } g_0(x),
-\end{equation}
-where $g_0$ is the pdf of $G_0$. 
+  Suppose $F=E(G), G|\Pi, \mathcal{A} \sim \pt (\Pi, \mathcal{A})$,
+  where $G_0 $ is the baseline measure. Then, using the canonical
+  construction, $F=G_0$ (as shown above) and the density function is 
+  \begin{equation}\label{eq:3}
+    f(x) = \left[ \prod_{j=1}^m \frac{ \alpha_{\epsilon_1, \ldots,
+          \epsilon_j}(x)}{\alpha_{\epsilon_1, \ldots, \epsilon_{j-1},0}(x)
+        + \alpha_{\epsilon_1, \ldots, \epsilon_{j-1},1}(x)} \right] 2^{m } g_0(x),
+  \end{equation}
+  where $g_0$ is the pdf of $G_0$. 
 \end{deff}
 
 \begin{rmk}
-When using the canonical construction with no data,
-$\alpha_{\epsilon_0 } = \alpha_{\epsilon_1}$, equation (\ref{eq:3})
-simplifies to 
-\begin{displaymath}
-f(x) = g_0(x).
-\end{displaymath}
+  When using the canonical construction with no data,
+  $\alpha_{\epsilon_0 } = \alpha_{\epsilon_1}$, equation (\ref{eq:3})
+  simplifies to 
+  \begin{displaymath}
+    f(x) = g_0(x).
+  \end{displaymath}
 \end{rmk}
 
 \begin{rmk}[Conjugacy]
-If $x_1, \ldots, x_n | G \sim G, G|\Pi, \mathcal{A} \sim \pt (\Pi,
-\mathcal{A})$, then $G|x_1, \ldots, x_n , \Pi, \mathcal{A} \sim \pt
-(\Pi, \mathcal{A}^{*})$, where in $\mathcal{A}^{*}, \forall \epsilon
-\in E^{*}$, 
-\begin{displaymath}
-\alpha_{\epsilon}^{*} = \alpha_{\epsilon} + n_{\epsilon}(x_1, \ldots, x_n),
-\end{displaymath}
-where $n_{\epsilon}(x_1, \ldots, x_n)$ indicates the count how many
-samples of $x_1, \ldots, x_n$ drop in $B_{\epsilon}$. 
+  If $x_1, \ldots, x_n | G \sim G, G|\Pi, \mathcal{A} \sim \pt (\Pi,
+  \mathcal{A})$, then $G|x_1, \ldots, x_n , \Pi, \mathcal{A} \sim \pt
+  (\Pi, \mathcal{A}^{*})$, where in $\mathcal{A}^{*}, \forall \epsilon
+  \in E^{*}$, 
+  \begin{displaymath}
+    \alpha_{\epsilon}^{*} = \alpha_{\epsilon} + n_{\epsilon}(x_1, \ldots, x_n),
+  \end{displaymath}
+  where $n_{\epsilon}(x_1, \ldots, x_n)$ indicates the count how many
+  samples of $x_1, \ldots, x_n$ drop in $B_{\epsilon}$. 
 \end{rmk}
 
-\subsubsection{Mixture of \polya{} Trees}
-The behavior of a single \polya{} trees highly depends on how the
+\subsubsection{Mixture of \polya{} Tree}
+The behavior of a single \polya{} tree highly depends on how the
 partition is separated. A random probability measure $G_\theta$ is
-said to be a mixture of \polya{} trees if there exists a random
-variable $\theta$ with distribution $h_{\theta}$ , and \polya{} trees
+said to be a mixture of \polya{} tree if there exists a random
+variable $\theta$ with distribution $h_{\theta}$ , and \polya{} tree
 parameters $(\Pi_{\theta}, \mathcal{A}_{\theta})$ such that
-$G_{\theta} | \theta=\theta \sim \pt (\Pi_{\theta},
-\mathcal{A}_{\theta})$.
+$G_{\theta} | \theta=\theta \sim \pt (\Pi^{\theta},
+\mathcal{A}^{\theta})$.
 
 \begin{emp}
-Suppose $G_0 = \mathrm{N}(\mu, \sigma^2)$ is the baseline measure, and
-for $\epsilon \in E^{*}, \alpha_{\epsilon_m} = cm^2 $, then
-$\bm{\theta}= (\mu, \sigma^2, c)$ is the mixing index and the
-distribution on $\Theta = (\mu, \sigma^2, c) $ is the mixing
-distribution. 
+  Suppose $G_0 = \mathrm{N}(\mu, \sigma^2)$ is the baseline measure, and
+  for $\epsilon \in E^{*}, \alpha_{\epsilon_m} = cm^2 $, then
+  $\bm{\theta}= (\mu, \sigma^2, c)$ is the mixing index and the
+  distribution on $\Theta = (\mu, \sigma^2, c) $ is the mixing
+  distribution. 
 \end{emp}
-With the mixture of \polya{} trees, the influence of the partition
+With the mixture of \polya{} tree, the influence of the partition
 is lessened. Thus, inference will not be affected greatly by a single
 \polya{} tree distribution. 
 
@@ -410,29 +424,29 @@ Suppose $G_{\theta} = \mathrm{N}(0, \sigma^2)$ is the baseline
 measure, $g_0(x) = \phi(x; 0, \sigma^2)$ is the density
 function. $\Pi^{\theta}$ is defined as
 \begin{displaymath}
-B^{\theta}_{\epsilon_1, \ldots, \epsilon_m} = \left( G^{-1}_{\theta}
-  \left( \frac{k}{2^m} \right) , G^{-1}_{\theta}\left( \frac{k+1}{2^m} \right) \right),
+  B^{\theta}_{\epsilon_1, \ldots, \epsilon_m} = \left( G^{-1}_{\theta}
+    \left( \frac{k}{2^m} \right) , G^{-1}_{\theta}\left( \frac{k+1}{2^m} \right) \right),
 \end{displaymath}
 where $k$ is the index of partition $\epsilon_1, \ldots, \epsilon_m$
 in level $m$. $\mathcal{A}^c$ is defined as 
 \begin{displaymath}
-\alpha_{\epsilon_1, \ldots, \epsilon_m} = cm^2.
+  \alpha_{\epsilon_1, \ldots, \epsilon_m} = cm^2.
 \end{displaymath}
 Therefore, the error model is 
 \begin{align*}
-x_1, \ldots, x_n |G_{\theta} & \iid G\\
-G|\Pi^{\theta}, \mathcal{A}^{c} & \sim \pt (\Pi^{\theta},
-\mathcal{A}^{c}). 
+  x_1, \ldots, x_n |G_{\theta} & \iid G, \\
+  G|\Pi^{\theta}, \mathcal{A}^{c} & \sim \pt (\Pi^{\theta},
+  \mathcal{A}^{c}). 
 \end{align*}
 
 The predictive density function of $X|x_1, \ldots, x_n, \theta$ ,
 marginalizing out $G$ , is  
 \begin{equation}
-\label{eq:4}
-f_x^{\theta} (x|x_1, \ldots, x_n)  = \lim_{m \to \infty} \left[
-  \prod_{j=2}^m \frac{cj^2 + n_{\epsilon_1 \cdots \epsilon_j(x) }(x_1 , \ldots, x_n)}{2cj^2
-  + n_{\epsilon_1 \cdots \epsilon_{j-1}(x)}(x_1, \ldots, x_n)}
-\right]2^{m-1} g_0(x),
+  \label{eq:4}
+  f_x^{\theta} (x|x_1, \ldots, x_n)  = \lim_{m \to \infty} \left[
+    \prod_{j=2}^m \frac{cj^2 + n_{\epsilon_1 \cdots \epsilon_j(x) }(x_1 , \ldots, x_n)}{2cj^2
+      + n_{\epsilon_1 \cdots \epsilon_{j-1}(x)}(x_1, \ldots, x_n)}
+  \right]2^{m-1} g_0(x),
 \end{equation}
 where $n_{\epsilon_1 \cdots \epsilon_j(x) }(x_1 , \ldots, x_n)$
 denotes the number of observations $x_1, \ldots, x_n$ dropping in the
@@ -441,108 +455,108 @@ $j$. Notice that, if  we restrict the first level weight as
 $\alpha_0=\alpha_1=1$, then we only need to update levels other than
 the first level.
 
-\begin{deff}[The predictive density for Finite \polya{} Trees]
-In practice, a finite $M$ level \polya{} Tree is usually adopted to
-approximate the full \polya{} trees, in which, only up to $M$ levels are
-updated. The corresponding predictive density becomes 
-\begin{equation}
-\label{eq:5}
-f_x^{\theta, M} (x|x_1, \ldots, x_n)  =  \left[
-  \prod_{j=2}^M \frac{cj^2 + n_{\epsilon_1 \cdots \epsilon_j(x) }(x_1 , \ldots, x_n)}{2cj^2
-  + n_{\epsilon_1 \cdots \epsilon_{j-1}(x)}(x_1, \ldots, x_n)}
-\right]2^{M-1} g_0(x).
-\end{equation}
-The rule of thumb for choosing $M$ is to set $M=\log_2n$, where $n$ is
-the sample size.
-\end{deff}
+\begin{rmk}[The predictive density for Finite \polya{} Tree]
+  In practice, a finite $M$ level \polya{} Tree is usually adopted to
+  approximate the full \polya{} tree, in which, only up to $M$ levels are
+  updated. The corresponding predictive density becomes 
+  \begin{equation}
+    \label{eq:5}
+    f_x^{\theta, M} (x|x_1, \ldots, x_n)  =  \left[
+      \prod_{j=2}^M \frac{cj^2 + n_{\epsilon_1 \cdots \epsilon_j(x) }(x_1 , \ldots, x_n)}{2cj^2
+        + n_{\epsilon_1 \cdots \epsilon_{j-1}(x)}(x_1, \ldots, x_n)}
+    \right]2^{M-1} g_0(x).
+  \end{equation}
+  The rule of thumb for choosing $M$ is to set $M=\log_2n$, where $n$ is
+  the sample size.
+\end{rmk}
 
-Hanson and Johnson (2002) showed the approximation to (4) given in
+\citet{hanson2002} showed the approximation to (4) given in
 (\ref{eq:5}) is exact for $M$ large enough.
 
 \begin{thm}
-Based on the predictive density function (\ref{eq:5}) of a
-finite \polya{} trees distribution, 
-the predictive cumulative density function is 
-\begin{equation}
-\label{eq:6}
-F^{\theta,M}_X(x|x_1, \ldots, x_n) = \sum_{i=1}^{N-1} P_{i} + P_N
-\left( G_{\theta}(x)2^M -(N-1) \right),
-\end{equation}
-where
-\begin{align*}
-P_i &= \frac{1}{2} \left\{\prod_{j=2}^M \frac{cj^2 + n_{j,\lceil i2^{j-M}
-  \rceil}(x_1, \ldots, x_n)}{2cj^2 + n_{j-1,\lceil
-  i2^{j-1-M} \rceil}(x_{1 },\ldots, x_n)} \right\} \mbox{ and}\\
-N & = \left[ 2^{M } G_{\theta}(x)   +1\right],
-\end{align*}
-in which $n_{j,\lceil i2^{j-M}
-  \rceil}(x_1, \ldots, x_n)$ denotes the number of observations $x_1,
-\ldots, x_n$ in the $\lceil i2^{j-M}
+  Based on the predictive density function (\ref{eq:5}) of a
+  finite \polya{} tree distribution, 
+  the predictive cumulative density function is 
+  \begin{equation}
+    \label{eq:6}
+    F^{\theta,M}_X(x|x_1, \ldots, x_n) = \sum_{i=1}^{N-1} P_{i} + P_N
+    \left( G_{\theta}(x)2^M -(N-1) \right),
+  \end{equation}
+  where
+  \begin{align*}
+    P_i &= \frac{1}{2} \left\{\prod_{j=2}^M \frac{cj^2 + n_{j,\lceil i2^{j-M}
+          \rceil}(x_1, \ldots, x_n)}{2cj^2 + n_{j-1,\lceil
+          i2^{j-1-M} \rceil}(x_{1 },\ldots, x_n)} \right\} \mbox{ and}\\
+    N & = \left[ 2^{M } G_{\theta}(x)   +1\right],
+  \end{align*}
+  in which $n_{j,\lceil i2^{j-M}
+    \rceil}(x_1, \ldots, x_n)$ denotes the number of observations $x_1,
+  \ldots, x_n$ in the $\lceil i2^{j-M}
   \rceil$ slot at level $j$, $\lceil \cdot
   \rceil$ is the ceiling function, and $[ \cdot ]$ is the floor function. 
 \end{thm}
 
 \begin{proof}
-\begin{align*}
-F^{\theta,M}_X(x| x_1, \ldots, x_n) & = \int_{-\infty}^x
-f_x^{\theta,M} (x|x_1, \ldots, x_n) dx \\
-& = \int_{-\infty}^x \left[
-  \prod_{j=2}^M \frac{cj^2 + n_{\epsilon_1 \cdots \epsilon_j(x) }(x_1 , \ldots, x_n)}{2cj^2
-  + n_{\epsilon_1 \cdots \epsilon_{j-1}(x)}(x_1, \ldots, x_n)}
-\right]2^{M-1} g_\theta(x) dx \\
-& =  \sum_{i=1}^{N-1} \left[ \prod_{j=2}^M \frac{cj^2 + n_{j, \lceil i2^{j-M}
-  \rceil}(x_1,
-    \ldots, x_n)}{2cj^2 + n_{j-1, \lceil i2^{j-1-M}
-  \rceil}(x_1, \ldots, x_n)} 2^{M-1}
-  \int_{\epsilon_{M,i}} g_{\theta}(x) dx \right] \\
-&+ 
-\int_{G^{-1}_{\theta}((N-1)/2^M)}^x \left[ \prod_{j=2}^M \frac{cj^2 + n_{j, \lceil N2^{j-M}
-  \rceil}(x_1,
-    \ldots, x_n)}{2cj^2 + n_{j-1, \lceil N2^{j-1-M}
-  \rceil}(x_1, \ldots, x_n)}\right] 2^{M-1}
-   g_{\theta}(x) dx \\
-& = \sum_{i=1}^{N-1} P_i + P_N 2^M \left( G_{\theta}(x) -
-  G_{\theta}(G_{\theta}^{-1}\left( \frac{N-1}{2^M} \right)\right)\\
-& = \sum_{i=1}^{N-1}P_i + P_N \left( G_{\theta}(x) 2^M - (N-1) \right),
-\end{align*}
-where $\epsilon_{M,i}$ is the $i$th partition in level $M$. 
+  \begin{align*}
+    F^{\theta,M}_X(x| x_1, \ldots, x_n) & = \int_{-\infty}^x
+    f_x^{\theta,M} (x|x_1, \ldots, x_n) dx \\
+    & = \int_{-\infty}^x \left[
+      \prod_{j=2}^M \frac{cj^2 + n_{\epsilon_1 \cdots \epsilon_j(x) }(x_1 , \ldots, x_n)}{2cj^2
+        + n_{\epsilon_1 \cdots \epsilon_{j-1}(x)}(x_1, \ldots, x_n)}
+    \right]2^{M-1} g_\theta(x) dx \\
+    & =  \sum_{i=1}^{N-1} \left[ \prod_{j=2}^M \frac{cj^2 + n_{j, \lceil i2^{j-M}
+          \rceil}(x_1,
+        \ldots, x_n)}{2cj^2 + n_{j-1, \lceil i2^{j-1-M}
+          \rceil}(x_1, \ldots, x_n)} 2^{M-1}
+      \int_{\epsilon_{M,i}} g_{\theta}(x) dx \right] \\
+    &+ 
+    \int_{G^{-1}_{\theta}((N-1)/2^M)}^x \left[ \prod_{j=2}^M \frac{cj^2 + n_{j, \lceil N2^{j-M}
+          \rceil}(x_1,
+        \ldots, x_n)}{2cj^2 + n_{j-1, \lceil N2^{j-1-M}
+          \rceil}(x_1, \ldots, x_n)}\right] 2^{M-1}
+    g_{\theta}(x) dx \\
+    & = \sum_{i=1}^{N-1} P_i + P_N 2^M \left( G_{\theta}(x) -
+      G_{\theta}(G_{\theta}^{-1}\left( \frac{N-1}{2^M} \right)\right)\\
+    & = \sum_{i=1}^{N-1}P_i + P_N \left( G_{\theta}(x) 2^M - (N-1) \right),
+  \end{align*}
+  where $\epsilon_{M,i}$ is the $i$th partition in level $M$. 
 \end{proof}
 
 \begin{thm}
-The posterior predictive quantile of finite \polya{} trees
-distribution is 
-\begin{equation}
-\label{eq:7}
-Q^{\theta, M}_{X|x_1, \ldots, x_n}(\tau) = G^{-1}_{\theta} \left[
-  \frac{\tau- \sum_{i=1}^N P_i + N P_N}{2^M P_N} \right],
-\end{equation}
-where $N$ satisfies $ \sum_{i=1}^{N-1} P_i < \tau \le \sum_{i=1}^N P_i$.
+  The posterior predictive quantile of finite \polya{} tree
+  distribution is 
+  \begin{equation}
+    \label{eq:7}
+    Q^{\theta, M}_{X|x_1, \ldots, x_n}(\tau) = G^{-1}_{\theta} \left[
+      \frac{\tau- \sum_{i=1}^N P_i + N P_N}{2^M P_N} \right],
+  \end{equation}
+  where $N$ satisfies $ \sum_{i=1}^{N-1} P_i < \tau \le \sum_{i=1}^N P_i$.
 \end{thm}
 
 \begin{proof}
-From equation (\ref{eq:6}), 
-\begin{align*}
-\tau = F^{\theta,M}_X(x|x_1, \ldots, x_n) &= \sum_{i=1}^{N-1} P_{i} + P_N
-\left( G_{\theta}(x)2^M -(N-1) \right) \\
-\Rightarrow G_{\theta}(x) &= \frac{\tau - \sum_{i=1}^NP_i +
-  NP_N}{2^MP_N} \\
-x & = G_{\theta}^{-1} \left[\frac{\tau - \sum_{i=1}^NP_i +
-  NP_N}{2^MP_N}  \right].
-\end{align*}
+  From equation (\ref{eq:6}), 
+  \begin{align*}
+    \tau = F^{\theta,M}_X(x|x_1, \ldots, x_n) &= \sum_{i=1}^{N-1} P_{i} + P_N
+    \left( G_{\theta}(x)2^M -(N-1) \right) \\
+    \Rightarrow G_{\theta}(x) &= \frac{\tau - \sum_{i=1}^NP_i +
+      NP_N}{2^MP_N} \\
+    x & = G_{\theta}^{-1} \left[\frac{\tau - \sum_{i=1}^NP_i +
+        NP_N}{2^MP_N}  \right].
+  \end{align*}
 \end{proof}
 
 \subsection{Bayesian Quantile Regression with Mixture of \polya{}
-  Trees Priors}
+  Tree Priors}
 Suppose we consider the following location-scale shift model, 
 \begin{align*}
-y_i& = \bm{x_i'\beta} + (\bm{x_i'\gamma}) \epsilon_{i}, i = 1, \ldots,
-n \\
-\epsilon_i |G_{\theta} & \iid G_{\theta} \\
-G_{\theta}|\Pi^{\theta}, \mathcal{A}^{\theta} & \sim \pt
-(\Pi^{\theta}, \mathcal{A}^{\theta}) \\
-\bm{\theta} = (\sigma^2, c) & \sim \pi_{\theta}(\theta) \\
-\bm{\beta} & \sim \pi_{\beta}(\beta)\\
-\bm{\gamma} &\sim \pi_{\gamma}(\gamma).
+  y_i& = \bm{x_i'\beta} + (\bm{x_i'\gamma}) \epsilon_{i}, i = 1, \ldots,
+  n \\
+  \epsilon_i |G_{\theta} & \iid G_{\theta} \\
+  G_{\theta}|\Pi^{\theta}, \mathcal{A}^{\theta} & \sim \pt
+  (\Pi^{\theta}, \mathcal{A}^{\theta}) \\
+  \bm{\theta} = (\sigma^2, c) & \sim \pi_{\theta}(\theta) \\
+  \bm{\beta} & \sim \pi_{\beta}(\beta)\\
+  \bm{\gamma} &\sim \pi_{\gamma}(\gamma).
 \end{align*} 
 In order not to confound with location parameter, $\epsilon_i $ or $G$
 is set to have median 0 by fixing $\alpha_0=\alpha_1 = 1$. For the
@@ -553,26 +567,26 @@ at 1.
 Under Bayesian framework, the posterior distribution of $(\beta,
 \gamma, \sigma^2, c)$ is 
 \begin{align*}
-\pr(\bm{\beta}, \bm{\gamma}, \sigma^2, c|\bm{Y}) & \propto L(\bm{Y}|
-\bm{\beta}, \bm{\gamma}, \sigma^2, c) \pi_{\beta}(\beta)
-\pi_{\gamma}(\gamma) \pi_{\sigma^2}(\sigma^2) \pi_c(c) \\
-& = \frac{1}{\prod_{i=1}^n (\bm{x_i'\gamma})} \pr \left( \epsilon_1,
-  \ldots, \epsilon_n | \bm{\beta}, \bm{\gamma}, \sigma^2, c\right)
-\pi_{\beta}(\beta)
-\pi_{\gamma}(\gamma) \pi_{\sigma^2}(\sigma^2) \pi_c(c) \\
-& = \frac{1}{\prod_{i=1}^n (\bm{x_i'\gamma})} \pr \left(\epsilon_n| \epsilon_1,
-  \ldots, \epsilon_{n-1} , \bm{\beta}, \bm{\gamma}, \sigma^2, c\right)
-\cdots  \pr \left(\epsilon_2| \epsilon_1, \bm{\beta}, \bm{\gamma},
-  \sigma^2, c\right)  \pr \left(\epsilon_1| \bm{\beta}, \bm{\gamma},
-  \sigma^2, c\right)\\
-& \qquad 
-\pi_{\beta}(\beta)
-\pi_{\gamma}(\gamma) \pi_{\sigma^2}(\sigma^2) \pi_c(c) \\
+  \pr(\bm{\beta}, \bm{\gamma}, \sigma^2, c|\bm{Y}) & \propto L(\bm{Y}|
+  \bm{\beta}, \bm{\gamma}, \sigma^2, c) \pi_{\beta}(\beta)
+  \pi_{\gamma}(\gamma) \pi_{\sigma^2}(\sigma^2) \pi_c(c) \\
+  & = \frac{1}{\prod_{i=1}^n (\bm{x_i'\gamma})} \pr \left( \epsilon_1,
+    \ldots, \epsilon_n | \bm{\beta}, \bm{\gamma}, \sigma^2, c\right)
+  \pi_{\beta}(\beta)
+  \pi_{\gamma}(\gamma) \pi_{\sigma^2}(\sigma^2) \pi_c(c) \\
+  & = \frac{1}{\prod_{i=1}^n (\bm{x_i'\gamma})} \pr \left(\epsilon_n| \epsilon_1,
+    \ldots, \epsilon_{n-1} , \bm{\beta}, \bm{\gamma}, \sigma^2, c\right)
+  \cdots  \pr \left(\epsilon_2| \epsilon_1, \bm{\beta}, \bm{\gamma},
+    \sigma^2, c\right)  \pr \left(\epsilon_1| \bm{\beta}, \bm{\gamma},
+    \sigma^2, c\right)\\
+  & \qquad 
+  \pi_{\beta}(\beta)
+  \pi_{\gamma}(\gamma) \pi_{\sigma^2}(\sigma^2) \pi_c(c) .\\
 \end{align*}
 {\bf should be using p or Pr in the above.  Pr implies discrete so
   maybe just do p above}
 
-\section{Simulations}
+\section{Simulations and Real Data}
 We
 conduct a simulation study to compare our approach with other existing
 methods, specifically, the 'rq' function in the 'quantreg' package in
@@ -583,13 +597,13 @@ flexible Bayesian quantile regression approach by Reich
 We compare quantile regression approaches
 for both homogeneous and heterogeneous models. 
 
-\subsubsection{Design}
+\subsection{Design}
 We generated data from the following 3 models,
 \begin{itemize}
-\item [M1:] $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 + \epsilon_{1i}$
-\item [M2:] $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 + \epsilon_{2i}$
+\item [M1:] $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 + \epsilon_{1i}$,
+\item [M2:] $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 + \epsilon_{2i}$,
 \item [M3:]  $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 +
-  (1-0.5x_{i1}+0.5x_{i2}) \epsilon_{2i}$
+  (1-0.5x_{i1}+0.5x_{i2}) \epsilon_{2i}$, 
 \end{itemize}
 where $x_{i1} , x_{i2} \stackrel{\text{iid}}{\sim} \mathrm{N}(0,1),
 \epsilon_{1i} \sim \mathrm{N}(0,1), \epsilon_{2i} 
@@ -601,89 +615,233 @@ sets with the sample size $n=100$. $\tau=0.5, 0.9$ are the quantiles
 of interest.  
 
 Each simulated data set is analyzed using the three methods. For the proposed
-Bayesian linear quantile regression with \polya{} Trees prior (PT),
+Bayesian linear quantile regression with \polya{} Tree prior (PT),
 we adopt the following prior specifications: $\mu_{\beta} = (0,0,0)^T, 
 \Sigma_{\beta}=\text{diag} (\sqrt{1000},\sqrt{1000},\sqrt{1000}), $
-$\mu_{\gamma} = (0,0,0)^T,  
-\Sigma_{\gamma}=\text{diag} (\sqrt{1000},\sqrt{1000},\sqrt{1000}),
-\tau=(0.01, 0.01), $ A partial \polya{} tree with $M=7$ levels was adopted
+$\mu_{\gamma} = (0,0,0)^T$, 
+$\Sigma_{\gamma}=\text{diag} (\sqrt{1000},\sqrt{1000},\sqrt{1000}) $,
+and $\tau=(0.01, 0.01)$. A partial \polya{} tree with $M=7$ levels was adopted
 in the model. For Monte Carlo Markov chain parameter, 820,000
 iterations of a single Markov chain were used, during which, 20,000
 samples were saved through every 40 steps after a burn-in period of
 20,000 samples. Acceptance rates for $\bm{\beta}$ and $\bm{\gamma}$ candidates
 during the adaptive Metropolis-Hastings algorithm were set to approach
-25\%. } 
+25\%.  
 We also use the method proposed by Reich (BQR),
 which conducts a single $\tau$
-  quantile regression for linear model and assigns an infinite mixture
+quantile regression for linear model and assigns an infinite mixture
 of Gaussian densities for the error term and the
 standard frequentist quantile regression approach , 'rq' function in
 the 'quantreg' package in R (RQ). 
 
 Methods are evaluated  based on mean squared error: 
 \begin{displaymath}
-\text{MSE}  = \frac{1}{p} \sum_{j=1}^p (\hat{\beta}_j(\tau) - \beta_j(\tau))^2
+  \text{MSE}  = \frac{1}{p} \sum_{j=1}^p (\hat{\beta}_j(\tau) -
+  \beta_j(\tau))^2, 
 \end{displaymath}
-where $p$ is the number of covariates except the intercept (so here, $p=2$). $\beta_j(\tau)$ is the
+where $p$ is the number of covariates except the intercept (so here,
+$p=2$). $\beta_j(\tau)$ is the 
 $j-$component of the true quantile regression
 parameters. $\hat{\beta}_j(\tau)$ is the  $j$th component of estimated
 quantile regression parameters. (we use the posterior median for
 the Bayesian approaches) {\bf why the posterior median?  is that what
-  is typically used??}. We report the mean (standard error) of the 100
+  is typically used?? Minzhao: at least , Reich did so}. We report the
+mean (standard error) of the 100 
 MSEs for each model in Table 1. 
-\subsubsection{Results}
+
+\begin{center}
+  \begin{table}[h]
+    \centering
+    \caption[]{ Mean squared error (reported as 100*average) and standard
+      error (reported as 100*standard error for each
+      quantile regression method}
+    \vspace{4mm}
+    \begin{tabular}[tb]{l|l|lll}
+      \hline
+      Model & quantile & rq         & BQR        & PT          \\
+      \hline
+      M1    & 0.5      & 1.39(0.13) & 0.96(0.10) & 0.96(0.09)  \\
+      M2    &          & 17.2(1.48) & 4.09(0.5)  & 1.89(0.26)  \\
+      M3    &          & 95.4(6.69) & 16.5(1.90) & 6.29(0.86)  \\
+      \hline
+      M1    & 0.9      & 2.35(0.26) & 1.96(0.25) & 1.79(0.17)  \\
+      M2    &          & 5.73(1.03) & 4.32(0.54) & 3.83(0.49)  \\
+      M3    &          & 25.1(2.66) & 12.4(1.44) & 14.06(1.39) \\
+      \hline
+    \end{tabular}
+    \label{tab:1}
+  \end{table}
+\end{center}
+
+\subsection{Results}
 The simulation results are shown in Table \ref{tab:1}. Our
-  Bayesian quantile regression method with \polya{} trees prior (PT)
-  does very well (in terms of MSE) relative to Reich's method (BQR) and traditional frequentist approach
-  (rq) in most cases except Model 3 with $\tau = 0.9$.
+Bayesian quantile regression method with \polya{} tree prior (PT)
+does very well (in terms of MSE) relative to Reich's method (BQR)
+and traditional frequentist approach 
+(rq) in most cases except Model 3 with $\tau = 0.9$.
 The difference becomes critical especially in
 the  non-unimodal case (M2) and heterogeneous model (M3). 
 
 In Model 2 and Model 3 with $\tau=0.5$, where the error is
-  distributed as a bimodal distribution (mixture of normal
-  distributions), the rq method performs poorly in terms of MSE
+distributed as a bimodal distribution (mixture of normal
+distributions), the rq method performs poorly in terms of MSE
 since the mode of the error is no longer the quantile of
-  interest. In contrast, our method (PT) is not impacted my lack of
-  unimodality and heterogeneity and provides more information
-  for the relationship between responses and covariates. In Model 3
-  with $\tau=0.9$, Reich's method (BQR) outperforms our approach (PT),
-  since in his model, the error is assigned an infinite mixture of
-  normal distribution with mode at $\tau=0.9$, which is very close to
-  the true distribution. Less information is available from our
-  approach to detect the shape at a particular quantile of the
-  distribution since there are few observations at extreme quantiles. 
+interest. In contrast, our method (PT) is not impacted by lack of
+unimodality and heterogeneity and provides more information
+for the relationship between responses and covariates. In Model 3
+with $\tau=0.9$, Reich's method (BQR) outperforms our approach (PT),
+since in his model, the error is assigned an infinite mixture of
+normal distribution with mode at $\tau=0.9$, which is very close to
+the true distribution. Less information is available from our
+approach to detect the shape at a particular quantile of the
+distribution since there are few observations at extreme quantiles. 
 
-\begin{center}
-\begin{table}[h]
-\centering
-\caption[]{ Mean squared error (reported as 100*average) and standard
-  error (reported as 100*standard error for each
-  quantile regression method}
-\vspace{4mm}
-\begin{tabular}[tb]{l|l|l|l|l}
-\hline
-Model & quantile & rq         & BQR        & PT          \\
-\hline
-M1    & 0.5      & 1.39(0.13) & 0.96(0.10) & 0.96(0.09)  \\
-M2    &          & 17.2(1.48) & 4.09(0.5)  & 1.89(0.26)  \\
-M3    &          & 95.4(6.69) & 16.5(1.90) & 6.29(0.86)  \\
-\hline
-M1    & 0.9      & 2.35(0.26) & 1.96(0.25) & 1.79(0.17)  \\
-M2    &          & 5.73(1.03) & 4.32(0.54) & 3.83(0.49)  \\
-M3    &          & 25.1(2.66) & 12.4(1.44) & 14.06(1.39) \\
-\hline
-\end{tabular}
-\label{tab:1}
-\end{table}
-\end{center}
-
-\subsection{TOURS Data}
-% \includepdf[page={1,2,3}]{m1-0501}
-% \includepdf[page={1,2,3}]{m2-0501}
+\subsection{Analysis of The Tours Data}
 {\bf using 6 month change with age and race as covariates}
+
+AAA and BBB applied their methods on tours data from 224
+individuals. In this section, we apply our Bayesian quantile
+regression approach to study this data set. The data consist of the
+age and race of the participants, and the response is the  weight loss
+between  baseline and  6 weeks later . The age of
+participants range from 50 to 75, and there are 43 people with race 1
+(Black) and 181 people with race 3
+(White). Our goal of the study is to find out how the change of
+weight for different percentile is affected by participants' age and
+their races.  
+
+\begin{figure}[h]
+  \begin{minipage}{0.5\linewidth}
+    \centerline{\includegraphics[scale=0.4]{../data/change-age}}
+  \end{minipage}
+  \begin{minipage}{0.5\linewidth}
+    \centerline{\includegraphics[scale=0.4]{../data/change-race1}}
+  \end{minipage}
+
+  \caption[]{\label{fig:tours} Scatterplots of change vs age and
+    Boxplots of weight loss for each race. On the left figure, Red
+    solid line is the   fitted line from regular mean regression model
+    with one covariate   'age', and blue dashed line is the fitted
+    lowess line for model:  Change vs age. The whiskers and box in the
+    boxplots use the default settings: (0.75, 0.5, 0.25) quantile for
+    box and $Q1-1.5IQR$ for lower whisker and $Q3+1.5IQR$ for upper
+    whisker. }
+\end{figure}
+
+The  weight loss vs age and the Boxplot of change vs races are
+shown in the above two figures. No obvious evidence shows the
+heterogeneity of the response. Weight change is a little bit right
+skewed. 
+
+As to the model, we used weight loss ('change') as response, and
+covariates as participants' centered age ('age') (
+(age-mean(age))/sd(age) for better numerical performance) , race
+(indicator of race 1 'race1'). Thus race 3 (white) became the
+reference race.
+
+\begin{table}[h]
+  \caption[]{\label{tab:tours} 95\% Credible and confidence interval for
+    tours data quantile regression parameter and quantile regression
+    parameter estimates. Results are compared with
+    traditional frequentist approach (QReg).}
+  \vspace{4mm}
+
+  \centering
+  \begin{tabular}{r|r|rrrr}
+    \hline
+    & $\tau$ & PT              & QReg             & PT Estimates
+    & QReg Estimates                                        \\
+    \hline
+    Intercept & 0.5    & (9.73, 11.20)    & (9.31, 10.80)    & 10.38 & 10.30\\
+    Age       &        & (-1.02, 0.07)  & (-1.27, 0.17)    & -0.41 & -0.69\\
+    Race 1    &        & (-5.28, -2.33)  & (-5.46, -2.42)   & -3.88 & -3.53\\
+    \hline
+    Intercept & 0.9    & (16.76, 18.16)  & (16.64, 18.42)  & 17.41 & 17.38\\
+    Age       &        & (-1.28, 0.50)   & (-1.93, -0.06)  & -0.24 & -0.86 \\
+    Race 1    &        & (-6.70, -2.41) & (-6.85, -2.48) & -4.77 & -6.08\\
+    \hline 
+  \end{tabular}
+\end{table}
+
+As shown in table \ref{tab:tours}, most of the credible intervals from our
+method are narrower than confidence intervals from frequentist approach
+(QReg) , except intercept and Race 1 regression coefficient intervals
+in median regression, though they are very close (differences are less than
+0.03). Both methods  show the median  
+and 90\% percentile for weight loss is significantly  affected by
+race, which can be interpreted as that white people generally tend to
+lose more weight than black people and further more, this situation
+becomes more remarkable when comparing successful weight losers (90\%
+percentile) between two races. Interestingly, the results for 'age'
+parameter in 90\% quantile regression became diverse. Our approach
+indicates the relationship between weight loss and age in terms of
+90\% percentile is not significant, while the traditional frequentist
+method shows the age did affect the weight loss in terms of this
+extreme quantile. Nevertheless, the confidence interval by rq function
+(-1.93, -0.06) almost contains zero. It may lose some  accuracy since
+the confidence interval construction are based on the asymptotic
+property while in our dataset, the number of observations is only
+224. Thus, a small fluctuation may lead to  non-significance for 'age'
+covariate. 
+
+\begin{figure}[htbp]
+  \begin{minipage}{0.5\linewidth}
+    \centerline{\includegraphics[scale=0.4]{../data/hist-res}}
+  \end{minipage}
+  \begin{minipage}{0.5\linewidth}
+    \centerline{\includegraphics[scale=0.4]{../data/density-res}}
+  \end{minipage}
+  \caption[]{\label{fig:tourpost} Estimated residuals ($r_i = (y_i-
+    \bm{x_i'\hat{\beta}})/(\bm{x_i'\hat{\gamma}})$), where
+    $\hat{\bm{\beta}}, \hat{\bm{\gamma}}$ are posterior median. The left
+    figure shows the histogram of the residuals, and the right one
+    illustrates the estimated predictive density function, where the
+    predictive density function are estimated by averaging predictive
+    \polya{} tree distribution density during each MCMC iteration over
+    certain grid.}
+\end{figure}
+
+Figure \ref{fig:tourpost} illustrates the residuals and estimated
+probability density function of $\epsilon$, $\hat{f}(\epsilon)$. We
+can also see our approach correctly capture the small minor mode on
+the right tail. If upper quantile of response is of interest, our
+approach would be more accurate to estimate the quantile regression
+parameter than other methods do. Also the right skewness is also
+captured by our approach through predictive density estimation. 
+
 \section{Discussion}
 {\bf conclusions, discussion of correlated data, and whether R
   function to do this and shrinking of heterogeneity coefficients to zero}
+
+This paper shows a Bayesian approach for linear quantile regression
+model simultaneously by introducing mixture of \polya{} tree
+priors and estimating heterogeneous parameters. By marginalizing the
+predictive density function of \polya{} tree distribution, quantile
+of interest can be obtained by inverting the predictive cumulative
+density function. Exact posterior inference can be made from
+MCMC. Crossing quantile lines situation will happen since
+quantiles are obtained through density estimation. In addition,
+simultaneous quantile regressions can be fit because there does not
+exist crossing quantile lines conflict and it is also coherent to make
+joint inference  from each individual single quantile regression. The
+simulation study shows our method performs better than the frequentist
+approach especially when the error is multimodal and highly skewed. We
+also applied and illustrated our approach to the tours data exploring
+the relationship between  quantiles of weight loss and people's age
+and race. 
+
+Further research includes quantile regression for correlated data by
+modelling error as a mixture of multivariate \polya{} tree
+distribution (Minzhao : I am coding this part), shrinkage mode by
+shrinking of heterogeneity coefficients to zero (Minzhao: just set
+$\gamma$ prior narrow and  close to zero ?). Moreover, quantile
+regression with missing data may be considered by \polya{} tree
+priors. Also spatial quantile regression with \polya{} tree might be
+a promising area. 
+
+\bibliographystyle{plainnat}
+% \bibliographystyle{abbrev}
+\bibliography{qr-draft-reference}
 
 \end{document}
 %%% Local Variables: 
