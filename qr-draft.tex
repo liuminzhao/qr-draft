@@ -96,7 +96,13 @@ densities which put quantile constraints on the residuals
 (\citet{hjort2007}, \citet{hjort2009}, \citet{kottas2009},
 \citet{reich2010}). 
 
-Like the asymmetric Laplace distribution, all of the above methods {\bf is this true?} are single semiparametric
+Like the asymmetric Laplace distribution, all of the above methods
+{\bf is this true?} {\it Minzhao: yes. they are all about single
+  quantile regression. walker1999, kottas2001, hanson2002 are about
+  median regression which definitely are single quantile regression;
+  yu2001, kottas2009, reich2010 modeled the error as ALD, DP, and
+  mixture of infinite normal distribution, their models also did
+  quantile regression once a time. }are single semiparametric
 quantile regression  methods,
 which have some limitations. The densities have their (restrictive) mode at
 the quantile of interest, which is not appropriate when extreme
@@ -104,9 +110,11 @@ quantiles are being investigated. Other criticisms include crossed
 quantile lines, monotonicity constraints, difficulty in making
 inference for quantile regression parameter for an interval of
 $\tau$s. Joint inference is poor in borrowing information through
-single quantile regression. It is not coherent to pool from every
+single quantile regressions. It is not coherent to pool from every
 individual quantile regression. Meanwhile, the sampling distribution
-of response for $\tau_1$ might not be the same as that under quantile $\tau_2$. {\bf might be more specific about why the above issues are problems}
+of response for $\tau_1$ might not be the same as that under quantile
+$\tau_2$. {\bf might be more specific about why the above issues are
+  problems} {\it Minzhao: show mike tokdar2011}
 
 In order to solve those problems, simultaneous linear quantile
 regression have been proposed by \citet{tokdar2011}. 
@@ -121,13 +129,18 @@ extended them to \polya{} Tree models (\citet{lavine1992, lavine1994}). The
 major advantage of 
 \polya{} Tree over Dirichlet process is that it can be absolutely
 continuous with probability 1 and it can be easily tractable {\bf
-  isn't the DP tractable too??}. In
+  isn't the DP tractable too??} {\it Minzhao: DP is tractable too,
+  here I only mean PT is better than DP in terms of continuous pdf.}. In
 a regression context, \citet{walker1997, walker1999} assigned a finite
 \polya{} Tree 
 prior to the random effects in a generalized linear mixed
 model. \citet{berger2001}  used a mixture
 of \polya{} Tree comparing data distribution coming from parametric
-distribution or mixture of \polya{} Tree. {\bf this is not clear??}
+distribution or mixture of \polya{} Tree. {\bf this is not
+  clear??}{\it Minzhao: used a \polya{} tree process to test the fit
+  of data to a parametric model by embedding the parametric model in a
+  nonparametric alternative and computing the Bayes factor of the
+  parametric model to the nonparametric alternative.}
 \citet{hanson2002} as mentioned earlier 
 modeled the error term as a mixture of \polya{} tree
 prior. 
@@ -193,16 +206,17 @@ quantile regression parameter can be expressed as
   \label{eq:1}
   \bm{\beta}(\tau) = \bm{\beta} + F^{-1}_{\epsilon}(\tau) \bm{e}_1,
 \end{equation}
-where $\bm{e}_1 = [1, 0, \ldots, 0]^T$.  {\bf put the next little bit
-  in an appendix}  $F^{-1}_{\epsilon}(\tau)$ is
-the $\tau$th quantile for error $\epsilon$, since 
-\begin{align*}
-  \pr (Y \le \bm{X'\beta}(\tau)) & = \pr \left( \bm{x'\beta} + \epsilon
-    \le \bm{x'\beta} + F^{-1}_{\epsilon}(\tau) \right) \\
-  & = \pr (\epsilon \le F^{-1}_{\epsilon}(\tau)) \\
-  & = \tau. 
-\end{align*}
+where $\bm{e}_1 = [1, 0, \ldots, 0]^T$,  {\bf put the next little bit
+  in an appendix} and $F^{-1}_{\epsilon}(\tau)$ is
+the $\tau$th quantile for error $\epsilon$. 
+% \begin{align*}
+%   \pr (Y \le \bm{X'\beta}(\tau)) & = \pr \left( \bm{x'\beta} + \epsilon
+%     \le \bm{x'\beta} + F^{-1}_{\epsilon}(\tau) \right) \\
+%   & = \pr (\epsilon \le F^{-1}_{\epsilon}(\tau)) \\
+%   & = \tau. 
+% \end{align*}
 {\bf up to here}
+
 As we can see from equation (\ref{eq:1}), if the model is homogeneous
 , i.e., i.i.d case, then for different quantiles $\tau$, the
 corresponding quantile regression parameters only vary in the
@@ -210,67 +224,70 @@ first component, the intercept. The rest of the quantile regression
 parameters stay the same. Therefore, quantile lines for different
 quantiles are parallel to each other. 
 {\bf i would put figure 1 in the dissertation, but not the paper}
-Figure~\ref{fig:homo} for a single quantile regression as example. 
+% Figure~\ref{fig:homo} for a single quantile regression as example. 
 
-\begin{figure}[h]
-  \centerline{\includegraphics[scale=0.4]{homo}}
-  \caption[]{\label{fig:homo} A Single Quantile Regression: True 
-    distribution is $1+3x + \epsilon$, where $\epsilon \sim
-    \mathrm{N}(0,1)$. The scatter plot contains 500 samples and true quantile
-    lines for quantiles $\tau=0.1,0.25,0.5,0.75,0.9$ are shown in the
-    left panel. The middle and right panel show how the true quantile
-    regression parameter, intercept and slope, change with different
-    quantiles in a homogeneous model. Only the intercept changes in such
-    a case ($\beta_0+\gamma_0 F^{-1}_{\tau}(\epsilon)$) , while the slopes
-    stay the same.}
-  \label{fig:homo}
-\end{figure}
+% \begin{figure}[h]
+%   \centerline{\includegraphics[scale=0.4]{homo}}
+%   \caption[]{\label{fig:homo} A Single Quantile Regression: True 
+%     distribution is $1+3x + \epsilon$, where $\epsilon \sim
+%     \mathrm{N}(0,1)$. The scatter plot contains 500 samples and true quantile
+%     lines for quantiles $\tau=0.1,0.25,0.5,0.75,0.9$ are shown in the
+%     left panel. The middle and right panel show how the true quantile
+%     regression parameter, intercept and slope, change with different
+%     quantiles in a homogeneous model. Only the intercept changes in such
+%     a case ($\beta_0+\gamma_0 F^{-1}_{\tau}(\epsilon)$) , while the slopes
+%     stay the same.}
+%   \label{fig:homo}
+% \end{figure}
 
 Now, consider the heterogeneous linear regression model  from \citet{he1998}  
-\begin{displaymath}
+\begin{equation}\label{eq:8}
   y_i = \bm{x}_i'\bm{\beta} + (\bm{x}_i'\bm{\gamma}) \epsilon_i, 
-\end{displaymath}
+\end{equation}
 {\bf need an equation \# for this one}
 where $\bm{x_i'\gamma}$ is positive  for all
 $i$. Under this model, the $\tau$th quantile regression parameter is 
 \begin{equation}\label{eq:2}
   \bm{\beta}(\tau) = \bm{\beta} + F^{-1}_{\epsilon}(\tau) \bm{\gamma},
 \end{equation}
-{\bf put this little 'proof' in the appendix too}since 
-\begin{align*}
-  \pr (Y \le \bm{x'\beta}(\tau)) & = \pr \left( \bm{x'\beta} +
-    (\bm{x}'\gamma) \epsilon \le \bm{x'\beta} + (\bm{x'\gamma})
-    F^{-1}_{\epsilon}(\tau) \right) \\
-  & = \pr \left( (\bm{x'\gamma}) \epsilon \le  (\bm{x'\gamma})
-    F^{-1}_{\epsilon}(\tau)  \right)\\
-  & = \pr (\epsilon \le F^{-1}_{\epsilon}(\tau)) \\
-  & = \tau .
-\end{align*}
+{\bf put this little 'proof' in the appendix too} %since 
+% \begin{align*}
+%   \pr (Y \le \bm{x'\beta}(\tau)) & = \pr \left( \bm{x'\beta} +
+%     (\bm{x}'\gamma) \epsilon \le \bm{x'\beta} + (\bm{x'\gamma})
+%     F^{-1}_{\epsilon}(\tau) \right) \\
+%   & = \pr \left( (\bm{x'\gamma}) \epsilon \le  (\bm{x'\gamma})
+%     F^{-1}_{\epsilon}(\tau)  \right)\\
+%   & = \pr (\epsilon \le F^{-1}_{\epsilon}(\tau)) \\
+%   & = \tau .
+% \end{align*}
 {\bf figure for dissertation}
-Figure~\ref{fig:hetero} shows a single $\tau$th quantile regression under
-heterogeneous linear model.  
+% Figure~\ref{fig:hetero} shows a single $\tau$th quantile regression under
+% heterogeneous linear model.  
 
-\begin{figure}[h]
-  \centerline{\includegraphics[scale=0.4]{heter}}
-  \caption[]{ \label{fig:heter} A Single Quantile Regression: True
-    distribution is $1+3x + (1+0.5x)\epsilon$, where $\epsilon \sim
-    \mathrm{N}(0,1)$. The scatter plot of 500 samples and true quantile
-    lines for quantiles $\tau=0.1,0.25,0.5,0.75,0.9$ are shown in the
-    left panel. The middle and right panel show how the true quantile
-    regression parameter, intercept and slope, change with different
-    quantiles in this heterogeneous model. The slope is now changes 
-    for different quantiles via the heterogeneity parameter $\bm{\gamma}
-    \neq \bm{e}_1$.  }
-  \label{fig:hetero}
-\end{figure}
+% \begin{figure}[h]
+%   \centerline{\includegraphics[scale=0.4]{heter}}
+%   \caption[]{ \label{fig:heter} A Single Quantile Regression: True
+%     distribution is $1+3x + (1+0.5x)\epsilon$, where $\epsilon \sim
+%     \mathrm{N}(0,1)$. The scatter plot of 500 samples and true quantile
+%     lines for quantiles $\tau=0.1,0.25,0.5,0.75,0.9$ are shown in the
+%     left panel. The middle and right panel show how the true quantile
+%     regression parameter, intercept and slope, change with different
+%     quantiles in this heterogeneous model. The slope is now changes 
+%     for different quantiles via the heterogeneity parameter $\bm{\gamma}
+%     \neq \bm{e}_1$.  }
+%   \label{fig:hetero}
+% \end{figure}
 
-Clearly, quantile lines
+% Clearly, 
+Quantile lines
 are no longer parallel
 under the heterogeneous linear model which adds considerably more
 flexibility in the model.
 
 {\bf this paragraph should probably be merged with material in the
-  introduction} Traditional single quantile regression make different assumptions on
+  introduction} 
+{\it Minzhao: merge to introduction}
+Traditional single quantile regression make different assumptions on
 the error term. The frequentist approach of \citet{koenker1978} does not 
 assign distributions for the residual, and uses linear
 programming technique to minimize the check function $\sum_{i=1}^n
@@ -334,8 +351,10 @@ two partition of $B_{\epsilon}$.
 
 \subsubsection{\polya{} Tree Parameters}
 There are two parameters in the \polya{} tree distribution $(\Pi,
-\mathcal{A})$. The $\mathcal{A}$ family determines how much $G$ can
-deviate from $G_0$ , the baseline measure {\bf need to define $G_0$ as
+\mathcal{A})$. {\it Minzhao: If a \polya{} tree is centered around a
+  pre-specified distribution $G_0$, which is called the baseline
+  measure, } the $\mathcal{A}$ family determines how much $G$ can
+deviate from $G_0$. {\it \sout{ , the baseline measure}} {\bf need to define $G_0$ as
   the base measure before this, $\Pi(G_0)$}. \citet{ferguson1974} pointed out
 $\alpha_{\epsilon = 1} $ yields a $G$ that is continuous singular with
 probability 1, and $\alpha_{\epsilon_1, \ldots, \epsilon_m} = m^2$
@@ -403,15 +422,15 @@ measure and $\epsilon_1, \epsilon_2, \ldots$ are a random sample from $G$.
 \end{rmk}
 
 \begin{rmk}[Conjugacy]
-{\bf should use y's instead of x's here??}  If $x_1, \ldots, x_n | G \sim G, G|\Pi, \mathcal{A} \sim \pt (\Pi,
-  \mathcal{A})$, then $G|x_1, \ldots, x_n , \Pi, \mathcal{A} \sim \pt
+{\bf should use y's instead of x's here??}  If $y_1, \ldots, y_n | G \sim G, G|\Pi, \mathcal{A} \sim \pt (\Pi,
+  \mathcal{A})$, then $G|y_1, \ldots, y_n , \Pi, \mathcal{A} \sim \pt
   (\Pi, \mathcal{A}^{*})$, where in $\mathcal{A}^{*}, \forall \epsilon
   \in E^{*}$, 
   \begin{displaymath}
-    \alpha_{\epsilon}^{*} = \alpha_{\epsilon} + n_{\epsilon}(x_1, \ldots, x_n),
+    \alpha_{\epsilon}^{*} = \alpha_{\epsilon} + n_{\epsilon}(y_1, \ldots, y_n),
   \end{displaymath}
-  where $n_{\epsilon}(x_1, \ldots, x_n)$ indicates the count how many
-  samples of $x_1, \ldots, x_n$ drop in $B_{\epsilon}$. 
+  where $n_{\epsilon}(y_1, \ldots, y_n)$ indicates the count how many
+  samples of $y_1, \ldots, y_n$ drop in $B_{\epsilon}$. 
 \end{rmk}
 
 \subsubsection{Mixture of \polya{} Tree}
@@ -562,6 +581,15 @@ predictive cdf and the predictive quantile(s).
   \end{align*}
 \end{proof}
 {\bf Now explicitly state result (corollary) for closed form for (2)}
+Now the explicit form for quantile regression coefficients in equation
+(\ref{eq:2}) becomes: 
+\begin{equation}
+\label{eq:9}
+  \bm{\beta}(\tau) = \bm{\beta} + \bm{\gamma}G_{\theta}^{-1}
+  \left[\frac{\tau - \sum_{i=1}^NP_i + 
+        NP_N}{2^MP_N}  \right] ,
+\end{equation}
+where $P_i$ and $N$ are the notations in equation (\ref{eq:6}) and (\ref{eq:7}).
 
 \subsection{Fully Bayesian Quantile Regression Specification with Mixture of \polya{}
   Tree Priors}
@@ -583,8 +611,8 @@ similar reasons,
 the first component of $\bm{\gamma}$ is fixed
 at 1. 
 
-The posterior distribution of $(\beta,
-\gamma, \sigma^2, c)$ is given as
+The posterior distribution of $(\bm{\beta},
+\bm{\gamma}, \sigma^2, c)$ is given as
 \begin{align*}
   \pr(\bm{\beta}, \bm{\gamma}, \sigma^2, c|\bm{Y}) & \propto L(\bm{Y}|
   \bm{\beta}, \bm{\gamma}, \sigma^2, c) \pi_{\beta}(\beta)
@@ -599,10 +627,20 @@ The posterior distribution of $(\beta,
     \sigma^2, c\right)  \pr \left(\epsilon_1| \bm{\beta}, \bm{\gamma},
     \sigma^2, c\right)\\
   & \qquad 
-  \pi_{\beta}(\beta)
-  \pi_{\gamma}(\gamma) \pi_{\sigma^2}(\sigma^2) \pi_c(c) .\\
+  \pi_{\bm{\beta}}(\bm{\beta})
+  \pi_{\bm{\gamma}}(\bm{\gamma}) \pi_{\sigma^2}(\sigma^2) \pi_c(c) .\\
 \end{align*}
 {\bf Need to discuss choices of priors here}
+
+Usually priors for parameters $(\bm{\beta}, \bm{\gamma})$
+could be diffused p-dimensional normal distribution . Diffused gamma
+distribution could be chosen as priors for $\sigma^2$ and $c$. For
+shrinkage model, spike priors could be adopted to shrink the parameter
+estimates to pre-specified values. In addition, spike priors can also
+help variable selection in Bayesian model and shrink heterogeneity
+parameters to zero to find homogeneous model. Moreover, spike and slab
+priors can help to accommodate zero-inflated situation and research
+hypothesis in variable selection. 
 
 \section{Simulations}
 We
@@ -638,11 +676,14 @@ we adopt the following prior specifications: $\mu_{\beta} = (0,0,0)^T,
 \Sigma_{\beta}=\text{diag} (\sqrt{1000},\sqrt{1000},\sqrt{1000}), $
 $\mu_{\gamma} = (0,0,0)^T$, 
 $\Sigma_{\gamma}=\text{diag} (\sqrt{1000},\sqrt{1000},\sqrt{1000}) $,
-and $\tau=(0.01, 0.01)$. A partial \polya{} tree with $M=7$ levels was adopted
-in the model. For Monte Carlo Markov chain parameter, 820,000
-iterations of a single Markov chain were used, during which, 20,000
-samples were saved through every 40 steps after a burn-in period of
-20,000 samples. {\bf can comment on time??}  Acceptance rates for $\bm{\beta}$ and $\bm{\gamma}$ candidates
+and $\tau=(0.01, 0.01)$. A partial \polya{} tree with $M=6$ levels was adopted
+in the model. For Monte Carlo Markov chain parameter, 220,000
+iterations of a single Markov chain were used, during which, 10,000
+samples were saved through every 20 steps after a burn-in period of
+20,000 samples. {\bf can comment on time??} {\it Minzhao: 330 seconds
+  for one simulation
+  under Linux 2.6.32 kernel, x86\_64 machine, 8g memory, 4 core
+  2.66GHz cpu.} Acceptance rates for $\bm{\beta}$ and $\bm{\gamma}$ candidates
 during the adaptive Metropolis-Hastings algorithm were set to approach
 25\%.  
 We also use the method proposed by Reich (BQR),
@@ -668,9 +709,13 @@ the Bayesian approaches).
   \begin{table}[h]
     \centering
     \caption[]{ Mean squared error (reported as 100*average) and standard
-      error (reported as 100*standard error for each
+      error (reported as 100*standard error) for each
       quantile regression method.  {\bf identify abbreviations in
-        table in the table caption here}}
+        table in the table caption here} {\it Minzhao: The three
+        columns ('rq', 'BQR',
+        'PT') stand for frequentist method (rq) function from
+        'quantreg' R package, flexible Bayesian method by Reich , and
+        our Bayesian approach using \polya{} tree separately.}}
     \vspace{4mm}
     \begin{tabular}[tb]{l|l|lll}
       \hline
@@ -690,7 +735,7 @@ the Bayesian approaches).
 \end{center}
 
 \subsection{Results}
-The simulation results are shown in Table \ref{tab:1}. The proposed
+The simulation results are shown in Table~\ref{tab:1}. The proposed
 Bayesian quantile regression method with \polya{} tree prior (PT)
 does very well (in terms of MSE) relative to Reich's method (BQR)
 and traditional frequentist approach 
@@ -762,16 +807,16 @@ age was centered and standardized.
   \centering
   \begin{tabular}{r|r|rrrr}
     \hline
-    & $\tau$ & PT              & QReg             & PT Estimates
-    & QReg Estimates                                        \\
+              & $\tau$ & PT             & QReg           & PT Estimates
+              & QReg Estimates                                           \\
     \hline
-    Intercept & 0.5    & (9.73, 11.20)    & (9.31, 10.80)    & 10.38 & 10.30\\
-    Age       &        & (-1.02, 0.07)  & (-1.27, 0.17)    & -0.41 & -0.69\\
-    Race 1    &        & (-5.28, -2.33)  & (-5.46, -2.42)   & -3.88 & -3.53\\
+    Intercept & 0.5    & (9.73, 11.20)  & (9.31, 10.80)  & 10.38 & 10.30 \\
+    Age       &        & (-1.02, 0.07)  & (-1.27, 0.17)  & -0.41 & -0.69 \\
+    Race 1    &        & (-5.28, -2.33) & (-5.46, -2.42) & -3.88 & -3.53 \\
     \hline
-    Intercept & 0.9    & (16.76, 18.16)  & (16.64, 18.42)  & 17.41 & 17.38\\
-    Age       &        & (-1.28, 0.50)   & (-1.93, -0.06)  & -0.24 & -0.86 \\
-    Race 1    &        & (-6.70, -2.41) & (-6.85, -2.48) & -4.77 & -6.08\\
+    Intercept & 0.9    & (16.76, 18.16) & (16.64, 18.42) & 17.41 & 17.38 \\
+    Age       &        & (-1.28, 0.50)  & (-1.93, -0.06) & -0.24 & -0.86 \\
+    Race 1    &        & (-6.70, -2.41) & (-6.85, -2.48) & -4.77 & -6.08 \\
     \hline 
   \end{tabular}
 \end{table}
@@ -791,6 +836,14 @@ method shows the age did affect weight loss.
 {\bf also more specifically comment on the large differences in
   estimates between the .5 and .9 quantile and between the qreg and pt
   approaches} 
+{\it Minzhao: Estimates for intercept in median and 90\% percentile
+  model from both methods are almost the same. Other coefficients
+  estimates ('age' and 'race') keep the same sign. However, when
+  making inference of comparison between median and 90 \% percentile
+  model, \polya{} tree model tends to smooth the coefficient change
+  (-0.41 to -0.24, -3.88 to -4.77), while the 'qreg' method would
+  'model' the error with completely different distributions analog to
+  asymmetric Laplace distribution.}
 
 \begin{figure}[htbp]
   \begin{minipage}{0.5\linewidth}
@@ -808,7 +861,7 @@ method shows the age did affect weight loss.
     \polya{} tree distribution density over MCMC iterations.} 
 \end{figure}
 
-Figure \ref{fig:tourpost} shows the residuals and posterior mean of the
+Figure~\ref{fig:tourpost} shows the residuals and posterior mean of the
 probability density function of $\epsilon$, $\hat{f}(\epsilon)$. We
 can see our approach correctly captures the small minor mode on
 the right tail. Thus, if upper quantile of the response is of interest, our
@@ -837,17 +890,41 @@ distribution and
 shrinking the heterogeneity coefficients to zero for increased
 efficiency  (Minzhao: just set
 $\gamma$ prior narrow and  close to zero ?; {\bf might want spike and
-  slab priors here}).  Our approach allows for
+  slab priors here}). {\it Minzhao: Spike and slab
+priors can accommodate zero-inflated situation and specialists' priors
+to help variable selection.} Our approach allows for
 quantile
 regression with missing data under ignorability by adding a data
 augmentation step.  We are exploring extending our approach to allow
-for nonignorable missingness (ref. Biometrics paper here).
-Also spatial quantile regression (ref. Gelfand here) with \polya{} tree might be
+for nonignorable missingness ({\bf ref. Biometrics paper here}).
+Also spatial quantile regression ({\bf ref. Gelfand here}) with \polya{} tree might be
 a promising area for further exploration. 
 
 \bibliographystyle{plainnat}
 % \bibliographystyle{abbrev}
 \bibliography{qr-draft-reference}
+
+\appendix 
+\section{Small Proofs}
+
+Proof for equation (\ref{eq:1}) : 
+\begin{align*}
+  \pr (Y \le \bm{X'\beta}(\tau)) & = \pr \left( \bm{x'\beta} + \epsilon
+    \le \bm{x'\beta} + F^{-1}_{\epsilon}(\tau) \right) \\
+  & = \pr (\epsilon \le F^{-1}_{\epsilon}(\tau)) \\
+  & = \tau. 
+\end{align*}
+
+Proof for equation (\ref{eq:2})
+\begin{align*}
+  \pr (Y \le \bm{x'\beta}(\tau)) & = \pr \left( \bm{x'\beta} +
+    (\bm{x}'\gamma) \epsilon \le \bm{x'\beta} + (\bm{x'\gamma})
+    F^{-1}_{\epsilon}(\tau) \right) \\
+  & = \pr \left( (\bm{x'\gamma}) \epsilon \le  (\bm{x'\gamma})
+    F^{-1}_{\epsilon}(\tau)  \right)\\
+  & = \pr (\epsilon \le F^{-1}_{\epsilon}(\tau)) \\
+  & = \tau .
+\end{align*}
 
 \end{document}
 %%% Local Variables: 
