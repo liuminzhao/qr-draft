@@ -211,4 +211,267 @@ $G_{\bm{\theta}}$ are fixed at 0. As to heterogeneity parameters
 $\gamma_{ij}$, for the same reason, we restrict $\gamma_{1j}=1$ and
 for all $\bm{\gamma_{.j}}, \bm{x}_{i.}$, $\bm{x_{i.}\gamma_{.j}}>0$
 for all $i,j$. 
+
+\subsection{Demonstration}
+Here we illustrate our approach in several examples. Suppose we have a
+bunch of bivariate data ($q=2$) , and there are $n=100$ observation
+subjects in each dataset. Details about four datasets are listed
+below:
+\begin{enumerate}
+\item [M1]
+$\begin{pmatrix}
+y_{i1}\\
+y_{i2}
+\end{pmatrix}
+= 
+\begin{pmatrix}
+1 & x_{i1} & x_{i2}
+\end{pmatrix}
+\begin{pmatrix}
+1& 1\\
+1&1\\
+1&1
+\end{pmatrix}
++
+\begin{pmatrix}
+1 & x_{i1} & x_{i2}
+\end{pmatrix}
+\begin{pmatrix}
+1 & 1\\
+0 & 0\\
+0 & 0
+\end{pmatrix}
+\circ \bm{\epsilon}_{1i}, \epsilon_{1i} \sim \mathrm{N} \left( 
+\begin{pmatrix}
+0\\
+0
+\end{pmatrix}
+, 
+\begin{pmatrix}
+1 & 0 \\
+0 & 1
+\end{pmatrix}
+ \right)$.
+\item [M2]
+$\begin{pmatrix}
+y_{i1}\\
+y_{i2}
+\end{pmatrix}
+= 
+\begin{pmatrix}
+1 & x_{i1}  &  x_{i2} 
+\end{pmatrix}
+\begin{pmatrix}
+1& 1\\
+2&1\\
+3&1
+\end{pmatrix}
++
+\begin{pmatrix}
+1 &  x_{i1}  &  x_{i2} 
+\end{pmatrix}
+\begin{pmatrix}
+1 & 1\\
+0 & 0\\
+0 & 0
+\end{pmatrix}
+ \circ \bm{\epsilon}_{2i} ,  \epsilon_{2i} \sim \mathrm{N} \left( 
+\begin{pmatrix}
+0\\
+0
+\end{pmatrix}
+, 
+\begin{pmatrix}
+1 & 0.5 \\
+0.5 & 1
+\end{pmatrix}
+ \right)$.
+\item [M3]
+$\begin{pmatrix}
+ y_{i1} \\
+ y_{i2} 
+\end{pmatrix}
+= 
+\begin{pmatrix}
+1 &  x_{i1}  &  x_{i2} 
+\end{pmatrix}
+\begin{pmatrix}
+1& 1\\
+1&1\\
+1&1
+\end{pmatrix}
++
+\begin{pmatrix}
+1 &  x_{i1}  &  x_{i2} 
+\end{pmatrix}
+\begin{pmatrix}
+1 & 1\\
+0 & 0\\
+0 & 0
+\end{pmatrix}
+ \circ \bm{\epsilon}_{3i} ,  \epsilon_{3i} \sim 0.5 \times \mathrm{N} \left( 
+\begin{pmatrix}
+-1.35\\
+0.28
+\end{pmatrix}
+, 
+\begin{pmatrix}
+0.15 & 0.02 \\
+0.02 & 0.04
+\end{pmatrix}
+ \right)
++ 
+0.5 \times \mathrm{N} \left( 
+\begin{pmatrix}
+1.35\\
+0.28
+\end{pmatrix}
+, 
+\begin{pmatrix}
+0.15 & 0.02 \\
+0.02 & 0.04
+\end{pmatrix}
+ \right)
+$.
+\item [M4]
+$\begin{pmatrix}
+ y_{i1} \\
+ y_{i2} 
+\end{pmatrix}
+= 
+\begin{pmatrix}
+1 &  x_{i1}  &  x_{i2} 
+\end{pmatrix}
+\begin{pmatrix}
+1& 1\\
+2&1\\
+3&1
+\end{pmatrix}
++
+\begin{pmatrix}
+1 &  x_{i1}  &  x_{i2} 
+\end{pmatrix}
+\begin{pmatrix}
+1 & 1\\
+0 & -0.5\\
+0 & 0.5
+\end{pmatrix}
+ \circ \bm{\epsilon}_{3i}$
+\end{enumerate}
+where $\epsilon_{3i}$ are coming from Jara (2009) illustration
+section.  Model 1,2,3 (M1, M2, M3) considered homogeneous model with
+no correlated normal error, correlated normal error and correlated
+mixture of bivariate normal error respectively. Model 4 (M4) assigned
+heterogeneity to mixture of bivariate normal error. Estimates from
+mean of parameters posterior distributions are shown below:
+\begin{table}[htbp]
+\caption[]{\label{tab:multi-est} Posterior Estimates for Model 1-4}
+\vspace{4mm}
+\centering
+\begin{tabular}[tb]{l|l|l|l}
+Model &Term & Estimates & True \\
+\hline
+M1 & $\bm{B}$&
+$\begin{pmatrix}
+1.05 & 0.97 \\
+1.04 & 0.96 \\
+0.89 & 1.06 
+\end{pmatrix}$
+& 
+$\begin{pmatrix}
+1 & 1\\
+1 & 1\\
+1 & 1
+\end{pmatrix}$ \\
+& $\bm{\Gamma}$&
+$\begin{pmatrix}
+1.00 & 1.00 \\
+0.02 & -0.20 \\
+-0.04 & 0.14
+\end{pmatrix}$
+& 
+$\begin{pmatrix}
+1 & 1\\
+0 & 0\\
+0 & 0
+\end{pmatrix} $\\
+\hline
+M2 & $\bm{B}$&
+$\begin{pmatrix}
+0.88 & 1.04 \\
+1.96 & 1.21 \\
+3.03 & 0.86 
+\end{pmatrix}$
+& 
+$\begin{pmatrix}
+1 & 1\\
+2 & 1\\
+3 & 1
+\end{pmatrix}$ \\
+& $\bm{\Gamma}$&
+$\begin{pmatrix}
+1.00 & 1.00 \\
+0.09 & -0.02 \\
+0.01 & 0.18
+\end{pmatrix}$
+& 
+$\begin{pmatrix}
+1 & 1\\
+0 & 0\\
+0 & 0
+\end{pmatrix}$ \\
+\hline
+M3 & $\bm{B}$&
+$\begin{pmatrix}
+0.95 & 1.22 \\
+1.02 & 0.97 \\
+0.97 & 1.03 
+\end{pmatrix}$
+& 
+$\begin{pmatrix}
+1 & 1\\
+1 & 1\\
+1 & 1
+\end{pmatrix}$ \\
+& $\bm{\Gamma}$&
+$\begin{pmatrix}
+1.00 & 1.00 \\
+0.04 & -0.07 \\
+0.02 & 0.00
+\end{pmatrix}$
+& 
+$\begin{pmatrix}
+1 & 1\\
+0 & 0\\
+0 & 0
+\end{pmatrix} $\\
+\hline
+M4 & $\bm{B}$&
+$\begin{pmatrix}
+0.98 & 1.24 \\
+2.02 & 0.80 \\
+2.94 & 1.17 
+\end{pmatrix}$
+& 
+$\begin{pmatrix}
+1 & 1\\
+2 & 1\\
+3 & 1
+\end{pmatrix} $\\
+& $\bm{\Gamma}$&
+$\begin{pmatrix}
+1.00 & 1.00 \\
+0.03 & -0.55 \\
+0.02 & 0.39
+\end{pmatrix}$
+& 
+$\begin{pmatrix}
+1 & 1\\
+0 & -0.5\\
+0 & 0.5
+\end{pmatrix} $
+\end{tabular}
+
+\end{table}
+
 \end{document}
