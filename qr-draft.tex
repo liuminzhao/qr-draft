@@ -926,6 +926,53 @@ Proof for equation (\ref{eq:2})
   & = \tau .
 \end{align*}
 
+\section{Additional Simulation}
+
+Three models with other errors are also tested in simulations to check
+performance of our approach. First two models were using a skewed
+mixture of normal distribution error (Reich 2009) $\pi N(0,1) +
+(1-\pi) N(3,3)$, where $\pi \sim Bern(0.8)$. One of them is
+homogeneous  and the other is heterogeneous with $\gamma=(1,
+-0.5,0.5)$. The third example uses student t distribution with degree
+freedom of three. Also same heterogeneity parameters $\gamma=(1,
+-0.5,0.5)$ were assigned to this model. 
+
+\begin{itemize}
+\item [M1] $y_i = 1+x_{i1} + x_{i2} + \epsilon_{i1}$,
+\item [M2] $y_i = 1+x_{i1} + x_{i2} + (1 -0.5x_{i1} +
+  0.5x_{i2})\epsilon_{i1}$,
+\item [M3] $y_i = 1+x_{i1} + x_{i2} + (1 -0.5x_{i1} +
+  0.5x_{i2})\epsilon_{i2}$,
+\end{itemize}
+where $\epsilon_{i1} \sim \pi N(0,1) +
+(1-\pi) N(3,3)$,  $\pi \sim Bern(0.8)$, and $\epsilon_{i2} \sim t_3$. 
+
+\begin{table}[htbp]\label{tab:add}
+\caption[]{ Result for additional simulations: mean squared error
+  (reported as 100*average) and standard error (reported as
+  100*standard error) for each quantile regression method. 'BQR',
+  'PT', 'rq' stand for Reich's Bayesian flexible quantile regression
+  method, our approach with \polya{} tree and the frequentist method
+  in R package 'quantreg'. }
+\vspace{4mm}
+
+\centering
+\begin{tabular}[tb]{l|r|r|r|r}
+Model & $\tau$ & BQR         & PT          & rq           \\
+\hline
+M1    & 0.5    & 1.87(0.22)  & 2.24(0.27)  & 2.33(0.32)   \\
+      & 0.9    & 8.77(1.01)  & 11.30(1.32) & 17.27(1.81)  \\
+M2    & 0.5    & 7.11(0.92)  & 8.11(0.86)  & 11.64(1.49)  \\
+      & 0.9    & 39.41(4.09) & 44.91(4.28) & 103.0(10.52) \\
+M3    & 0.5    & 6.12(0.63)  & 6.93(0.69)  & 7.23(0.69)   \\
+      & 0.9    & 18.38(2.06) & 24.16(2.32) & 38.80(4.69) 
+\end{tabular}
+\end{table}
+
+From table \ref{tab:add}, Reich's method ('BQR') is generally better
+than our approach ('PT') and our method beats the traditional
+frequentist method 'rq' function in terms of MSE. 
+
 \end{document}
 %%% Local Variables: 
 %%% mode: latex
