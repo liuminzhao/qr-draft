@@ -56,7 +56,7 @@ $\mathcal{A}=\left\{ \alpha_{\varepsilon_1;\cdots;\varepsilon_q} ;
 (note: $\varepsilon_i$ indicates which position the bin takes in level
 $j$ with respect to $i^{th}$ dimension) and random vectors
 $\mathcal{Y} = \left\{ Y_{\varepsilon_1;\cdots;\varepsilon_q} ;
-  \varepsilon_1, \cdots, \varepsilon_q \in E^j, j=1, \cdots \right\}$,
+ \varepsilon_1, \cdots, \varepsilon_q \in E^j, j=1, \cdots \right\}$,
 such that the following hold: 
 \begin{enumerate}
 \item All of the random vectors in $\mathcal{Y}$ are independent,
@@ -66,7 +66,8 @@ such that the following hold:
       \varepsilon_q} \right)$, where
   $\bm{Y}_{\varepsilon_1;\cdots;\varepsilon_q} = \left\{
     y_{\varepsilon_1\epsilon_1; \cdots; \varepsilon_q\epsilon_q};
-    \epsilon_1, \cdots, \epsilon_q \in E \right\}$ and $\bm{\alpha}_{\varepsilon_1; \cdots;
+    \epsilon_1, \cdots, \epsilon_q \in E \right\}$ and
+  $\bm{\alpha}_{\varepsilon_1; \cdots; 
       \varepsilon_q} = \left\{ \alpha_{\varepsilon_1\epsilon_1;
         \cdots; \varepsilon_q\epsilon_q}; \epsilon_1, \cdots,
       \epsilon_q \in E \right\}$,
@@ -74,7 +75,8 @@ such that the following hold:
 \begin{displaymath}
 G(B_{\epsilon_{11},\cdots,
   \epsilon_{1j};\cdots;\epsilon_{q1}\cdots\epsilon_{qj}}) =
-\prod_{l=1}^j Y_{\epsilon_{11}\cdots \epsilon_{1l}; \cdots ; \epsilon_{q1}\cdots\epsilon_{ql}}.
+\prod_{l=1}^j Y_{\epsilon_{11}\cdots \epsilon_{1l}; \cdots ;
+  \epsilon_{q1}\cdots\epsilon_{ql}}. 
 \end{displaymath}
 \end{enumerate}
 \end{deff}
@@ -124,7 +126,8 @@ possible square roots of $\bm{\Sigma}$, which control the direction of
 the partition sets.
 
 The uniqueness in Lemma 1 (Jara 2009) can show it is well defined. In
-this way, the location-scale transformation induced partition sets $B_{\bm{\theta}}(\bm{e}_j(\bm{k})) = \left\{ \bm{\mu} +
+this way, the location-scale transformation induced partition sets
+$B_{\bm{\theta}}(\bm{e}_j(\bm{k})) = \left\{ \bm{\mu} + 
   \bm{T'O'} \bm{z}; \bm{z} \in B_0(\bm{e}_j(\bm{k})) \right\}.$ The
 Haar measure (Halmos 1950) provides an easy way to sample orthogonal
 matrix $\bm{O}$ ``uniformly''. 
@@ -197,20 +200,150 @@ x_{n1} & \cdots & x_{np}
 \epsilon_{n1} & \cdots & \epsilon_{nq} 
 \end{bmatrix}_{n\times q}
 \end{displaymath}
-in which $'\circ'$ is Hadamard product, aka entrywise product. We
+in which $'\circ'$ is Hadamard product, a.k.a. entrywise product. We
 assign a multivariate \polya{} tree prior on the error:
 \begin{align*}
-\bm{E}_i = [\epsilon_{i1}, \cdots, \epsilon_{iq}]^T
- & \stackrel{\text{i.i.d}}{\sim} G_{\bm{\theta}} \\
-G_{\bm{\theta}} | \bm{\mu, \Sigma, O} & \sim PT \left( \Pi^{\bm{\mu,
+&\bm{E}_i = [\epsilon_{i1}, \cdots, \epsilon_{iq}]^T
+  \stackrel{\text{i.i.d}}{\sim} G_{\bm{\theta}} \\
+&G_{\bm{\theta}} | \bm{\mu, \Sigma, O}  \sim PT \left( \Pi^{\bm{\mu,
       \Sigma, O}}, \mathcal{A} \right).
 \end{align*}
-Furthermore, in order not to confound with $\bm{beta}$ estimates, we
+Furthermore, in order not to confound with $\bm{\beta}$ estimates, we
 set $\bm{\mu} = \bm{0}$ and medians for each component of
 $G_{\bm{\theta}}$ are fixed at 0. As to heterogeneity parameters
 $\gamma_{ij}$, for the same reason, we restrict $\gamma_{1j}=1$ and
 for all $\bm{\gamma_{.j}}, \bm{x}_{i.}$, $\bm{x_{i.}\gamma_{.j}}>0$
 for all $i,j$. 
+
+Analog to univariate quantile regression with \polya{} tree, the
+posterior $\tau$th quantile regression coefficient can be obtained
+from posterior estimates of 
+\begin{equation}\label{eq:mul}
+\bm{\beta^{(i)}}(\tau) = \bm{\beta^{(i)}} + \bm{\gamma^{(i)}}F^{-1}_{\epsilon^{(i)}}(\tau),
+\end{equation}
+where $\bm{\beta^{(i)}}$ and $\bm{\gamma^{(i)}}$ is the $i^{th}$
+column of $\bm{B}$ and $\bm{\Gamma}$, and $F^{-1}_{\epsilon^{(i)}}$ is
+the inverse marginal cdf of $i^{th}$ component of $q$-dim error, which
+can be calculated in the same way from univariate \polya{} tree after
+collapsing multivariate residuals. 
+
+\subsection{Comparison to Reich}
+(reich 2010) proposed a flexible Bayesian approach dealing with
+clustered data based on both conditional and marginal model. He added
+a random effect term to the flexible Bayesian model in order to
+address compound symmetric correlation struction. However, the
+proposed method by us can deal with any correlation struction since
+\polya{} tree can capture the error distribution after 'learning'
+through enough data observations. More specifically, Reich's method
+restricts the correlation to be positive and constant across
+components, while \polya{} tree (or an abbr name for our method) works
+fine for negative correlation, autoregressive model or any other
+scenarios. 
+
+In addition, Reich's approach can only make inference for the
+quantiles of dependent variables itself, relative to combinatioins of
+components in a multivariate dependent random vector. For example,
+quantiles of measurement difference between baseline and couples of
+weeks are usually of interest in clinical trials, say
+$\text{median}(y_3-y_0)$, where $y_0$ and $y_3$ are observations in
+baseline and three weeks later respectively. While our method can
+accommodate the issue by making inference through posterior sampling
+of $y_3-y_0$ and using \polya{} tree technique to draw posterior
+quantiles.  
+
+\subsection{Simulation}
+The closest approach for multivariate quantile regression is by (Reich
+2009), the flexible Bayesian method. Although restricted in compound
+symmetric correlation structure, it is still competative and shows
+robustness. The generic function made by Reich is not suitable for the
+situation where quantile regression coefficients for different
+components of subject response might differ with each other . Instead
+Reich's approach assumes the effects of covariates on each components'
+quantile keep the same. When we do simulations comparing these two
+methods, in order to adjust the difference, we adapt Reich's function
+to make the function detect different effects of covariates on
+quantiles by expanding covariates matrix and the number of
+corresponding coefficients.  
+
+(Reich 2010) considered the model:
+\begin{equation}\label{eq:reich:uni}
+y_i = \bm{x}_i\bm{\beta} + \bm{x}_i \bm{\gamma}\epsilon_i,
+\end{equation}
+while for clustered data, the random effect model is adopted:
+\begin{equation}\label{eq:reich:mul}
+y_{is} = \bm{x}_{is} \bm{\beta} + \bm{x}_{is} \bm{\gamma} (\alpha_s +
+\epsilon_{is}), 
+\end{equation}
+where subscript $s$ indicates $s^{th}$ subject and $i$ indicates
+$i^{th}$ observation for $s^{th}$ subject. In Reich's scenario,
+quantile regression coefficients $\bm{\beta}$ keep the same for all
+component. Therefore, we modified Reich's function in order to achieve
+more flexibility in regression coefficients.  
+
+Suppose there is only one covariate and there are two observations for
+each subject. According to (bqrpt) settings, for each subject $i$, the
+model is 
+\begin{displaymath}
+\begin{bmatrix}
+y_{i1}, & y_{i2}
+\end{bmatrix}
+= 
+\begin{bmatrix}
+1, & x_i
+\end{bmatrix}
+\begin{bmatrix}
+\beta_{11} & \beta_{12} \\
+\beta_{21} & \beta_{22}
+\end{bmatrix}
++ \left( 
+\begin{bmatrix}
+1, & x_i
+\end{bmatrix}
+\begin{bmatrix}
+  1 & 1\\
+  \gamma_{21} & \gamma_{22}
+\end{bmatrix}
+ \right)
+\circ
+\begin{bmatrix}
+\epsilon_{i1}, & \epsilon_{i2}
+\end{bmatrix}.
+\end{displaymath}
+For Reich's model, we expand the covariates matrix and regression
+coefficients,
+\begin{displaymath}
+\begin{bmatrix}
+y_{i1}\\
+y_{i2}
+\end{bmatrix}
+= 
+\begin{bmatrix}
+  1 & x_i & 0 & 0\\
+  0 & 0 & 1 & x_i
+\end{bmatrix}
+\begin{bmatrix}
+\beta_1\\
+\beta_2\\
+\beta_3\\
+\beta_4
+\end{bmatrix}
++ 
+\begin{bmatrix}
+\epsilon_{i1}\\
+\epsilon_{i2}
+\end{bmatrix},
+\end{displaymath}
+where $\bm{\epsilon}_i = [\epsilon_{i1}, \epsilon_{i2}]$ is a
+correlated two dimensional error. Evaluation of methods is based on
+mean squared error:
+\begin{displaymath}
+\text{MSE} = \frac{1}{p} \sum_{j=1}^p \left( \hat{\beta}_j(\tau) -
+  \beta_j(\tau) \right)^2, 
+\end{displaymath}
+where $p$ is the number of covariates except the
+intercept. $\hat{\beta}_j(\tau)$ is the estimated quantile regression
+coefficients, and $\beta_j(\tau)$ is the true value. Each component
+and each quantile is compared between two methods. 
 
 \subsection{Demonstration}
 Here we illustrate our approach in several examples. Suppose we have a
