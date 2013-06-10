@@ -1,0 +1,241 @@
+\documentclass{article}
+\usepackage{array}
+\usepackage{geometry}
+\geometry{verbose,letterpaper,tmargin=1in,bmargin=.75in,lmargin=.75in,rmargin=1in}
+\begin{document}
+\begin{table}[htbp]
+\caption[]{\label{tab:qr1} Quantile regression by check function :                                                              \\
+Keyword: QR, check function, bayesian , tobit QR, correlated, missing data}
+\vspace{4mm}
+\begin{tabular}[tb]{m{4cm}|m{1cm}|m{5cm}|m{5cm}}
+\hline
+Author                    & Year & Title                                        & Abstract                                      \\
+\hline
+Koenker, Bassett          & 1978 &                                              & check function for RQ                         \\
+\hline 
+Cole, Green               & 1992 & smoothing reference centile curves:...       &                                               \\
+\hline
+Buchinsky                 & 1995 & Estimating the Asym Cov Matrix for QR , a MC study
+                          & $\sqrt{n} (\hat{\beta}-\beta) \to N(0, A) $, Powell (1984,
+1986)                                                                                                                           \\
+\hline
+Jung                      & 1996 & Quasi likelihood for median regression model & 
+Quasi-likelihood , median regression, dependency structure , cov
+matrix of indicator functions.                                                                                                  \\
+\hline
+Lipsitz                   & 1997 & QR methods for longitudinal data w/ dropouts
+application...            & based on Jung, QR on longitudinal MAR / dropouts/
+weighting GEE                                                                                                                   \\
+\hline
+He                        & 1997 & Quantile Curves w/o crossing                 & $y = x\beta +
+(x'\gamma)\epsilon$, Great review here.                                                                                         \\
+\hline 
+Heagerty, Pepe & 1999 & semiparametric estimation of regression
+quantile path w/ application to ... & \\
+\hline
+Koenker, Machado  & 1999 & goodness of fit and related inference
+process for QR & likelihood based goodness of fit test for QR \\
+\hline
+Yu, Moyeed                & 2001 & Bayesian quantile regression
+                          & ALD, Bayesian, b=random effect , posterior
+                          under an improper prior\\
+\hline
+Koenker                   & 2004 & 
+                          & $L_1$-regularization QR , shrink individual effect to a common value
+                                                                                                                                \\
+\hline
+Koenker                   & 2004 & QR for longitudinal data                     & penalized interpretation
+random effects, estimator , QR w/ subject-specific fixed effects                                                                \\
+\hline
+Koenker                   & 2005 & Book: Quantile Regression                    & page. 72, asym var                            \\
+\hline
+Geraci, Bottai            & 2007 & QR for longitudinal data using the ALD       & ALD,
+QR, MCMC, random effects, longitudinal                                                                                          \\
+\hline
+Wang, Li, Jiang           & 2007 &                                              & LASSO w/ ALD, least absolute deviance,
+robust regression shrinkage and variable selection                                                                              \\
+\hline
+Yu, Stander               & 2007 &                                              & Tobit QR                                      \\
+\hline
+Li, Zhu                   & 2008 &                                              & LASSO QR, solution path of $L_1$ penalized QR \\
+\hline
+Chen, Koenker, Xiao       & 2009 & copula-based nonlinear quantile
+autoregression            & QAR, copula, nonlinear                                                                              \\
+\hline
+Wu, Liu                   & 2009 &                                              & penalized QR w/ SCAD and adaptive lasso penalities
+                                                                                                                                \\
+\hline 
+Reed, Yu                  & 2009 &                                              & new Gibbs for Bayesian QR w/ ALD              \\
+\hline 
+Dette                     & 2010 &                                              & mention Koenker 2005 : $\sqrt{n} ( \hat{\beta}-\beta)
+\to N(0, var)$                                                                                                                  \\
+\hline
+Fenske et al              & 2010 & Boosting Additive QR                         & boosting additive QR                          \\
+\hline 
+Yuan, Yin                 & 2010 & bayesian QR for longitudinal Data studies w/
+nonignorable missing data & $l_2$ penalty for b , check function ,
+shrinkage, latent variables, nonignorable dropout                                                                               \\
+\hline
+Li, Xi, Lin               & 2010 &                                              & Bayesian regularization QR w/ BQRL , group
+lasso, BQRN                                                                                                                     \\
+\hline
+Alhamzawi, Yu, Benoit     & 2011 & Bayesian Adaptive Lasso quantile
+regression (BALQR)        & different penalization for differenet regression
+coef. consistency.
+                                                                                                                                \\
+\hline
+Benoit, Van den Poel      & 2011 &                                              & Binary QR w/ ALD                                     \\
+\hline 
+
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\caption[]{\label{tab:qr2} QR, Polya tree, nonparametric,
+  semiparametric \\
+Keyword: bayesian, semiparametric, nonparametric,}
+\vspace{4mm}
+\begin{tabular}[tb]{m{4cm}|m{1cm}|m{5cm}|m{5cm}}
+\hline
+Muller et al & 1996 && DP \\
+\hline
+Kuo, Mallick & 1997 & Bayesian semi-parametric inference for AFT model
+& bayesian semi-parametric, AFT \\
+\hline
+Walker , Mallick & 1997 & Hierachical GLM and frailty model w/
+bayesian nonparametric mixing & PT, GLMM \\
+\hline
+Maceachem & 1999, 2000 && DP \\
+\hline
+Walker, Mallick & 1999 & semiparametric AFT model & bayesia
+semi-parametric AFT , Polya tree, median regression, deal w/ multimode
+and skewness\\
+\hline
+Barron, Schervish, Wasserman & 1999& & posterior consistency for Polya
+Tree (PT) \\
+\hline
+Kottas, Gelfand & 2001 & Bayesian semiparametric median regression
+model & DP on median regression , good for unimode \\
+\hline
+Berger, Gulielmi & 2001 & Bayesian and conditional frequentist testing
+of a parametric model using nonparametric alternative & Bayes Factor,
+model comparison by Polya tree\\
+\hline
+Hanson, Johnson & 2002 & Modeling Regression error w/ mixture of Polya
+tree & MPT, Marginalized \\
+\hline
+Dunson, watson, Taylor & 2003 & & multi, median , nonparametric,
+substitution likelihood\\
+\hline
+Scaccia, Green & 2003 & Bayesian Growth curves using normal mixtures
+w/ nonparametric weights & mixture normal, splines \\
+\hline
+Gelfand , Kottas & 2003 & Bayesian semiparametric regression for
+median residual life & median \\
+\hline
+Dunson, Taylor & 2004 && substitution likelihood \\
+\hline
+Muller, Quinlana & 2004 & nonparametric Bayesian Data analysis &
+Overview for bayesian nonparametric methods for density estimation \\
+ \hline
+Hjort, Petrone & 2005 & & nonparametric inference , DP, QR \\
+\hline
+Griffin, Steel & 2006 & order-based dependent DP & dependent DP \\
+\hline
+Geweke, keane & 2007 & smoothly mixing regression & normal mixture \\
+\hline
+Dunson et al & 2007 & Bayesian density regression & \\
+\hline  
+Dunson et al & 2007 & approximate bayesian inference for quantiles & \\
+Kottas , Kmjajic & 2009 & Bayesian nonparametric modeling in quantile
+regression & general quantile, DP \\
+\hline
+Thompson et al & 2010 & Bayesian nonparametric quantile regression
+using splines & Yu(2001 ) + natural cubic spline \\
+\hline
+Taddy, Kottas & 2010 & A bayesian nonparametric approach to Inference
+for QR & Flexible DP mixture , tobit QR, bayesian QR, good review \\
+\hline
+Feng, he, Hu & 2011 & Wild bootstrap for QR & Wild bootstrap \\
+\hline
+Hanson & 2011 & Polya Tree sampler & PT, MH, Density approximation,
+adaptive metropolis algorithm \\
+\hline 
+Tokdar, Kadane & 2011 & Simultaneous Linear Quantile Regression: a
+semiparameteric bayesian approach& Great review \\
+\hline 
+Machado, Silva & 2011 && asymptotic PT \\
+\hline 
+schrimpf & 2011 && good review, heter model, asymptotic property \\
+\hline 
+Tang, zhou, wu & 2011 && asymptotic  \\
+\hline
+Lum, Gelfand & 2012 & Bayesian Analysis: Spatial quantile multiple
+regression using the AL process & QR, conditional quantiles, spatial
+statistics , MCMC, good review on QR \\
+\hline
+Dette & 2012 & Optimal designs for quantile regression models & Test
+additive , nonparam, some review on univariate predictor, to
+multivariate predictor \\
+\hline
+Nieto & 2011 & Rubbery polya tree &  good review on PT and DP advantage\\
+\hline
+\end{tabular}
+
+\end{table}
+
+\begin{table}[htbp]
+\caption[]{ Polya Tree}
+\vspace{4mm}
+\begin{tabular}[tb]{m{4cm}|m{1cm}|m{5cm}|m{5cm}}
+\hline
+Branscum, Hanson & 2008 && ROC curve\\
+\hline
+Branscum, Hanson & 2008 && Meta analysis\\
+\hline
+Hanson , Johnson & 2002 && Regression residual \\
+\hline 
+Li et al & 2008 && Genetic association study \\
+\hline
+Hanson, Yang & 2007 && Survival \\
+\hline
+Zhang et al & 2010 & & survival w/ long covariates\\
+\hline 
+Yang et al & 210 & Repeated measurement data\\
+\hline
+Zhao, Hanson & 2011 && spatially dependent survival data\\
+\hline
+Paddock & 2002 & & MI in missing data\\
+\hline
+Jara et al & 2009 && MPT in mixed effects model \\
+\hline
+\end{tabular}
+
+\end{table}
+
+\begin{table}[htbp]
+\caption[]{ Polya Tree property}
+\vspace{4mm}
+
+\begin{tabular}[tb]{m{4cm}|m{1cm}|m{5cm}|m{5cm}}
+\hline
+Niego           & 2011 & Rubbery Polya Tree & rPT=PR marginally                \\
+Niego           & 2011 & Rubbery Polya Tree & absolutely cts                   \\
+Niego           & 2011 & Rubbery Polya Tree & posterior consistence            \\
+Hanson, Johnson & 2006 &                    & for M large enough, finite PT=PT \\
+Hanson, Johnson & 2006 &                    & f(w) cts                         \\
+Hanson, Johnson & 2006 &                    & f(w) has derivative              \\
+Zhao, Hanson    & 2011 &                    & quantile fcn formula             \\
+Jara            & 2009 &                    & MMPT cts  \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\end{document}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

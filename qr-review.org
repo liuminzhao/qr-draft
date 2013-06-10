@@ -1,0 +1,167 @@
+* lum-Gelfand-2012-BA
+  - Bayesian Gibbs sampler for BQR
+    - Tsionas 2003
+    - Reed and Yu 2009
+    - Kozumi Kobayashi  2011 : efficiency
+  - Li et al 2010: lasso
+  - Cai , Xu , 2008
+  - [ ] other less parametric assumption on error  + linearity in
+    quantile regression:
+    - Reich et al 2010
+    - Kottas, Krnijajic, 2009
+    - Hallin et al 2009: conditional spatial QR /nonparam asymptotic
+  - non-linearity + ALD / check loss assumption
+    - Koenker et al 1994
+    - Yu 2002
+    - Thompson et al 2010
+  - relax linearity , parametric form
+    - Chandleri et al  1997
+    - Honda 2004, 2004
+    - Buchinsky 1998
+    - Koenker, Hallock 2001
+    - Yu et al 2003
+  - [ ] Joint quantile model w/ all quantile <- density regression,
+    better to preclude possible 'crossing quantiles'
+    - Dunson et al 2007
+    - Dunson 2007
+    - Tokdar, Kadace, 2001
+    - Dunson and Taylor 2005, : approximate likelihood
+    - Taddy, Kottas, 2010 : non-parametric model
+    - Reich et al 2011
+  - cons: 
+    - restrictive assumptions on covariates , bounded support
+    - infeasibility handling 2+ covariates
+    - computation, both approximate and intensive
+  - ALD: too strong assumption on the skewness as a function of p (Yu,
+    Moyeed, 2001, posterior means vs p), ALP=mixture of ALD
+
+* Kim-Yang-2011-JASA: keyword: EL, QR, Bayeisan, Nonparametric
+  - QR -> random effect cluster data
+  - heter among clusters often motivates QR
+  - conditional quantile are invariant under monotonic transfermation
+    - Jung 1996, fixed effect median regression
+    - Koenker 2004: random- intercept + l1 penalty approach
+    - Geraci, BOttai 2007 : ALD + EM
+  - Bayesian: ALD, YU, Moyeed, 2001
+  - [ ] Nonparam: more general form of skewness, and tail behaviors,
+    also restrict error density to have modes at quantiles of
+    interest, model the error density , heterogeinty only by correctly
+    specifying its form parametrically in the model 
+    - Kottas and Gelfand 2001
+    - Hanson, Johnson 2002
+    - Kottas , Konjajie 2009 
+    - Reich, Bondell, Wang, 2010
+  - EL does not require modeling of the error densities , large sample
+    properites and inference , X=(1,t,t^2)
+
+* [important] Kottas- Krnjajic-2009 : DPM, posterior inference, Bayes, nonparam
+  - check fcns no likelihood, only point estimates , inference based
+    on asymptotics 
+  - DDP advantage: flexibility in capture different shapes of
+    different covariates, + provides posterior predictive inference at
+    both observed and unobserved covariates
+  - review paper: Buchinsky 1998, Yu, Lu, Stander 2003
+  - Xb + e, P(e<0)=tau, w/ no likelihood specification for the
+    response distribution, point estimates for beta proceeds by
+    optimization of some loss function. any inference beyond point
+    estimation is based on asymptotic arguments or resampling methods,
+    and thus relies on the availability of large samples.
+  - Bayes: exact and full inferece given the data (not only beta, but
+    also , any functional of distribution of e, 
+    - median regression: 
+      - walker , mallick 1999
+      - Kottas, Gelfand 2001
+      - Hanson, Johnson 2002
+    - general little: 
+      - Yu , Moyeed, 2001: ALD, param
+      - Dunson, Watson, Taylor, 2003, 
+      - Dunson, Taylor, 2004 : substitution likelihood
+    - Hjort, Petrone 2005 [check]
+  - posterior inference (ask mike)
+
+* Niego-muller-sjs-2011: rubbery polya tree 
+    We propose a generalization of the PT that reduces the undesirable
+    sensitivity to the choice of Π. To reduce the impact of the partition
+    on statistical inference, we allow the random variables  to be
+    dependent within the same level m, but keeping the independence
+    assumption between different levels. This defines a new RPM that still
+    belongs to the class of tail-free processes, and thus inference will
+    still depend on the choice of partitions. But the random probabilities
+    of the partitioning subsets vary in a smoother fashion across the sets
+    in each level of the partition tree. The only tail-free process
+    invariant to the choice of partitions is the DP. To keep the new prior
+    comparable with the original PT we continue to use beta distributions
+    as the marginal distributions for each Y. This is achieved by
+    considering a stochastic process with beta stationary distribution as
+    prior for . The construction of the process is defined in such a way
+    that for a specific choice of the hyperparameters we recover
+    independence of the Ys within the same level and thus having the
+    regular PT as particular case.
+    
+    - being a tail-free distribution is a condition for posterior
+      consistency (Freedman, 1963; Fabius, 1964).
+    - [ ] propositon: rPT = PT marginally
+    - [ ] corollary: absolutely cts
+    - [ ] corollary: posterior consistence 
+    - simulation : We consider the set of mixtures of normal densities
+      originally studied by Marron & Wand (1992), which are often used
+      as benchmark examples for density estimation problems.  
+
+    - great review on PT application , see qr-review.pdf 
+    - DP  : awkward dependence 
+    - advantage of DP
+    - limitation 
+      - DP -> discrete
+      - density of posterior estimated RPM is discts at boundary of
+        partitioning subsets
+    - overcome : 
+      - Hanson 2002, 2006 , MPT
+      - Paddock et al 2003 , jittered partition
+    - other 
+      - ROC curve: Branscum, Hanson, 2008, 
+      - Meta analysis: Branscum , Hanson 2008 
+      - Regression residual: hanson, johnson, 2002
+      - Genetic association study : li et al 2008
+      - survival : hanson , Yang, 2007
+      - survival w/ long covariates: zhang et al 2010
+      - repeated measurement data: yang et al 2010
+      - spatially dependent survival data: zhao , Hanson, 2011
+      - MI in missing data: Paddock 2002
+      - MPT in mixed effects model: Jara et al 2009
+    - drawbacks: hard to extend to multivariate case computationaly
+
+* Jara -2009 
+  - DPpackage
+  - marginalized MPT
+  - WLSNP/random walk 
+  - theta^t ~ N(theta^(l-t), c(theta))
+  - Sigma ~ IW(v, (v-q-1)Sigma^(l-1) ^-1)
+  - v = t_Sigma *m
+  - c ~ LN(log(c), t_c), t_c^1= 1
+  - tuning: +/- on log(t_c)  with delta(l) = min(0.01, 1/sqrt(t)) when
+    >< 0.44
+  - t_simga = 10, +/- >/< 0.44, 0.234 , for q=1
+  - O: b_ij ~ N(b_ij, t_B), t_B^1 = 0.05
+  - functional of G , sample to realization
+  - 20k + 40*20k = 820k, single chain
+
+* DPpackage
+** PTlm.R PTlmp.f 
+   - beta
+     -- betac ~ N(beta, t_b * propv)
+     -- propv = (x'x + V_p^-1)^-1
+     -- m(beta) ~ prior N(bpm, V_p) (0, I(1000))
+   - gamma
+     -- 1/sigma2 ~ prior Gamma(tau1/2, rate=tau2/2)
+     -- theta = log(sigma) 
+     -- prior = -theta*tau1 - tau2/2*exp(-2theta)
+     -- thetac ~ N(theta, exp(t1/2 + t2/2*(log(1+abs(theta)))))
+     -- after
+   - cpar
+     -- log(cparc) ~ N(log(cpar), t_c)
+     -- prior cpar ~ Gamma( aa0, ab0) (constant ?)
+
+
+
+* Tokdar-Kadane-BA-2011
+

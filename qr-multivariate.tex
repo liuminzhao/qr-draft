@@ -164,13 +164,13 @@ where $\bm{Y}_i = [y_{i1}, \ldots, y_{iq}]^T$, $\bm{X}_i= [x_{i1},
 
 so suppose there $n$ subjects and $q$ dimensional responses for each
 subject: 
-\begin{displaymath}
+\begin{align}
 \begin{bmatrix}
 y_{11} &\cdots & y_{1q} \\
 \vdots & \ddots & \vdots \\
 y_{n1} & \cdots & y_{nq} 
 \end{bmatrix}_{n\times q}
- = 
+& = 
 \begin{bmatrix}
 x_{11} &\cdots & x_{1p} \\
 \vdots & \ddots & \vdots \\
@@ -180,8 +180,8 @@ x_{n1} & \cdots & x_{np}
 \beta_{11} &\cdots & \beta_{1q} \\
 \vdots & \ddots & \vdots \\
 \beta_{p1} & \cdots & \beta_{pq} 
-\end{bmatrix}_{p\times q}
-+ 
+\end{bmatrix}_{p\times q} \nonumber\\
+& \quad + 
 \left( \begin{bmatrix}
 x_{11} &\cdots & x_{1p} \\
 \vdots & \ddots & \vdots \\
@@ -199,7 +199,7 @@ x_{n1} & \cdots & x_{np}
 \vdots & \ddots & \vdots \\
 \epsilon_{n1} & \cdots & \epsilon_{nq} 
 \end{bmatrix}_{n\times q}
-\end{displaymath}
+\end{align}
 in which $'\circ'$ is Hadamard product, a.k.a. entrywise product. We
 assign a multivariate \polya{} tree prior on the error:
 \begin{align*}
