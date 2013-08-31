@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 08/31/2013 09:29:49>
+##' Time-stamp: <liuminzhao 08/31/2013 10:51:33>
 ##' 2013/08/31 simulation M1
 
 sink('sim-m1-0831.txt')
@@ -76,8 +76,7 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
 }
 
 write.table(result, file="sim-m1-result-0831.txt", row.names = F, col.names = F)
-sendEmail(subject = "simulation-m1", text = "done", address = "liuminzhao@
-gmail.com")
+sendEmail(subject = "simulation-m1", text = "done", address = "liuminzhao@gmail.com")
 
 
 
@@ -94,7 +93,7 @@ library(xtable)
 ## MSE
 mse <- rep(0, 24)
 for (i in 1:24){
-  mse[i] <- mean((result[,i] - trueq[i])^2)
+  mse[i] <- mean((result[,i] - truebetatau[i])^2)
 }
 mse <- matrix(mse, 6, 4)
 colnames(mse) <- c('RQ', 'BQR', 'PT', 'PTSS')
@@ -104,7 +103,7 @@ print(mse)
 ## BIAS
 bias <- rep(0, 24)
 for (i in 1:24){
-  bias[i] <- mean((result[,i] - trueq[i]))
+  bias[i] <- mean((result[,i] - truebetatau[i]))
 }
 bias <- matrix(bias, 6, 4)
 colnames(bias) <- c('RQ', 'BQR', 'PT', 'PTSS')
