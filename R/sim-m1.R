@@ -1,11 +1,12 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 08/31/2013 00:56:13>
+##' Time-stamp: <liuminzhao 08/31/2013 09:29:49>
 ##' 2013/08/31 simulation M1
 
 sink('sim-m1-0831.txt')
 rm(list = ls())
 library(bqrpt)
 library(quantreg)
+library(xtable)
 source('sendEmail.R')
 source('RQboot.R')
 source('BQRboot.R')
@@ -27,8 +28,9 @@ quan <- c(0.5, 0.9)
 ###############
 
 boot <- 100
+start <- proc.time()[3]
 
-result <- foreach(icount(boot), .combine=cbind) %dopar% {
+result <- foreach(icount(boot), .combine=rbind) %dopar% {
 
   x1 <- rnorm(n)
   x2 <- rnorm(n)
@@ -67,13 +69,49 @@ result <- foreach(icount(boot), .combine=cbind) %dopar% {
   coefptss5 <- coef(modptss)$betatauMean[1, ]
   coefptss9 <- coef(modptss)$betatauMean[2, ]
 
-  ans <- c(coefrq5, coefbqr5, coefpt5, coefptss5,
-           coefrq9, coefbqr9, coefpt9, coefptss9)
+  ans <- c(coefrq5, coefrq9,
+           coefbqr5, coefbqr9,
+           coefpt5, coefpt9,
+           coefptss5, coefptss9)
 }
 
 write.table(result, file="sim-m1-result-0831.txt", row.names = F, col.names = F)
-sendEmail(subject = "simulation-m1", text = "done", address = "liuminzhao@gmail.com")
+sendEmail(subject = "simulation-m1", text = "done", address = "liuminzhao@
+gmail.com")
 
+
+
+###############
+## TRUE VALUE
+###############
+result <- read.table('sim-m1-result-0831.txt')
 truebetatau5 <- c(1,1,1)
 truebetatau9 <- c(1+qnorm(0.9),1,1)
-truebetatau1 <- rep(c(truebetatau5, truebetatau9), each = 4)
+truebetatau <- rep(c(truebetatau5, truebetatau9), 4)
+
+library(xtable)
+
+## MSE
+mse <- rep(0, 24)
+for (i in 1:24){
+  mse[i] <- mean((result[,i] - trueq[i])^2)
+}
+mse <- matrix(mse, 6, 4)
+colnames(mse) <- c('RQ', 'BQR', 'PT', 'PTSS')
+print(xtable(mse))
+print(mse)
+
+## BIAS
+bias <- rep(0, 24)
+for (i in 1:24){
+  bias[i] <- mean((result[,i] - trueq[i]))
+}
+bias <- matrix(bias, 6, 4)
+colnames(bias) <- c('RQ', 'BQR', 'PT', 'PTSS')
+print(xtable(bias))
+print(bias)
+
+
+## time
+cat("Time: ", proc.time()[3] - start, '\n')
+sink()
