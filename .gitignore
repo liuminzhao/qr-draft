@@ -6,3 +6,5 @@
 *.log
 *.out
 auto/*
+/draft/auto/bqrpt-paper.el
+reference/
