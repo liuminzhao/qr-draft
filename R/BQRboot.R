@@ -1,5 +1,5 @@
 ####################################################
-# Time-stamp: <liuminzhao 10/25/2012 19:43:48>
+# Time-stamp: <liuminzhao 08/31/2013 00:51:03>
 # 2012/02/27 Reich simulation BQRiid on M1.5 M1.9
 ####################################################
 
@@ -18,4 +18,10 @@ BQR.Summary <- function(foo, truebetatau){
 
   return(list(beta=beta.coef, lbd=lbd, ubd=ubd, length=len, mse=mse, cover=cover))
 
+}
+
+BQRCoef <- function(foo){
+  burn <- foo$burn
+  runs <- foo$runs
+  return(apply(foo$beta[burn:runs, ], 2, median))
 }
