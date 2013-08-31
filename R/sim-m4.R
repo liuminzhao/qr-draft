@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 08/31/2013 11:55:58>
+##' Time-stamp: <liuminzhao 08/31/2013 12:05:43>
 ##' 2013/08/31 simulation M4
 
 sink('sim-m4-0831.txt')
@@ -117,7 +117,7 @@ library(xtable)
 ## MSE
 mse <- rep(0, 24)
 for (i in 1:24){
-  mse[i] <- mean((result[,i] - truebetatau[i])^2)
+  mse[i] <- mean((result[,i] - truebetatau[i])^2)*100
 }
 mse <- matrix(mse, 6, 4)
 colnames(mse) <- c('RQ', 'BQR', 'PT', 'PTSS')
@@ -127,7 +127,7 @@ print(mse)
 ## BIAS
 bias <- rep(0, 24)
 for (i in 1:24){
-  bias[i] <- mean((result[,i] - truebetatau[i]))
+  bias[i] <- mean((result[,i] - truebetatau[i]))*100
 }
 bias <- matrix(bias, 6, 4)
 colnames(bias) <- c('RQ', 'BQR', 'PT', 'PTSS')
