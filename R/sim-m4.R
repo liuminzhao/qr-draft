@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 08/31/2013 12:05:43>
+##' Time-stamp: <liuminzhao 08/31/2013 17:25:30>
 ##' 2013/08/31 simulation M4
 
 sink('sim-m4-0831.txt')
@@ -26,7 +26,7 @@ rMN <-function(n){
 ## PARAMETERS
 ###############
 n <- 200
-mcmc <- list(nburn=10000, nskip=1, nsave=10000, ndisp=10000, arate=0.25)
+mcmc <- list(nburn=20000, nskip=1, nsave=20000, ndisp=20000, arate=0.25)
 b1 <- b2 <- 1
 g1 <- 0
 g2 <- 0
