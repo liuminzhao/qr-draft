@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 08/31/2013 17:25:23>
+##' Time-stamp: <liuminzhao 09/01/2013 08:39:47>
 ##' 2013/08/31 simulation M3
 
 sink('sim-m3-0831.txt')
@@ -47,6 +47,7 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
   while (any(X%*%c(1, g1, g2) < 0)) {
     x1 <- rnorm(n)
     x2 <- rnorm(n)
+    X <- cbind(1, x1, x2)
   }
 
   y1 <- 1 + x1*b1 + x2*b2 + (1 + x1*g1 + x2*g2)*e1
