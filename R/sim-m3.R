@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/01/2013 08:39:47>
+##' Time-stamp: <liuminzhao 09/02/2013 12:31:59>
 ##' 2013/08/31 simulation M3
 
 sink('sim-m3-0831.txt')
@@ -26,8 +26,6 @@ rMN3 <- function(n){
 n <- 200
 mcmc <- list(nburn=20000, nskip=1, nsave=20000, ndisp=20000, arate=0.25)
 b1 <- b2 <- 1
-g1 <- 0.2
-g2 <- 0.2
 quan <- c(0.5, 0.9)
 ###############
 ## SIMULATION
@@ -42,15 +40,9 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
   x2 <- rnorm(n)
   e1 <- rMN3(n)
 
+  y1 <- 1 + x1*b1 + x2*b2 + e1
+
   X <- cbind(1,x1,x2)
-
-  while (any(X%*%c(1, g1, g2) < 0)) {
-    x1 <- rnorm(n)
-    x2 <- rnorm(n)
-    X <- cbind(1, x1, x2)
-  }
-
-  y1 <- 1 + x1*b1 + x2*b2 + (1 + x1*g1 + x2*g2)*e1
 
   ## rq
   modrq5 <- rq(y1 ~ x1 + x2, 0.5)
@@ -97,7 +89,7 @@ sendEmail(subject = "simulation-m3", text = "done", address = "liuminzhao@gmail.
 ###############
 result <- read.table('sim-m3-result-0831.txt')
 truebetatau5 <- c(1,1,1)
-truebetatau9 <- c(1,1,1) + c(1 , g1, g2)*(2 + qnorm(0.8))
+truebetatau9 <- c(1+2 + qnorm(0.8),1,1)
 truebetatau <- rep(c(truebetatau5, truebetatau9), 4)
 
 library(xtable)
@@ -121,7 +113,6 @@ bias <- matrix(bias, 6, 4)
 colnames(bias) <- c('RQ', 'BQR', 'PT', 'PTSS')
 print(xtable(bias))
 print(bias)
-
 
 ## time
 cat("Time: ", proc.time()[3] - start, '\n')
