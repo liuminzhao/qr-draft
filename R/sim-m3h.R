@@ -1,8 +1,8 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/02/2013 00:34:45>
-##' 2013/08/31 simulation M2H t3
+##' Time-stamp: <liuminzhao 09/02/2013 00:33:39>
+##' 2013/08/31 simulation M3
 
-sink('sim-m2h-0902.txt')
+sink('sim-m3h-0902.txt')
 rm(list = ls())
 library(bqrpt)
 library(quantreg)
@@ -14,6 +14,11 @@ library(doMC)
 registerDoMC()
 options(cores=10)
 set.seed(1)
+
+rMN3 <- function(n){
+  posneg <- rbinom(n,1,0.5)
+  (1-posneg)*rnorm(n, -2, 1) + posneg*rnorm(n, 2,1)
+}
 
 ###############
 ## PARAMETERS
@@ -35,7 +40,7 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
 
   x1 <- runif(n)
   x2 <- runif(n)
-  e1 <- rt(n, df = 3)
+  e1 <- rMN3(n)
 
   X <- cbind(1,x1,x2)
 
@@ -82,17 +87,17 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
            coefptss5, coefptss9)
 }
 
-write.table(result, file="sim-m2h-result-0902.txt", row.names = F, col.names = F)
-sendEmail(subject = "simulation-m2h", text = "done", address = "liuminzhao@gmail.com")
+write.table(result, file="sim-m3h-result-0902.txt", row.names = F, col.names = F)
+sendEmail(subject = "simulation-m3h", text = "done", address = "liuminzhao@gmail.com")
 
 
 
 ###############
 ## TRUE VALUE
 ###############
-result <- read.table('sim-m2h-result-0902.txt')
+result <- read.table('sim-m3h-result-0902.txt')
 truebetatau5 <- c(1,1,1)
-truebetatau9 <- c(1,1,1) + c(1 , g1, g2)*(qt(0.9, df = 3))
+truebetatau9 <- c(1,1,1) + c(1 , g1, g2)*(2 + qnorm(0.8))
 truebetatau <- rep(c(truebetatau5, truebetatau9), 4)
 
 library(xtable)
