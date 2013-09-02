@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/02/2013 00:09:44>
+##' Time-stamp: <liuminzhao 09/02/2013 10:44:45>
 ##' manipulate data TOURS
 ##' 2013/06/05 focus on AGE and RACE
 ##' 2013/06/22 add baseline y0 as a covariate
@@ -9,6 +9,7 @@ rm(list=ls())
 library(bqrpt)
 library(quantreg)
 source('../R/BQRboot.R')
+set.seed(1)
 
 TOURS <- read.csv('~/Documents/qr-draft/tours/tours.csv')
 
@@ -44,7 +45,7 @@ box2 <- ggplot(data = dat, aes(x = race, y = loss)) + geom_boxplot() + scale_x_d
 
 box3 <- ggplot(data = dat, aes(x = age, y = loss, color = race)) + geom_point() + ylab('Weight Loss (Kg)') + xlab('Age') + ggtitle("Weight Loss vs Age") + ggtitle('Weight Loss vs Age and Race')
 
-pdf('../image/weight-age-race.pdf', width = 18, height = 7)
+pdf('../image/weight-age-race.pdf', width = 20, height = 7)
 sds <- grid.arrange(box1, box2, box3, nrow = 1, ncol = 3)
 dev.off()
 
@@ -77,8 +78,6 @@ cimod <- cbind(coefmod, cimodlbd, cimodubd)
 ## RQ
 
 modrq <- rq(y ~ age_center + race3, tau = c(0.1,0.3,0.5,0.7,0.9))
-
-modrq <- rq(y ~ age_center + race3, tau = 0.1, ci = T)
 
 coefmodrq <- t(coef(modrq))
 
