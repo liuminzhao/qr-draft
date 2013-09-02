@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/02/2013 12:31:38>
+##' Time-stamp: <liuminzhao 09/02/2013 14:08:26>
 ##' 2013/08/31 simulation M2: t_3 error
 
 sink('sim-m2-0901.txt')
@@ -32,8 +32,8 @@ start <- proc.time()[3]
 
 result <- foreach(icount(boot), .combine=rbind) %dopar% {
 
-  x1 <- rnorm(n)
-  x2 <- rnorm(n)
+  x1 <- runif(n)
+  x2 <- runif(n)
   e1 <- rt(n, df = 3)
 
   y1 <- 1 + x1*b1 + x2*b2 + e1

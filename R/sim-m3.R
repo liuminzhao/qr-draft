@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/02/2013 12:31:59>
+##' Time-stamp: <liuminzhao 09/02/2013 14:08:41>
 ##' 2013/08/31 simulation M3
 
 sink('sim-m3-0831.txt')
@@ -36,8 +36,8 @@ start <- proc.time()[3]
 
 result <- foreach(icount(boot), .combine=rbind) %dopar% {
 
-  x1 <- rnorm(n)
-  x2 <- rnorm(n)
+  x1 <- runif(n)
+  x2 <- runif(n)
   e1 <- rMN3(n)
 
   y1 <- 1 + x1*b1 + x2*b2 + e1
