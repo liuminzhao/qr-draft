@@ -1,5 +1,5 @@
 ####################################################
-# Time-stamp: <liuminzhao 08/31/2013 17:02:19>
+# Time-stamp: <liuminzhao 09/02/2013 00:06:14>
 # 2012/02/27 Reich simulation BQRiid on M1.5 M1.9
 ####################################################
 
@@ -26,8 +26,14 @@ BQRCoef <- function(foo){
   return(apply(foo$beta[burn:runs, ], 2, median))
 }
 
-BQRCI <- function(foo){
+BQRCIlbd <- function(foo){
   burn <- foo$burn
   runs <- foo$runs
-  return(apply(foo$beta[burn:runs, ], 2, function(x) quantile(x, probs = c(0.025, 0.975))))
+  return(apply(foo$beta[burn:runs, ], 2, function(x) quantile(x, probs = c(0.025))))
+}
+
+BQRCIubd <- function(foo){
+  burn <- foo$burn
+  runs <- foo$runs
+  return(apply(foo$beta[burn:runs, ], 2, function(x) quantile(x, probs = c(0.975))))
 }
