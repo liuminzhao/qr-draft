@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/03/2013 21:34:34>
+##' Time-stamp: <liuminzhao 09/06/2013 11:59:22>
 ##' 2013/08/31 simulation M2: t_3 error
 ##' 2013/09/03 new
 
@@ -97,6 +97,25 @@ mse <- matrix(mse, 4, 4)
 colnames(mse) <- c('RQ', 'BQR', 'PT', 'PTSS')
 print(xtable(mse))
 print(mse)
+
+## MCSE
+mcse <- rep(0, 16)
+for (i in 1:16){
+  mcse[i] <- sd((result[,i] - truebetatau[i])^2)/sqrt(boot) * 100
+}
+mcse <- matrix(mcse, 4, 4)
+colnames(mcse) <- c('RQ', 'BQR', 'PT', 'PTSS')
+print(xtable(mcse))
+print(mcse)
+
+## combine mse and MCSE
+msemcse <- matrix(0, 4, 8)
+for (i in 1:4){
+  msemcse[, i*2 - 1] <- mse[, i]
+  msemcse[, i*2] <- mcse[, i]
+}
+print(msemcse)
+print(xtable(msemcse))
 
 ## BIAS
 bias <- rep(0, 16)
