@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/04/2013 00:24:09>
+##' Time-stamp: <liuminzhao 09/05/2013 09:32:28>
 ##' 2013/08/31 simulation M4H
 
 sink('sim-m4h-0903.txt')
@@ -46,8 +46,8 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
   y1 <- 1 + x1*b1 + (1 + x1*g1)*e1
 
   ## rq
-  modrq5 <- rq(y1 ~ x1 + x2, 0.5)
-  modrq9 <- rq(y1 ~ x1 + x2, 0.9)
+  modrq5 <- rq(y1 ~ x1, 0.5)
+  modrq9 <- rq(y1 ~ x1, 0.9)
 
   ## bqr
   modbqr5 <- BayesQReg(y1, X, 0.5)
