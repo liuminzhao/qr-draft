@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/02/2013 10:44:45>
+##' Time-stamp: <liuminzhao 09/06/2013 14:39:41>
 ##' manipulate data TOURS
 ##' 2013/06/05 focus on AGE and RACE
 ##' 2013/06/22 add baseline y0 as a covariate
@@ -53,7 +53,7 @@ dev.off()
 ## ANALYSIS
 ###############
 mcmc <- list(nburn=30000, nskip=1, nsave=30000, ndisp=10000, arate=0.2)
-## mcmc <- list(nburn=30000, nskip=1, nsave=30000, ndisp=10000, arate=0.25)
+## mcmc <- list(nburn=30000, nskip=1, nsave=30000, ndisp=10000, arate=0.4)
 quan <- c(0.1, 0.3, 0.5, 0.7, 0.9)
 
 modss <- HeterPTlm(y, X, mcmc = mcmc, quan = quan, den = TRUE, method = 'ss')
@@ -112,4 +112,6 @@ cimodbqr <- cbind(coefmodbqr, cimodbqrlbd, cimodbqrubd)
 totalci <- cbind(cimodrq, cimodbqr, cimod, cimodss)
 
 library(xtable)
+sink('tours-result-0906.txt')
 print(xtable(totalci))
+sink()
