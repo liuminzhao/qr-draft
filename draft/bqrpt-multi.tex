@@ -1,0 +1,230 @@
+\section{Multivariate Bayesian Quantile Regression with \polya{} Tree}
+\label{sec:multi}
+
+\subsection{Multivariate \polya{} Trees}
+
+Due to the difficulty in definition of quantiles in multivariate case
+and wide array of possible partition methods, there is not much literatures
+about \polya{} trees priors for multivariate data. \citet{paddock1999,
+  paddock2002} extended the univariate \polya{} tree
+\citep{lavine1992,lavine1994} to multivariate case in a
+q-dimensional hypercube. Partitions are constructed through a series
+of binary recursive perpendicular splits of each axis of the
+hypercube. \citet{hanson2006} proposed a q-dimensional location-scale
+mixture of finite \polya{} trees which is a direct generalization of
+the univariate finite location-scale \polya{} tree. \citet{jara2009}
+extended the multivariate \polya{} tree prior based on
+\citet{hanson2006} with an additional parameter: directional
+orthogonal matrix.
+
+Based on \citet{hanson2006} and \citet{jara2009}, we briefly introduce
+multivariate \polya{} tree priors as follows: Let $E=\{0,1\}$,
+$E^m=\{0,1\}^m$ be m-fold product of $E$, and $\pi_j = \left\{
+  B_{\epsilon_{11}\cdots
+    \epsilon_{1j};\cdots;\epsilon_{q1}\cdots\epsilon_{qj}};
+  \epsilon_{ij}\in E \right\}$ be a level $j$ partition set of
+$\Omega$ such that $\pi_{j+1}$ are the $2^q$ finer partitions of
+$\pi_j$.
+
+\begin{deff}[Multivariate \polya{} Tree Distribution]
+  A q-dimensional random probability measure $G$ is said to have a
+  multivariate \polya{} tree distribution with parameters $(\Pi,
+  \mathcal{A})$, if there exists nonnegative numbers
+  $\mathcal{A}=\left\{ \alpha_{\varepsilon_1;\cdots;\varepsilon_q} ;
+    \varepsilon_1, \cdots, \varepsilon_q \in E^j, j=1, \ldots
+  \right\}$ (note: $\varepsilon_i$ indicates which position the bin
+  takes in level $j$ with respect to $i^{th}$ dimension) and random
+  vectors $\mathcal{Y} = \left\{
+    Y_{\varepsilon_1;\cdots;\varepsilon_q} ; \varepsilon_1, \cdots,
+    \varepsilon_q \in E^j, j=1, \cdots \right\}$, such that the
+  following hold:
+  \begin{enumerate}
+  \item All of the random vectors in $\mathcal{Y}$ are independent,
+  \item For $j=1, \ldots$ and for all $\varepsilon_1, \cdots,
+    \varepsilon_q \in E^j$,
+    $\bm{Y}_{\varepsilon_1;\cdots;\varepsilon_q} \sim
+    \mathrm{Dirichlet}\left( \bm{\alpha}_{\varepsilon_1; \cdots;
+        \varepsilon_q} \right)$, where
+    $\bm{Y}_{\varepsilon_1;\cdots;\varepsilon_q} = \left\{
+      y_{\varepsilon_1\epsilon_1; \cdots; \varepsilon_q\epsilon_q};
+      \epsilon_1, \cdots, \epsilon_q \in E \right\}$ and
+    $\bm{\alpha}_{\varepsilon_1; \cdots; \varepsilon_q} = \left\{
+      \alpha_{\varepsilon_1\epsilon_1; \cdots;
+        \varepsilon_q\epsilon_q}; \epsilon_1, \cdots, \epsilon_q \in E
+    \right\}$,
+  \item For every $j=1,2, \cdots$,
+    \begin{displaymath}
+      G(B_{\epsilon_{11},\cdots,
+        \epsilon_{1j};\cdots;\epsilon_{q1}\cdots\epsilon_{qj}}) =
+      \prod_{l=1}^j Y_{\epsilon_{11}\cdots \epsilon_{1l}; \cdots ;
+        \epsilon_{q1}\cdots\epsilon_{ql}}.
+    \end{displaymath}
+  \end{enumerate}
+\end{deff}
+
+Similar to univariate \polya{} tree, the canonical way of
+constructing the partition is based on inverting CDF of the centering
+distribution. First, suppose $G_0$ is a univariate cdf and its
+corresponding pdf is $g_0(\omega)$. Define $g_0(\bm{\omega}=(\omega_1,
+\ldots, \omega_q)) = \prod_{i=1}^q g_0(\omega_i)$. Denote
+$\bm{\theta}= (\bm{\mu}_q, \bm{\Sigma}_{q\times q}$ as location-scale
+parameters, then a family of location-scale baseline measures for
+multivariate \polya{} tree have the following pdf forms
+$g_{\bm{\theta}} ( \bm{\omega}) = |\bm{\Sigma}|^{-1/2} g_0 (
+\bm{\Sigma}^{-1/2} (\bm{\omega} - \bm{\mu}) ) $.
+
+For baseline measure $g_0(\bm{\omega})$, the partition $\Pi_0^j$ of
+$\mathrm{R}^q$ are obtained from cross-products of corresponding
+univariate partition sets. Denote
+$$B_0( \epsilon_{11}\cdots
+\epsilon_{1j};\cdots;\epsilon_{q1}\cdots\epsilon_{qj}) = B_0(e_j(k_1))
+\times B_0(e_j(k_2)) \times \cdots \times B_0(e_j(k_q)),$$ where
+$B_0(e_j(k))= \left( G_0^{-1}((k-1)2^{-j}), G_0^{-1}(k2^{-j})
+\right)$.
+
+Denote $\bm{e}_j(\bm{k})= e_j(k_1); \cdots;e_j(k_q)$, where $\bm{k}=
+(k_1, \ldots, k_q)$, then partitions $\Pi_{\theta}^j$ from
+location-scale baseline measure family $G_{\bm{\theta}}$ or
+$g_{\bm{\theta}}(\bm{\omega})$ are defined as
+\begin{displaymath}
+  B_{\bm{\theta}}(\bm{e}_j(\bm{k})) = \left\{ \bm{\mu} +
+    \bm{\Sigma}^{1/2} \bm{y}; \bm{y} \in B_0(\bm{e}_j(\bm{k})) \right\}.
+\end{displaymath}
+
+\citet{jara2009} pointed out that the direction of the sets in
+\citet{hanson2006} is completely defined by the decomposition of the
+covariance matrix, the unique symmetric square root. As a result, he
+introduced another orthogonal matrix as additional parameter to
+control the direction of the sets.
+
+Suppose $\bm{\Sigma} = \bm{T'T}$, where $\bm{T}$ is the unique upper
+triangular Cholesky matrix, then for any orthogonal matrix $\bm{O}$,
+let $\bm{U=OT}$, then $\bm{U}$ is also a square root of
+$\bm{\Sigma}$. Therefore, if we put a prior for $\bm{O}$ on the space
+of all $q \times q$ orthogonal matrices, then we have a prior on all
+possible square roots of $\bm{\Sigma}$, which control the direction of
+the partition sets.
+
+Lemma 1 \citep{jara2009} shows it is well
+defined. In this way, the location-scale transformation induces
+partition sets $B_{\bm{\theta}}(\bm{e}_j(\bm{k})) = \left\{ \bm{\mu} +
+  \bm{T'O'} \bm{z}; \bm{z} \in B_0(\bm{e}_j(\bm{k})) \right\}.$ The
+Haar measure \citep{halmos1950} provides an easy way to sample
+orthogonal matrix $\bm{O}$ uniformly.
+
+\subsection{Multivariate Regression with \polya{} Tree}
+
+In order to address clustered or correlated data, we propose to model
+multivariate errors directly instead of adding random effects. We
+assume each component of subject's multivariate response can be
+affected by covariates on its mean and variance, therefore we propose
+a heterogeneous q-dimensional multivariate regression model:
+\begin{displaymath}
+  \bm{Y}_i = \bm{X}_i \bm{B} + (\bm{X}_i\bm{\Gamma}) \circ \bm{E}_i,
+\end{displaymath}
+where $\bm{Y}_i = [y_{i1}, \ldots, y_{iq}]^T$, $\bm{X}_i= [x_{i1},
+\cdots, x_{ip}]$, $\bm{E}_i =[\epsilon_{i1}, \cdots, \epsilon_{iq}]$,
+\begin{displaymath}
+  \bm{B}_{p\times q} =
+  \begin{bmatrix}
+    \beta_{11}& \cdots & \beta_{1q} \\
+    \vdots & \ddots & \vdots \\
+    \beta_{p1} & \cdots & \beta_{pq}
+  \end{bmatrix}
+  \quad \text{  and  } \quad
+  \bm{Gamma}_{p\times q} =
+  \begin{bmatrix}
+    \gamma_{11} & \cdots & \gamma_{1q} \\
+    \vdots & \ddots & \vdots \\
+    \gamma_{p1} & \cdots & \gamma_{pq}
+  \end{bmatrix}.
+\end{displaymath}
+For $n$ subjects and $q$ dimensional responses for each subject, we
+have
+\begin{align}
+  \begin{bmatrix}
+    y_{11} &\cdots & y_{1q} \\
+    \vdots & \ddots & \vdots \\
+    y_{n1} & \cdots & y_{nq}
+  \end{bmatrix}_{n\times q} & =
+  \begin{bmatrix}
+    x_{11} &\cdots & x_{1p} \\
+    \vdots & \ddots & \vdots \\
+    x_{n1} & \cdots & x_{np}
+  \end{bmatrix}_{n\times p}
+  \begin{bmatrix}
+    \beta_{11} &\cdots & \beta_{1q} \\
+    \vdots & \ddots & \vdots \\
+    \beta_{p1} & \cdots & \beta_{pq}
+  \end{bmatrix}_{p\times q} \nonumber\\
+  & \quad + \left( \begin{bmatrix}
+      x_{11} &\cdots & x_{1p} \\
+      \vdots & \ddots & \vdots \\
+      x_{n1} & \cdots & x_{np}
+    \end{bmatrix}
+    \begin{bmatrix}
+      \gamma_{11} &\cdots & \gamma_{1q} \\
+      \vdots & \ddots & \vdots \\
+      \gamma_{p1} & \cdots & \gamma_{pq}
+    \end{bmatrix}
+  \right) \circ
+  \begin{bmatrix}
+    \epsilon_{11} &\cdots & \epsilon_{1q} \\
+    \vdots & \ddots & \vdots \\
+    \epsilon_{n1} & \cdots & \epsilon_{nq}
+  \end{bmatrix}_{n\times q}
+\end{align}
+in which $\circ$ is Hadamard product (entrywise product). We assign a
+multivariate \polya{} tree prior on the error:
+\begin{align*}
+  &\bm{E}_i = [\epsilon_{i1}, \cdots, \epsilon_{iq}]^T
+  \stackrel{\text{i.i.d}}{\sim} G_{\bm{\theta}} \\
+  &G_{\bm{\theta}} | \bm{\mu, \Sigma, O} \sim PT \left( \Pi^{\bm{\mu,
+        \Sigma, O}}, \mathcal{A} \right).
+\end{align*}
+In order to not confound the $\bm{\beta}$ estimates, we set $\bm{\mu}
+= \bm{0}$ and the medians for each component of $G_{\bm{\theta}}$ are
+fixed at 0. For the heterogeneity parameters $\gamma_{ij}$, for the
+same reason, we restrict $\gamma_{1j}=1$ and for all
+$\bm{\gamma_{.j}}, \bm{x}_{i.}$, $\bm{x_{i.}\gamma_{.j}}>0$ for all
+$i,j$.
+
+Analogous to the univariate quantile regression case, the posterior
+$\tau$th quantile regression coefficient for component of response can
+be obtained from posterior estimates by
+\begin{equation}\label{eq:mul}
+  \bm{\beta^{(i)}}(\tau) = \bm{\beta^{(i)}} + \bm{\gamma^{(i)}}F^{-1}_{\epsilon^{(i)}}(\tau),
+\end{equation}
+where $\bm{\beta^{(i)}}$ and $\bm{\gamma^{(i)}}$ is the $i^{th}$
+column of $\bm{B}$ and $\bm{\Gamma}$, and $F^{-1}_{\epsilon^{(i)}}$ is
+the inverse marginal CDF of $i^{th}$ component of $q$-dim error, which
+can be calculated in the same way as in univariate \polya{} tree after
+collapsing multivariate residuals.
+
+\subsection{Comparison to Reich}
+\citet{reich2010} proposed a flexible Bayesian approach dealing with
+clustered data based on both conditional and marginal models. They
+added a random effect term to this flexible Bayesian model to address
+compound symmetric correlation struction. However, the assumption for
+correlation structure is restrictive in many settings. Our proposed
+method deals with any correlation structure since \polya{} tree can
+capture the error distribution after training through enough data
+observations. More specifically, Reich's method restricts the
+correlation to be positive and constant across components, while the
+quantile regression with \polya{} trees prior works well for negative
+correlation, serial correlation or any other scenarios.
+
+In addition, Reich's approach can only make inference for the
+quantiles of the dependent variables itself, rather than linear
+combinations of components in a multivariate dependent random
+vector. For example in longitudinal data, quantiles of measurement
+differences between time points are often of interest, e.g. in data
+example.  However our method can easily handle such inferences through
+posterior sampling of $y_3-y_0$ and using \polya{} tree technique to
+draw posterior quantiles.
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
