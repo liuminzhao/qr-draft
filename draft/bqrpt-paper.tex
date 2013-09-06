@@ -25,7 +25,7 @@
 \newtheorem{pps}[thm]{Proposition}
 
 \newcommand{\polya}{P\'{o}lya}
-\newcommand{\iid}{\stackrel{\text{i.i.d}}{\sim}}
+\newcommand{\iid}{\stackrel{\mbox{i.i.d}}{\sim}}
 \DeclareMathOperator{\pr}{p}
 \DeclareMathOperator{\pt}{PT}
 \DeclareMathOperator{\LN}{LN}
@@ -174,7 +174,7 @@ Now, consider a location shift model,
 \begin{displaymath}
   y_i = \bm{x}_i\beta + \epsilon_i,
 \end{displaymath}
-where $\epsilon_i \stackrel{\text{i.i.d}}{\sim} F_{\epsilon}$. Then,
+where $\epsilon_i \stackrel{\mbox{i.i.d}}{\sim} F_{\epsilon}$. Then,
 the $\tau$th quantile regression parameter can be expressed as
 \begin{equation} \label{eq:reg} \bm{\beta}(\tau) = \bm{\beta} +
   F^{-1}_{\epsilon}(\tau) \bm{e}_1,
@@ -547,7 +547,7 @@ $\beta_j$ can be written as:
   \pi_{\bm \beta} (\beta_j) &= \delta_{\beta_j} \phi(\beta_j; 0, s_j^2
   \sigma_{\beta_j}^2) +
   (1- \delta_{\beta_j}) \phi(\beta_j; \beta_j^p, \sigma_{\beta_j}^2),\\
-  \delta_{\beta_j} & \sim \text{Bernoulli} (\pi_{\beta_j}),
+  \delta_{\beta_j} & \sim \mbox{Bernoulli} (\pi_{\beta_j}),
 \end{align*}
 where $\phi(x; \mu, \sigma^2)$ is the density function of normal
 distribution at $x$ with mean $\mu$ and variance
@@ -560,7 +560,7 @@ probability.  $s_j (>0)$ is small enough so that if $\delta_{\beta_j}
 probability, thus it can be approximately estimated as 0 and regarded
 as non-significant and removed from the model; if $\delta_{\beta_j} =
 0$, it indicates $\beta_j$ comes from the slab component, thus
-$\beta_j$ is believed to come from a diffuse distribution
+$\beta_j$ is believed to come from a diffuse prior distribution
 \citep{george1993}.
 
 We choose $\bm \beta^p$, the mean of normal distribution of slab
@@ -579,7 +579,7 @@ corresponding regressors are needed in the model. Large $\pi$ reflects
 doubt that regressors should be included, and vice versa. Furthermore,
 we can put hyper priors on $\pi_{\beta_j}$ and $\pi_{\gamma_j}$ to get
 rid of uncertainty about distribution of the components.  For example,
-in this article, we simply assign priors for $\pi_{\beta_j}$ and
+in this article, we assign priors for $\pi_{\beta_j}$ and
 $\pi_{\gamma_j}$ to be a beta distribution with parameters $(1,1)$.
 
 \subsection{Computational Details}\label{sec:computation}
@@ -596,12 +596,11 @@ posterior samples. The full conditional distributions of ($\bm
 c, \bm Y$), ($\sigma|\bm \beta, \bm \gamma, c, \bm Y$), and ($c|\bm
 \beta, \bm \gamma, \sigma, \bm Y$) are proportional to equation~(\ref{eq:post}).
 
-We use $\beta_j^* \sim N(\beta_j^{l-1}, t_{\beta_j} \Sigma_{jj})$ as
+We use $\beta_j^* \sim N(\beta_j^{l-1}, t_{\beta_j} )$ as
 candidate distribution for $\beta_j$ in $l$-th iteration, where
-$\Sigma_{jj}$ is the $j$-th element on the diagonal of matrix
-$\bm{(X'X)}^{-1}$, $t_{\beta_j}$ is the tuning parameter for $\beta_j$
+$t_{\beta_j}$ is the tuning parameter for $\beta_j$
 to adjust acceptance rate.  Similarly, we use $\gamma_j^* \sim
-N(\gamma_j^{l-1}, t_{\gamma_j}\Sigma_{jj})$ as candidate distribution
+N(\gamma_j^{l-1}, t_{\gamma_j})$ as candidate distribution
 for $\gamma_j$ in $l$-th iteration.  For baseline (centering) normal
 distribution parameter $\sigma$ ($\mu$ is fixed at 0 due to not
 confound with location parameter $\bm \beta$), we use the lognormal
@@ -636,22 +635,22 @@ approaches for both homogeneous and heterogeneous models.
 \subsection{Design}
 We generated data from the following 6 models,
 \begin{itemize}
-\item [M1:] $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 + \epsilon_{1i}$,
-\item [M2:] $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 + \epsilon_{2i}$,
-\item [M3:] $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 + \epsilon_{3i}$,
-\item [M4:] $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 + \epsilon_{4i}$,
-\item [M1H:] $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 + (1 -
-  0.5x_{i1}+0.5x_{i2}) \epsilon_{1i}$,
-\item [M2H:] $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 + (1 -
-  0.5x_{i1}+0.5x_{i2}) \epsilon_{2i}$,
-\item [M3H:] $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 + (1 -
-  0.5x_{i1}+0.5x_{i2}) \epsilon_{3i}$,
-\item [M4H:] $y_i = 1 + x_{i1}\beta_1 + x_{i2}\beta_2 + (1 -
-  0.5x_{i1}+0.5x_{i2}) \epsilon_{4i}$,
+\item [M1:] $y_i = 1 + x_{i1}\beta_1 + \epsilon_{1i}$,
+\item [M2:] $y_i = 1 + x_{i1}\beta_1 + \epsilon_{2i}$,
+\item [M3:] $y_i = 1 + x_{i1}\beta_1 + \epsilon_{3i}$,
+\item [M4:] $y_i = 1 + x_{i1}\beta_1 + \epsilon_{4i}$,
+\item [M1H:] $y_i = 1 + x_{i1}\beta_1 + (1 + 0.2x_{i1})
+  \epsilon_{1i}$,
+\item [M2H:] $y_i = 1 + x_{i1}\beta_1 + (1 + 0.2x_{i1})
+  \epsilon_{2i}$,
+\item [M3H:] $y_i = 1 + x_{i1}\beta_1 + (1 + 0.2x_{i1})
+  \epsilon_{3i}$,
+\item [M4H:] $y_i = 1 + x_{i1}\beta_1 + (1 + 0.2x_{i1})
+  \epsilon_{4i}$,
 \end{itemize}
-where $x_{i1}, x_{i2} \stackrel{\text{iid}}{\sim} \mathrm{N}(0,1),
+where $x_{i1} \stackrel{\mbox{iid}}{\sim} \mathrm{N}(0,1),
 \epsilon_{1i} \sim \mathrm{N}(0,1), \epsilon_{2i} \sim t_3,
-\epsilon_{3i} \stackrel{\text{iid}}{\sim} 0.5 \times \mathrm{N}(-2,1)
+\epsilon_{3i} \stackrel{\mbox{iid}}{\sim} 0.5 \times \mathrm{N}(-2,1)
 + 0.5 \times \mathrm{N}(2,1)$ and $\epsilon_{4i} \sim 0.8 N(0,1) + 0.2
 N(3,3)$. In model 1 (M1), the error distribution coincides with
 baseline distribution. Model 2 (M2) has a heavier tail distribution,
@@ -664,7 +663,7 @@ other.
 
 All covariates and error terms are mutually independent. All
 coefficients are set to be 1. For each model, we generate 100 data
-sets with the sample size $n=200$. The quantiles estimated are 50\%,
+sets with the sample size $n=500$. The quantiles estimated are 50\%,
 90\%.
 
 Each simulated data set is analyzed using the following four methods:
@@ -686,99 +685,131 @@ priors for $\bm \beta$ and $\bm \gamma$:
 \begin{align*}
   \pi(\beta_j) & \sim \delta_{\beta_j}N(0, s_j\bm V_{jj}) +  (1 - \delta_{\beta_j})N(\bm \beta_j^p, \bm V_{jj}) , j = 0, 1, 2,\\
   \pi(\gamma_j) & \sim \delta_{\gamma_j}N(0, 100s_j) + (1 - \delta_{\gamma_j}) N(0, 100), j = 1, 2\\
-  \delta_{\beta_j} & \sim \text{Bernoulli}(\pi_{\beta_j}) , \pi_{\beta_j} \sim \text{Beta}(1, 1),\\
-  \delta_{\gamma_j} & \sim \text{Bernoulli}(\pi_{\gamma_j}),
-  \pi_{\gamma_j} \sim \text{Beta}(1, 1).
+  \delta_{\beta_j} & \sim \mbox{Bernoulli}(\pi_{\beta_j}) , \pi_{\beta_j} \sim \mbox{Beta}(1, 1),\\
+  \delta_{\gamma_j} & \sim \mbox{Bernoulli}(\pi_{\gamma_j}),
+  \pi_{\gamma_j} \sim \mbox{Beta}(1, 1).
 \end{align*}
 And we choose $s_j = 1/1000$ from \cite{george1993}.
 
 A partial \polya{} tree with $M=6$ levels was adopted in the
 model. For Monte Carlo Markov chain parameter, 40,000 iterations of a
 single Markov chain were used, during which, 20,000 samples were saved
- after a burn-in period of 20,000 samples.  It
-takes around 100 seconds for one simulation for PT under R version 2.15.3
-(2013-03-01) and platform: x86\_64-apple-darwin9.8.0/x86\_64
-(64-bit). Acceptance rates were set to approach 25\% for $\bm{\beta}$
-and $\bm{\gamma}$ candidates during the adaptive Metropolis-Hastings
-algorithm.  We also tested the method proposed by Reich (FBQR), which
-conducts a single $\tau$ quantile regression for linear model and
-assigns an infinite mixture of Gaussian densities for the error term
-and the standard frequentist quantile regression approach, \textit{rq}
-function in the \textit{quantreg} package \citep{quantreg} in \cite{R}
-(RQ).
+after a burn-in period of 20,000 samples.  It takes around  250 seconds
+for one simulation for PT under R version 2.15.3 (2013-03-01) and
+platform: x86\_64-apple-darwin9.8.0/x86\_64 (64-bit). Acceptance rates
+were set to approach 40\% for $\bm{\beta}$ and $\bm{\gamma}$
+candidates during the adaptive Metropolis-Hastings algorithm.  We also
+tested the method proposed by Reich (FBQR), which conducts a single
+$\tau$ quantile regression for linear model and assigns an infinite
+mixture of Gaussian densities for the error term and the standard
+frequentist quantile regression approach, \textit{rq} function in the
+\textit{quantreg} package \citep{quantreg} in \cite{R} (RQ).
 
 Methods are evaluated based on mean squared error:
 \begin{displaymath}
-  \text{MSE}  =  \frac{1}{N}\sum_{i = 1}^N (\hat{\beta}_j(\tau) -
+  \mbox{MSE}  =  \frac{1}{N}\sum_{i = 1}^N (\hat{\beta}_j(\tau) -
   \beta_j(\tau))^2 ,
 \end{displaymath}
-where $N$ is the number of simulations,
-$\beta_j(\tau)$ is the $j^{th}$ component of the true quantile
-regression parameters. $\hat{\beta}_j(\tau)$ is the $j^{th}$ component
-of estimated quantile regression parameters. And we use the posterior
+where $N$ is the number of simulations, $\beta_j(\tau)$ is the
+$j^{th}$ component of the true quantile regression
+parameters. $\hat{\beta}_j(\tau)$ is the $j^{th}$ component of
+estimated quantile regression parameters. And we use the posterior
 mean as estimated parameters.
 
-\begin{landscape}
+Monte Carlo standard error (MCSE) is used to evaluate the significance
+of difference between methods. It is calculated by
+\begin{displaymath}
+  \mbox{MCSE} = \hat{\mbox{sd}}(\mbox{Bias}^2)/\sqrt{N},
+\end{displaymath}
+where $\hat{\mbox{sd}}$ is the sample standard deviation and
+$\mbox{Bias} = \hat{\beta}_{j}(\tau) - \beta_{j}(\tau)$.
+
 \begin{center}
   \begin{table}[h]
     \centering
-    \caption[]{ Mean squared error (reported as 100*average) and standard
-      error (reported as 100*standard error) for each
-      quantile regression method.   The three
+    \caption[]{ Mean squared error (reported as 100*average) and MCSE
+      (reported as 100*MCSE) for each
+      quantile regression method.   The four
       columns (RQ, FBQR,
-      PT) stand for frequentist method \textit{rq} function from
+      PT, PTSS) stand for frequentist method \textit{rq} function from
       \textit{quantreg} R package, flexible Bayesian method by Reich, and
-      our Bayesian approach using \polya{} tree separately.}
+      our Bayesian approach using \polya{} tree with normal priors and with
+spike and slab priors.}
     \vspace{4mm}
     \tabcolsep = 0.11cm
-    \begin{tabular}[tb]{cllllllllllllllll}
-      \toprule
-            & RQ    & BQR   & PT    & PTSS  & RQ       & BQR   & PT    & PTSS  & RQ       & BQR   & PT    & PTSS    & RQ       & BQR   & PT    & PTSS   \\
-  \hline
-M1 50\%     &       &       &       &       & M2 50\%  &       &       &       & M3 50\%  &       &       & &M4 50\%  &         &       &                \\
- $\beta_0$  & 0.73  & 0.82  & 0.65  & 0.65  & 0.83     & 0.74  & 1.36  & 1.37  & 36.36    & 17.42 & 6.50  & 11.76   & 1.13     & 1.10  & 11.13 & 11.13  \\
-  $\beta_1$ & -1.13 & -0.93 & -0.78 & -0.78 & 0.92     & 0.83  & 1.48  & 1.48  & 25.86    & 4.24  & 4.08  & 4.95    & 1.47     & 0.95  & 1.41  & 1.41   \\
-  $\beta_2$ & 1.42  & 0.96  & 0.93  & 0.93  & 1.29     & 1.03  & 1.66  & 1.67  & 20.12    & 3.19  & 4.30  & 5.41    & 1.43     & 0.98  & 1.64  & 1.63   \\
-M1 90\%     &       &       &       &       & M2 90\%  &       &       &       & M3 90\%  &       &       &         & M4 90\%  &       &       &        \\
- $\beta_0$  & -1.66 & 0.78  & -1.53 & -1.78 & 3.95     & 3.47  & 6.55  & 6.36  & 6.10     & 4.68  & 4.53  & 5.92    & 14.95    & 12.42 & 18.08 & 17.18  \\
-  $\beta_1$ & -1.75 & -1.30 & -0.64 & -0.65 & 4.66     & 2.30  & 3.36  & 2.53  & 3.82     & 2.76  & 5.39  & 5.60    & 16.66    & 5.94  & 8.42  & 5.88   \\
-  $\beta_2$ & -0.34 & 1.33  & 1.50  & 1.31  & 4.43     & 2.68  & 3.82  & 2.95  & 5.63     & 3.63  & 6.30  & 6.58    & 13.62    & 4.56  & 7.74  & 5.67   \\
-\hline
-M1H 50\%    &       &       &       &       & M2H 50\% &       &       &       & M3H 50\% &       &       &         & M4H 50\% &       &       &        \\
-$\beta_0$   & 4.72  & 3.10  & 3.57  & 3.74  & 6.11     & 5.42  & 8.12  & 9.21  & 94.92    & 21.20 & 14.71 & 23.63   & 11.28    & 8.36  & 18.17 & 21.54  \\
-  $\beta_1$ & 8.42  & 5.06  & 5.69  & 6.89  & 9.90     & 8.62  & 13.61 & 17.47 & 150.79   & 22.02 & 20.91 & 29.31   & 13.76    & 10.46 & 22.66 & 32.82  \\
-  $\beta_2$ & 10.03 & 5.39  & 6.72  & 8.13  & 10.35    & 7.89  & 14.95 & 20.85 & 204.72   & 20.28 & 17.64 & 33.30   & 17.99    & 13.44 & 18.53 & 36.25  \\
-M1H 90\%    &       &       &       &       & M2H 90\% &       &       &       & M3H 90\% &       &       &         & M4H 90\% &       &       &        \\
- $\beta_0$  & 10.50 & 8.14  & 7.42  & 8.56  & 32.61    & 15.41 & 28.54 & 26.90 & 16.10    & 11.31 & 15.48 & 23.81   & 110.08   & 41.07 & 62.97 & 81.63  \\
-  $\beta_1$ & 16.54 & 11.34 & 10.39 & 23.18 & 45.61    & 21.58 & 45.96 & 63.43 & 26.47    & 15.55 & 27.82 & 61.66   & 177.03   & 52.48 & 79.16 & 112.10 \\
-  $\beta_2$ & 17.81 & 14.85 & 16.20 & 32.15 & 53.44    & 17.36 & 39.98 & 63.70 & 23.27    & 17.30 & 23.41 & 87.85   & 182.33   & 63.00 & 96.33 & 215.79 \\
-      \bottomrule
+    \begin{tabular}[tb]{c|llll|llll}
+      \hline
+      & RQ            & FBQR         & PT          & PTSS        & RQ            & FBQR        & PT          & PTSS        \\
+      \hline
+      & M1 50\%       &              &             &             & M2 50\%       &             &             &             \\
+      $\beta_0$ & 1.04(0.15)    & 0.55(0.08)   & 0.53(0.08)  & 0.53(0.08)  & 1.32(0.17)    & 1.14(0.17)  & 2.20(0.32)  & 2.20(0.32)  \\
+      $\beta_1$ & 3.66(0.46)    & 1.99(0.26)   & 2.03(0.30)  & 2.03(0.30)  & 4.34(0.51)    & 3.34(0.44)  & 6.31(0.82)  & 6.32(0.81)  \\
+      & M1 90\%       &              &             &             & M2 90\%       &             &             &             \\
+      $\beta_0$ & 2.51(0.31)    & 1.74(0.25)   & 1.68(0.21)  & 1.09(0.13)  & 7.56(0.92)    & 4.55(0.57)  & 6.55(0.80)  & 4.57(0.64)  \\
+      $\beta_1$ & 6.59(0.98)    & 4.48(0.74)   & 4.09(0.65)  & 2.32(0.35)  & 17.43(2.23)   & 12.18(1.84) & 18.87(2.53) & 7.78(1.06)  \\
+      \hline
+      & M1H 50\%       &              &             &             & M2H 50\%       &             &             &             \\
+      $\beta_0$ & 1.28(0.17)    & 0.83(0.09)   & 0.85(0.10)  & 0.85(0.10)  & 1.61(0.27)    & 1.27(0.21)  & 1.85(0.26)  & 1.83(0.26)  \\
+      $\beta_1$ & 4.86(0.66)    & 2.82(0.38)   & 2.95(0.39)  & 2.95(0.39)  & 5.02(0.82)    & 3.88(0.66)  & 5.56(0.79)  & 5.58(0.77)  \\
+      & M1H 90\%       &              &             &             & M2H 90\%       &             &             &             \\
+      $\beta_0$ & 3.39(0.44)    & 20.59(18.52) & 2.37(0.34)  & 1.96(0.32)  & 6.80(0.99)    & 4.35(0.58)  & 7.98(1.14)  & 8.01(1.30)  \\
+      $\beta_1$ & 10.49(1.27)   & 6.45(0.96)   & 6.68(0.99)  & 5.79(0.88)  & 25.33(3.63)   & 16.44(2.70) & 29.19(5.18) & 24.73(8.64) \\
+      \hline
+      & M3 50\%       &              &             &             & M4 50\%       &             &             &             \\
+      $\beta_0$ & 41.54(4.71)   & 9.22(1.20)   & 4.32(0.54)  & 4.34(0.55)  & 1.91(0.27)    & 1.31(0.18)  & 10.43(0.88) & 10.46(0.88) \\
+      $\beta_1$ & 127.67(14.39) & 9.30(1.52)   & 9.66(1.17)  & 9.94(1.43)  & 5.94(0.85)    & 3.71(0.55)  & 6.69(0.92)  & 6.58(0.92)  \\
+      & M3 90\%       &              &             &             & M4 90\%       &             &             &             \\
+      $\beta_0$ & 4.80(0.56)    & 2.75(0.35)   & 5.53(0.59)  & 4.46(0.53)  & 31.30(4.85)   & 10.60(1.40) & 19.08(2.76) & 16.43(2.28) \\
+      $\beta_1$ & 15.91(1.86)   & 8.75(1.05)   & 18.11(2.03) & 14.03(1.70) & 99.78(12.83)  & 20.51(2.88) & 32.81(4.18) & 15.43(2.32) \\
+      \hline
+      & M3H 50\%       &              &             &             & M4H 50\%       &             &             &             \\
+      $\beta_0$ & 41.12(5.37)   & 8.22(1.05)   & 4.21(0.77)  & 4.28(0.77)  & 2.41(0.27)    & 2.00(0.23)  & 9.55(0.98)  & 9.67(0.99)  \\
+      $\beta_1$ & 116.71(17.10) & 8.15(1.60)   & 9.12(1.35)  & 10.26(1.83) & 7.38(0.87)    & 5.65(0.69)  & 8.59(1.09)  & 9.42(1.47)  \\
+      & M3H 90\%       &              &             &             & M4H 90\%       &             &             &             \\
+      $\beta_0$ & 4.42(0.69)    & 2.94(0.45)   & 4.66(0.72)  & 4.56(0.89)  & 30.12(3.05)   & 12.76(1.76) & 21.54(2.80) & 28.64(3.25) \\
+      $\beta_1$ & 13.51(1.84)   & 8.64(1.28)   & 15.16(2.07) & 15.32(2.48) & 106.58(11.87) & 20.95(3.33) & 36.07(4.88) & 27.91(3.80) \\
+      \hline
     \end{tabular}
     \label{tab:m1}
   \end{table}
 \end{center}
-\end{landscape}
 
 \subsection{Results}
-The simulation results are shown in Table~\ref{tab:m1}. The proposed
-Bayesian quantile regression method with \polya{} tree prior (PT) does
-well (in terms of MSE) relative to Reich's method (FBQR) and
-traditional frequentist approach (rq).  The differences becomes quite
-large in the non-unimodal case (M2) and heterogeneous model (M3).
+The simulation results are shown in Table~\ref{tab:m1}.  In model 1
+(M1), when the error is homogeneous and distributed as standard normal
+distribution, which coincides with \polya{} tree baseline measure, RQ
+has larger MSE than FBQR, PT, and PTSS is even better than PT and FBQR
+since its prior shrunk the heterogeneity parameters toward zero.
 
-In Model 2 and Model 3 with $\tau=0.5$, where the error is distributed
-as a bimodal distribution (mixture of normal distributions), the
-\textit{rq} method performs poorly in terms of MSE since the mode of
-the error is no longer the quantile of interest. In contrast, our
-method (PT) is not impacted by lack of unimodality and heterogeneity
-and provides more information for the relationship between responses
-and covariates. In Model 3 with $\tau=0.9$, Reich's method (FBQR)
-outperforms our approach (PT), since the error is assigned an infinite
-mixture of normal distribution with mode at $\tau=0.9$ in his model,
-which is very close to the true distribution. Less information is
-available from our approach to detect the shape at a particular
-quantile of the distribution since there are few observations at
-extreme quantiles.
+When considering heterogeneity factor in model 1 (M1H), PT and PTSS
+still show advantages over RQ and FBQR, especially FBQR is problematic
+when estimating 90\% quantile regression.
+
+In model 2, 3, 4 and 2H, 3H, 4H, when error is homogeneous or
+heterogenous, and comes from a mixture of normal distributions (even
+student t distribution can be regarded as a mixture of normal
+distributions), FBQR shows great advantage in terms of MSE, because
+simulated models coincide the models in FBQR approach. Except FBQR, PT
+and PTSS have competitive MSE with RQ method, and even around
+one-tenth of the MSE of RQ in scenario Model 3 median regression and
+model 3 heterogeneity scenario median regression. The similar
+situation happened in M4 and M4H model 90\% quantile regression.
+
+To sum up, where the error is distributed as a bimodal distribution (a
+mixture of normal distributions), the RQ method performs poorly in
+terms of MSE since the mode of the error is no longer the quantile of
+interest. In contrast, PT is not impacted by lack of unimodality and
+heterogeneity and provides more information for the relationship
+between responses and covariates. FBQR outperforms PT, since the error
+is assigned an infinite mixture of normal distribution in his
+model. Less information is available from our approach to detect the
+shape at a particular extreme percentile of the distribution since
+there are few observations at extreme quantiles. However, PT and PTSS
+can fit simultaneously multiple quantile regressions and provide
+coherent information about the error distribution. Meanwhile, quantile
+lines would not be crossed by our method.  We also expect to see
+advantages when dimension of responses is bivariate or more.
+
 
 \section{Analysis of the Tours Data}
 \label{sec:tours}
@@ -792,8 +823,8 @@ interest is the weight loss from baseline to 6 months later. The age
 of the subjects ranged from 50 to 75, and there were 43 people with
 race classified as black and 181 people as white.  Our goal is to
 determine how the percentiles of weight change are affected by their
-age and race.  ``Age'' covariates are scaled to 0 to 5 with every
-increment representing 5 years age increase.
+age and race.  ``Age'' covariate are scaled to 0 to 5 with every
+increment representing 5 years.
 
 We fitted regression models for quantiles (10\%, 30\%, 50\%, 70\%,
 90\%). And we used Bayesian posterior samples to build 95\% credible
@@ -816,7 +847,7 @@ intervals.
   \vspace{4mm}
 
   \centering
-  \begin{tabular}[tb]{lllll}
+  \begin{tabular}[tb]{l|l|l|l|l}
     \toprule
     Term  & RQ                   & FBQR                 & PT                   & PTSS                 \\
     \hline
