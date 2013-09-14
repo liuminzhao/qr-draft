@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/13/2013 17:33:02>
+##' Time-stamp: <liuminzhao 09/14/2013 09:34:04>
 ##' 2013/08/31 simulation M1
 ##' 2013/09/03 new
 
@@ -23,7 +23,10 @@ set.seed(1)
 n <- 500
 mcmc <- list(nburn=20000, nskip=1, nsave=20000, ndisp=30000, arate=0.4)
 b1 <- 1
-quan <- c(0.5,  0.875)
+quan <- c(0.5,  0.9)
+p <- 0.5
+alpha <- 0
+
 ###############
 ## SIMULATION
 ###############
@@ -32,8 +35,6 @@ boot <- 100
 start <- proc.time()[3]
 
 result <- foreach(icount(boot), .combine=rbind) %dopar% {
-  p <- 0.5
-  alpha <- 0
   R <- rbinom(n, 1, p)
   x1 <- runif(n, max = 4)
   y1 <- rep(n, 0)
