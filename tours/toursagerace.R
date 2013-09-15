@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/06/2013 14:39:41>
+##' Time-stamp: <liuminzhao 09/14/2013 20:49:06>
 ##' manipulate data TOURS
 ##' 2013/06/05 focus on AGE and RACE
 ##' 2013/06/22 add baseline y0 as a covariate
@@ -111,7 +111,11 @@ cimodbqr <- cbind(coefmodbqr, cimodbqrlbd, cimodbqrubd)
 
 totalci <- cbind(cimodrq, cimodbqr, cimod, cimodss)
 
+## posterior prob of coefficient are zero for each quantile
+zero <- rbind(coef(modss)$deltabetaprop, coef(modss)$deltagammaprop)
+
 library(xtable)
-sink('tours-result-0906.txt')
+sink('tours-result-0914.txt')
 print(xtable(totalci))
+print(xtable(zero))
 sink()
