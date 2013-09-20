@@ -1,9 +1,9 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/14/2013 09:34:04>
+##' Time-stamp: <liuminzhao 09/19/2013 23:18:14>
 ##' 2013/08/31 simulation M1
 ##' 2013/09/03 new
 
-sink('sim-0913-2.txt')
+sink('sim-0916.txt')
 rm(list = ls())
 library(bqrpt)
 library(quantreg)
@@ -21,7 +21,7 @@ set.seed(1)
 ## PARAMETERS
 ###############
 n <- 500
-mcmc <- list(nburn=20000, nskip=1, nsave=20000, ndisp=30000, arate=0.4)
+mcmc <- list(nburn=20000, nskip=1, nsave=20000, ndisp=30000, arate=0.2)
 b1 <- 1
 quan <- c(0.5,  0.9)
 p <- 0.5
@@ -81,7 +81,7 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
            coefptss5, coefptss9)
 }
 
-write.table(result, file="sim-result-0913-2.txt", row.names = F, col.names = F)
+write.table(result, file="sim-result-0916.txt", row.names = F, col.names = F)
 sendEmail(subject = "simulation", text = "done", address = "liuminzhao@gmail.com")
 
 
@@ -89,7 +89,7 @@ sendEmail(subject = "simulation", text = "done", address = "liuminzhao@gmail.com
 ###############
 ## TRUE VALUE
 ###############
-result <- read.table('sim-result-0913-2.txt')
+result <- read.table('sim-result-0916.txt')
 
 quan1 <- function(y, x, tau){
   return(tau - .5*pnorm(y, 2+x, 1 + alpha*x) - .5*pnorm(y, -2-x, 1 + alpha*x))
