@@ -149,7 +149,7 @@ section~\ref{sec:model}, we introduce the heterogeneity model and
 derive a closed form for marginalized posterior quantile regression
 parameter with mixture of \polya{} tree prior.  In
 section~\ref{sec:simulations}, we conduct some simulation studies and
-applies our approach on a real data example in
+apply our approach on a real data example in
 section~\ref{sec:tours}. Finally, conclusions and discussions are
 presented in section~\ref{sec:discussion}.
 
@@ -521,22 +521,15 @@ is given as
 \end{equation}
 where $\epsilon_i = (y_i - \bm{x_i'\beta})/(\bm{x_i'\gamma})$.
 
-For priors of $\sigma$ and $c$, we use gamma distributions with
-following parameters:
+For priors of $\sigma$ and $c$, we use diffuse gamma distributions,
 \begin{align*}
   \pi(\sigma) & \sim \Gamma (1/2, 1/2), \\
   \pi(c) & \sim \Gamma(1/2, 1/2).
 \end{align*}
-
-Priors for the parameters $(\bm{\beta}, \bm{\gamma})$ can be diffuse
-p-dimensional normal distributions. We specify diffuse gamma
-distributions for $\sigma$ and $c$. For shrinkage model, spike priors
-could be adopted to shrink the parameter estimates to pre-specified
-values. In addition, spike priors can also help variable selection in
-Bayesian model and shrink heterogeneity parameters toward zero to find
-homogeneous model. Moreover, spike and slab priors can help to
-accommodate zero-inflated situation and research hypothesis in
-variable selection.
+Priors for the parameters $(\bm{\beta}, \bm{\gamma})$ are diffuse
+p-dimensional normal distributions.  Spike priors on ($\bm \beta,
+\bm \gamma$) are an alternative to do variable selection on both
+quantile regression parameters and heterogeneity parameters.
 
 Here we put continuous spike and slab priors on $(\bm \beta, \bm
 \gamma)$ to shrink them toward zero for each component. The prior for
@@ -554,7 +547,7 @@ distribution at $x$ with mean $\mu$ and variance
 $\sigma^2$. $\beta_j^p, \sigma_{\beta_j}^2$ are the mean and variance
 of the diffuse normal prior for the slab component.
 $\delta_{\beta_j}$ is the indicator that $\beta_j$ comes from spike
-component or from slab component and $\pi_{\beta_j}$ is its
+component or from slab component and $\pi_{\beta_j}$ is its corresponding
 probability.  $s_j (>0)$ is small enough so that if $\delta_{\beta_j}
 = 1$, it indicates $|\beta_j | < 3 s_j\sigma_{\beta_j}$ with high
 probability, thus it can be approximately estimated as 0 and regarded
@@ -594,27 +587,53 @@ We use Metropolis-Hasting within Gibbs sampling algorithm to draw
 posterior samples. The full conditional distributions of ($\bm
 \beta|\bm \gamma, \sigma, c, \bm Y$), ($\bm \gamma|\bm \beta, \sigma,
 c, \bm Y$), ($\sigma|\bm \beta, \bm \gamma, c, \bm Y$), and ($c|\bm
-\beta, \bm \gamma, \sigma, \bm Y$) are proportional to equation~(\ref{eq:post}).
+\beta, \bm \gamma, \sigma, \bm Y$) are proportional to
+equation~(\ref{eq:post}).
 
-We use $\beta_j^* \sim N(\beta_j^{l-1}, t_{\beta_j} )$ as
-candidate distribution for $\beta_j$ in $l$-th iteration, where
-$t_{\beta_j}$ is the tuning parameter for $\beta_j$
-to adjust acceptance rate.  Similarly, we use $\gamma_j^* \sim
-N(\gamma_j^{l-1}, t_{\gamma_j})$ as candidate distribution
-for $\gamma_j$ in $l$-th iteration.  For baseline (centering) normal
+We use $\beta_j^* \sim N(\beta_j^{l-1}, t_{\beta_j}
+(\bm{X'X})^{-1}_{jj})$ as candidate distribution for $\beta_j$ in
+$l$-th iteration, where $t_{\beta_j}$ is the tuning parameter for
+$\beta_j$ to adjust acceptance rate \citep{jara2009}.  Similarly, we
+use $\gamma_j^* \sim N(\gamma_j^{l-1},
+t_{\gamma_j}(\bm{X'X})^{-1}_{jj})$ as candidate distribution for
+$\gamma_j$ in $l$-th iteration.  For baseline (centering) normal
 distribution parameter $\sigma$ ($\mu$ is fixed at 0 due to not
 confound with location parameter $\bm \beta$), we use the lognormal
 candidate distribution $\sigma^* \sim \LN(\log \sigma^{l-1},
 t_{\sigma})$. The same strategy is applied for \polya{} tree weight
 parameter $c$, where $c^* \sim \LN(\log c^{l-1}, t_c)$.
 
+When using spike and slab priors, we need to update ($\bm \beta|\bm
+\gamma, \sigma, c, \bm Y, \bm \delta_{\beta}, \bm \pi_{\beta}, \bm
+\delta_{\gamma}, \bm \pi_{\gamma}$), $\ldots$, $(\bm \delta_{\beta}|\bm
+\beta, \bm \pi_{\beta})$, $(\bm \delta_{\gamma}|\bm \gamma, \bm
+\pi_{\gamma})$, $(\bm \pi_{\beta}|\delta_{\beta})$ and $(\bm
+\pi_{\gamma}|\bm \delta_{\gamma})$.  By Bayes rule,
+\begin{align*}
+  \pr(\delta_{\beta_j}|\beta_j, \pi_{\beta_j}) & \propto \pr(\beta_j |
+  \delta_{\beta_j})
+  \pr(\delta_{\beta_j}|\pi_{\beta_j}) ,\\
+  \pr(\delta_{\beta_j} = 1|\beta_j, \pi_{\beta_j})& = A/(A + B),
+\end{align*}
+where $A = \pi_{\beta_j}\phi (\beta_j;0, s_j^2\sigma_{\beta_j}^2)$, $B
+= (1-\pi_{\beta_j})\phi(\beta_j, \beta_j^p, \sigma_{\beta_j}^2)$.  For
+($\pi_{\beta_j}|\delta_{\beta_j}$),
+\begin{align*}
+  \pr(\pi_{\beta_j}| \delta_{\beta_j}) & \propto \pr(\delta_{\beta_j}|\pi_{\beta_j}) \pr(\pi_{\beta_j}) ,\\
+  & = \pi_{\beta_j}^{\delta_{\beta_j}} (1 - \pi_{\beta_j})^{(1 - \delta_{\beta_j})} \pi_{\beta_j}^{1 - 1}(1 - \pi_{\beta_j})^{1-1}.\\
+  & \sim \mbox{Beta}(\delta_{\beta_j} + 1, 2 - \delta_{\beta_j}).
+\end{align*}
+For $\pi_{\gamma_j}$ and $\delta_{\gamma_j}$, sampling method is
+similar.
+
+
 For good MCMC mixing performance, we adjust the acceptance rate of the
-adaptive Metropolis-Hasting algorithm to around 0.4 for univariate
-sampling, 0.2 for multi-dimension sampling. Tuning parameters are
-increased when current acceptance proportion is larger than target
-optimal acceptance rate for every 100 iterations during burn-in
-period; and they are decreased when current acceptance proportion is
-less than target acceptance rate.
+adaptive Metropolis-Hasting algorithm to around 0.25 for univariate
+sampling. Tuning parameters are increased(decreased) by
+multiplying(dividing) $\delta(l) = \exp(0.01, l^{-1/2})$ when current
+acceptance proportion is larger(smaller) than target optimal
+acceptance rate for every 100 iterations during burn-in period, where
+$l$ is the number of current batches of 100 iterations \citep{jara2009}.
 
 For the quantile regression coefficients, which are functionals of
 ($\bm \beta, \bm \gamma, \sigma, c, \bm Y$), we calculate the
@@ -647,19 +666,23 @@ We generated data from the following 6 models,
   \epsilon_{3i}$,
 \item [M4H:] $y_i = 1 + x_{i1}\beta_1 + (1 + 0.2x_{i1})
   \epsilon_{4i}$,
+\item [M5:] $y_{i} | R_i = 1 \sim 2 + x_{i1} + \epsilon_{1i}, y_{i}|
+  R_i = 0 = -2 - x_{i1} + \epsilon_{1i}$,
 \end{itemize}
 where $x_{i1} \stackrel{\mbox{iid}}{\sim} \mathrm{N}(0,1),
 \epsilon_{1i} \sim \mathrm{N}(0,1), \epsilon_{2i} \sim t_3,
 \epsilon_{3i} \stackrel{\mbox{iid}}{\sim} 0.5 \times \mathrm{N}(-2,1)
-+ 0.5 \times \mathrm{N}(2,1)$ and $\epsilon_{4i} \sim 0.8 N(0,1) + 0.2
-N(3,3)$. In model 1 (M1), the error distribution coincides with
-baseline distribution. Model 2 (M2) has a heavier tail distribution,
-student-t distribution with 3 degrees of freedom. Model 3 (M3) has a
-bimodal distribution for the error term.  Model 4 (M4) uses a skewed
-mixture of normal distribution error introduced in
-\citet{reich2010}. Model 1H-4H (M1H-M4H) assume heterogeneous
-variances such that the quantiles lines are no long parallel to each
-other.
++ 0.5 \times \mathrm{N}(2,1)$, $\epsilon_{4i} \sim 0.8 N(0,1) + 0.2
+N(3,3)$ and $R_i \sim \mbox{Bernoulli}(0.5)$. In model 1 (M1), the
+error distribution coincides with baseline distribution. Model 2 (M2)
+has a heavier tail distribution, student-t distribution with 3 degrees
+of freedom. Model 3 (M3) has a bimodal distribution for the error
+term.  Model 4 (M4) uses a skewed mixture of normal distribution error
+introduced in \citet{reich2010}. Model 1H-4H (M1H-M4H) assume
+heterogeneous variances such that the quantiles lines are no long
+parallel to each other. Model 5 (M5) also assumes heterogeneity over
+covariate, but the heterogeneity comes from mixture of distributions
+instead of heterogeneous variance of errors.
 
 All covariates and error terms are mutually independent. All
 coefficients are set to be 1. For each model, we generate 100 data
@@ -667,13 +690,13 @@ sets with the sample size $n=500$. The quantiles estimated are 50\%,
 90\%.
 
 Each simulated data set is analyzed using the following four methods:
-RQ, FBQR, our proposed method using \polya{} trees (PT) with normal
-priors, and our proposed method with spike and slab priors (PTSS).  We
-used the default settings for RQ and FBQR.  For PT, we adopt the
-following prior specifications:
+RQ, FBQR, our proposed method with normal priors (PT), and our
+proposed method with spike and slab priors (PTSS).  We used the
+default settings for RQ and FBQR.  For PT, we adopt the following
+prior specifications:
 \begin{align*}
-  \pi(\beta_j) & \sim N(\bm \beta_j^p, \bm V_{jj}) , j = 0, 1, 2,\\
-  \pi(\gamma_j) & \sim N(0, 100), j = 1, 2\\
+  \pi(\beta_j) & \sim N(\bm \beta_j^p, \bm V_{jj}) , j = 0, 1,\\
+  \pi(\gamma_j) & \sim N(0, 100), j = 1,\\
   \pi(\sigma) & \sim \Gamma (a/2, b/2), \\
   \pi(c) & \sim \Gamma(a/2, b/2),
 \end{align*}
@@ -683,8 +706,8 @@ estimator, $\bm V = \hat{\sigma}^2\bm{(X'X)^{-1}}$, $\hat{\sigma}^2 =
 For PTSS, we used the same priors for $\sigma$ and $c$, but spike-slab
 priors for $\bm \beta$ and $\bm \gamma$:
 \begin{align*}
-  \pi(\beta_j) & \sim \delta_{\beta_j}N(0, s_j\bm V_{jj}) +  (1 - \delta_{\beta_j})N(\bm \beta_j^p, \bm V_{jj}) , j = 0, 1, 2,\\
-  \pi(\gamma_j) & \sim \delta_{\gamma_j}N(0, 100s_j) + (1 - \delta_{\gamma_j}) N(0, 100), j = 1, 2\\
+  \pi(\beta_j) & \sim \delta_{\beta_j}N(0, s_j\bm V_{jj}) +  (1 - \delta_{\beta_j})N(\bm \beta_j^p, \bm V_{jj}) , j = 0, 1, \\
+  \pi(\gamma_j) & \sim \delta_{\gamma_j}N(0, 100s_j) + (1 - \delta_{\gamma_j}) N(0, 100), j = 1, \\
   \delta_{\beta_j} & \sim \mbox{Bernoulli}(\pi_{\beta_j}) , \pi_{\beta_j} \sim \mbox{Beta}(1, 1),\\
   \delta_{\gamma_j} & \sim \mbox{Bernoulli}(\pi_{\gamma_j}),
   \pi_{\gamma_j} \sim \mbox{Beta}(1, 1).
@@ -694,7 +717,7 @@ And we choose $s_j = 1/1000$ from \cite{george1993}.
 A partial \polya{} tree with $M=6$ levels was adopted in the
 model. For Monte Carlo Markov chain parameter, 40,000 iterations of a
 single Markov chain were used, during which, 20,000 samples were saved
-after a burn-in period of 20,000 samples.  It takes around  250 seconds
+after a burn-in period of 20,000 samples.  It takes around 250 seconds
 for one simulation for PT under R version 2.15.3 (2013-03-01) and
 platform: x86\_64-apple-darwin9.8.0/x86\_64 (64-bit). Acceptance rates
 were set to approach 40\% for $\bm{\beta}$ and $\bm{\gamma}$
@@ -716,8 +739,8 @@ parameters. $\hat{\beta}_j(\tau)$ is the $j^{th}$ component of
 estimated quantile regression parameters. And we use the posterior
 mean as estimated parameters.
 
-Monte Carlo standard error (MCSE) is used to evaluate the significance
-of difference between methods. It is calculated by
+Monte Carlo standard errors (MCSE) are used to evaluate the
+``significance'' of the differences between methods,
 \begin{displaymath}
   \mbox{MCSE} = \hat{\mbox{sd}}(\mbox{Bias}^2)/\sqrt{N},
 \end{displaymath}
@@ -734,41 +757,48 @@ $\mbox{Bias} = \hat{\beta}_{j}(\tau) - \beta_{j}(\tau)$.
       PT, PTSS) stand for frequentist method \textit{rq} function from
       \textit{quantreg} R package, flexible Bayesian method by Reich, and
       our Bayesian approach using \polya{} tree with normal priors and with
-spike and slab priors.}
+      spike and slab priors.}
     \vspace{4mm}
     \tabcolsep = 0.11cm
     \begin{tabular}[tb]{c|llll|llll}
       \hline
-      & RQ            & FBQR         & PT          & PTSS        & RQ            & FBQR        & PT          & PTSS        \\
+                & RQ            & FBQR         & PT          & PTSS        & RQ            & FBQR        & PT          & PTSS        \\
       \hline
-      & M1 50\%       &              &             &             & M2 50\%       &             &             &             \\
+                & M1 50\%       &              &             &             & M2 50\%       &             &             &             \\
       $\beta_0$ & 1.04(0.15)    & 0.55(0.08)   & 0.53(0.08)  & 0.53(0.08)  & 1.32(0.17)    & 1.14(0.17)  & 2.20(0.32)  & 2.20(0.32)  \\
       $\beta_1$ & 3.66(0.46)    & 1.99(0.26)   & 2.03(0.30)  & 2.03(0.30)  & 4.34(0.51)    & 3.34(0.44)  & 6.31(0.82)  & 6.32(0.81)  \\
-      & M1 90\%       &              &             &             & M2 90\%       &             &             &             \\
+                & M1 90\%       &              &             &             & M2 90\%       &             &             &             \\
       $\beta_0$ & 2.51(0.31)    & 1.74(0.25)   & 1.68(0.21)  & 1.09(0.13)  & 7.56(0.92)    & 4.55(0.57)  & 6.55(0.80)  & 4.57(0.64)  \\
       $\beta_1$ & 6.59(0.98)    & 4.48(0.74)   & 4.09(0.65)  & 2.32(0.35)  & 17.43(2.23)   & 12.18(1.84) & 18.87(2.53) & 7.78(1.06)  \\
       \hline
-      & M1H 50\%       &              &             &             & M2H 50\%       &             &             &             \\
+                & M1H 50\%      &              &             &             & M2H 50\%      &             &             &             \\
       $\beta_0$ & 1.28(0.17)    & 0.83(0.09)   & 0.85(0.10)  & 0.85(0.10)  & 1.61(0.27)    & 1.27(0.21)  & 1.85(0.26)  & 1.83(0.26)  \\
       $\beta_1$ & 4.86(0.66)    & 2.82(0.38)   & 2.95(0.39)  & 2.95(0.39)  & 5.02(0.82)    & 3.88(0.66)  & 5.56(0.79)  & 5.58(0.77)  \\
-      & M1H 90\%       &              &             &             & M2H 90\%       &             &             &             \\
+                & M1H 90\%      &              &             &             & M2H 90\%      &             &             &             \\
       $\beta_0$ & 3.39(0.44)    & 20.59(18.52) & 2.37(0.34)  & 1.96(0.32)  & 6.80(0.99)    & 4.35(0.58)  & 7.98(1.14)  & 8.01(1.30)  \\
       $\beta_1$ & 10.49(1.27)   & 6.45(0.96)   & 6.68(0.99)  & 5.79(0.88)  & 25.33(3.63)   & 16.44(2.70) & 29.19(5.18) & 24.73(8.64) \\
       \hline
-      & M3 50\%       &              &             &             & M4 50\%       &             &             &             \\
+                & M3 50\%       &              &             &             & M4 50\%       &             &             &             \\
       $\beta_0$ & 41.54(4.71)   & 9.22(1.20)   & 4.32(0.54)  & 4.34(0.55)  & 1.91(0.27)    & 1.31(0.18)  & 10.43(0.88) & 10.46(0.88) \\
       $\beta_1$ & 127.67(14.39) & 9.30(1.52)   & 9.66(1.17)  & 9.94(1.43)  & 5.94(0.85)    & 3.71(0.55)  & 6.69(0.92)  & 6.58(0.92)  \\
-      & M3 90\%       &              &             &             & M4 90\%       &             &             &             \\
+                & M3 90\%       &              &             &             & M4 90\%       &             &             &             \\
       $\beta_0$ & 4.80(0.56)    & 2.75(0.35)   & 5.53(0.59)  & 4.46(0.53)  & 31.30(4.85)   & 10.60(1.40) & 19.08(2.76) & 16.43(2.28) \\
       $\beta_1$ & 15.91(1.86)   & 8.75(1.05)   & 18.11(2.03) & 14.03(1.70) & 99.78(12.83)  & 20.51(2.88) & 32.81(4.18) & 15.43(2.32) \\
       \hline
-      & M3H 50\%       &              &             &             & M4H 50\%       &             &             &             \\
+                & M3H 50\%      &              &             &             & M4H 50\%      &             &             &             \\
       $\beta_0$ & 41.12(5.37)   & 8.22(1.05)   & 4.21(0.77)  & 4.28(0.77)  & 2.41(0.27)    & 2.00(0.23)  & 9.55(0.98)  & 9.67(0.99)  \\
       $\beta_1$ & 116.71(17.10) & 8.15(1.60)   & 9.12(1.35)  & 10.26(1.83) & 7.38(0.87)    & 5.65(0.69)  & 8.59(1.09)  & 9.42(1.47)  \\
-      & M3H 90\%       &              &             &             & M4H 90\%       &             &             &             \\
+                & M3H 90\%      &              &             &             & M4H 90\%      &             &             &             \\
       $\beta_0$ & 4.42(0.69)    & 2.94(0.45)   & 4.66(0.72)  & 4.56(0.89)  & 30.12(3.05)   & 12.76(1.76) & 21.54(2.80) & 28.64(3.25) \\
       $\beta_1$ & 13.51(1.84)   & 8.64(1.28)   & 15.16(2.07) & 15.32(2.48) & 106.58(11.87) & 20.95(3.33) & 36.07(4.88) & 27.91(3.80) \\
       \hline
+                & M5 50\%       &              &             &             &               &             &             &             \\
+      $\beta_0$ & 73.17(9.26)   & 42.00(5.46)  & 4.88(0.77)  & 2.26(0.59)  &               &             &                           \\
+      $\beta_1$ & 135.41(7.05)  & 10.05(2.04)  & 0.73(0.10)  & 0.41(0.11)  &               &             &                           \\
+                & M5 90\%       &              &             &             &               &             &             &             \\
+      $\beta_0$ & 3.09(0.40)    & 3.60(0.64)   & 8.15(1.07)  & 6.95(0.85)  &               &             &                           \\
+      $\beta_1$ & 0.51(0.07)    & 1.00(0.15)   & 1.88(0.26)  & 1.59(0.20)  &               &             &                           \\
+\hline
     \end{tabular}
     \label{tab:m1}
   \end{table}
@@ -778,22 +808,30 @@ spike and slab priors.}
 The simulation results are shown in Table~\ref{tab:m1}.  In model 1
 (M1), when the error is homogeneous and distributed as standard normal
 distribution, which coincides with \polya{} tree baseline measure, RQ
-has larger MSE than FBQR, PT, and PTSS is even better than PT and FBQR
-since its prior shrunk the heterogeneity parameters toward zero.
+has a larger MSE than FBQR, PT. And PTSS performed best since its
+prior shrunk the heterogeneity parameters toward zero.
 
-When considering heterogeneity factor in model 1 (M1H), PT and PTSS
-still show advantages over RQ and FBQR, especially FBQR is problematic
-when estimating 90\% quantile regression.
+When considering heterogeneity in model 1 (M1H), PT and PTSS still
+perform well versus RQ and FBQR. FBQR has problems when estimating
+90\% quantile regression. Huge MSE is caused by particular outliers of
+estimates. After removing the outliers by trimming 5\%, FBQR has the
+smallest MSE.
 
 In model 2, 3, 4 and 2H, 3H, 4H, when error is homogeneous or
-heterogenous, and comes from a mixture of normal distributions (even
-student t distribution can be regarded as a mixture of normal
-distributions), FBQR shows great advantage in terms of MSE, because
-simulated models coincide the models in FBQR approach. Except FBQR, PT
-and PTSS have competitive MSE with RQ method, and even around
-one-tenth of the MSE of RQ in scenario Model 3 median regression and
-model 3 heterogeneity scenario median regression. The similar
-situation happened in M4 and M4H model 90\% quantile regression.
+heterogeneous, and is from a mixture of normals (student t
+distribution can be regarded as a mixture of normals), FBQR does well
+in terms of MSE, because simulated models coincide the models in FBQR
+approach. Except FBQR, PT and PTSS have competitive MSE with RQ
+method, and even around one-tenth of the MSE of RQ in scenario Model 3
+median regression and model 3 heterogeneity scenario median
+regression. The similar situation happened in M4 and M4H model 90\%
+quantile regression.
+
+In model 5, the heterogeneity comes from the mixture of distributions.
+Mode of error distribution is no longer at median for RQ and FBQR,
+thus leading to large MSE. Although PT and PTSS have larger MSE than RQ
+and BQR in 90\% quantile, the deficit is offset by much smaller bias in 50\%
+quantile regression.
 
 To sum up, where the error is distributed as a bimodal distribution (a
 mixture of normal distributions), the RQ method performs poorly in
@@ -801,14 +839,14 @@ terms of MSE since the mode of the error is no longer the quantile of
 interest. In contrast, PT is not impacted by lack of unimodality and
 heterogeneity and provides more information for the relationship
 between responses and covariates. FBQR outperforms PT, since the error
-is assigned an infinite mixture of normal distribution in his
-model. Less information is available from our approach to detect the
-shape at a particular extreme percentile of the distribution since
-there are few observations at extreme quantiles. However, PT and PTSS
-can fit simultaneously multiple quantile regressions and provide
-coherent information about the error distribution. Meanwhile, quantile
-lines would not be crossed by our method.  We also expect to see
-advantages when dimension of responses is bivariate or more.
+is assigned an infinite mixture of normal distribution in FBQR. Less
+information is available from our approach to detect the shape at a
+particular extreme percentile of the distribution since there are few
+observations at extreme quantiles. However, PT and PTSS can fit
+simultaneously multiple quantile regressions and provide coherent
+information about the error distribution. Meanwhile, quantile lines do
+not cross using our method.  We also expect to see advantages when
+dimension of responses is bivariate or more.
 
 
 \section{Analysis of the Tours Data}
@@ -818,17 +856,17 @@ examine the quantiles of 6 month weight loss from a recent weight
 management study \citep{perri2008extended}.  This trial was designed
 to test whether a lifestyle modification program could effectively
 help people to manage their weights in the long term.  In particular,
-we are interested in the effects of age and race.  The response of
-interest is the weight loss from baseline to 6 months later. The age
-of the subjects ranged from 50 to 75, and there were 43 people with
-race classified as black and 181 people as white.  Our goal is to
-determine how the percentiles of weight change are affected by their
-age and race.  ``Age'' covariate are scaled to 0 to 5 with every
-increment representing 5 years.
+we are interested in the effects of age and race.  We focus on the
+weight loss from baseline to 6 months later. The age of the subjects
+ranged from 50 to 75, and there were 43 people with race classified as
+black and 181 people as white.  Our goal is to determine how the
+percentiles of weight change are affected by their age and race.
+``Age'' covariate are scaled to 0 to 5 with every increment
+representing 5 years.
 
 We fitted regression models for quantiles (10\%, 30\%, 50\%, 70\%,
-90\%). And we used Bayesian posterior samples to build 95\% credible
-intervals.
+90\%). And we used Bayesian posterior samples to construct 95\%
+credible intervals.
 
 \begin{figure}[htbp]
   \centerline{\includegraphics[scale = 0.4]{../image/weight-age-race}}
@@ -840,65 +878,87 @@ intervals.
 
 \begin{table}[h]
   \caption[]{\label{tab:tours} 95\% credible (confidence) intervals for
-    quantile regression parameters for tours dataset. RQ stands for the
-    traditional frequentist approach from quantreg package \citep{quantreg}, FBQR stands for method introduced in \cite{reich2010},
-    PT is our proposed \polya{} trees approach with normal priors and PTSS stands for
+    quantile regression parameters for TOURS. RQ is  the
+    traditional frequentist approach using the quantreg package \citep{quantreg}, FBQR, method introduced in \cite{reich2010},
+    PT, our proposed \polya{} trees approach with normal priors, and PTSS,
     \polya{} trees approach with spike-slab priors .}
   \vspace{4mm}
 
   \centering
   \begin{tabular}[tb]{l|l|l|l|l}
     \toprule
-    Term  & RQ                   & FBQR                 & PT                   & PTSS                 \\
+    Term      & PT                  & PTSS               & RQ                  & FBQR                 \\
     \hline
-    10\%  &                      &                      &                      &                      \\
-    Intercept & 2.20 (1.39, 4.63)    & 2.16 (0.11, 4.07)    & 2.72 (1.21, 4.17)    & 1.44 (0.15, 2.59)    \\
-    Age       & -0.25 (-0.73, 0.16)  & -0.43 (-1.17, 0.24)  & -0.63 (-1.16, -0.15) & -0.12 (-0.53, 0.24)  \\
-    Race      & 2.40 (-0.23, 3.92)   & 2.88 (0.99, 5.34)    & 2.70 (1.25, 4.28)    & 3.19 (1.98, 4.54)    \\
+    10\%      &                     &                    &                     &                      \\
+    Intercept & 2.64(1.03, 4.17)    & 2.06(0.46, 3.39)   & 2.20(1.39, 4.63)    & 1.99(-0.61, 3.79)    \\
+    Age       & -0.58(-1.20, -0.04) & -0.54(-1.12, 0.01) & -0.25(-0.73, 0.16)  & -0.45(-1.23, 0.23)   \\
+    Race      & 2.67(1.15, 4.46)    & 3.32(2.09, 4.82)   & 2.40(-0.23, 3.92)   & 3.27(1.32, 5.50)     \\
     \hline
-    30\%      &                      &                      &                      &                      \\
-    Intercept & 5.56 (4.83, 6.52)    & 5.22 (3.62, 6.79)    & 5.68 (4.75, 6.63)    & 4.84 (3.99, 5.66)    \\
-    Age       & -0.66 (-1.28, 0.05)  & -0.46 (-1.00, 0.09)  & -0.53 (-0.78, -0.30) & -0.04 (-0.20, 0.09)  \\
-    Race      & 3.74 (2.04, 4.42)    & 3.56 (1.98, 5.24)    & 3.37 (2.34, 4.50)    & 3.51 (2.48, 4.53)    \\
+    30\%      &                     &                    &                     &                      \\
+    Intercept & 5.63(4.60, 6.64)    & 5.40(4.30, 6.38)   & 5.56(4.83, 6.52)    & 5.30(3.87, 6.83)     \\
+    Age       & -0.47(-0.89, -0.11) & -0.44(-0.84, -0.01)& -0.66(-1.28, 0.05)  & -0.47(-1.03, 0.03)   \\
+    Race      & 3.32(2.22, 4.55)    & 3.58(2.57, 4.77)   & 3.74(2.04, 4.42)    & 3.70(2.04, 5.17)     \\
     \hline
-    50\%      &                      &                      &                      &                      \\
-    Intercept & 7.83 (5.42, 9.09)    & 7.65 (5.99, 9.23)    & 7.51 (6.55, 8.44)    & 6.90 (6.01, 7.80)    \\
-    Age       & -0.57 (-1.04, 0.14)  & -0.51 (-1.06, 0.03)  & -0.46 (-0.60, -0.32) & -0.00 (-0.00, 0.00)  \\
-    Race      & 3.53 (2.52, 5.46)    & 3.86 (2.36, 5.46)    & 3.79 (2.88, 4.84)    & 3.70 (2.62, 4.63)    \\
+    50\%      &                     &                    &                     &                      \\
+    Intercept & 7.47(6.43, 8.46)    & 7.43(6.27, 8.49)   & 7.83(5.42, 9.09)    & 7.42(5.88, 9.07)     \\
+    Age       & -0.40(-0.76, -0.08) & -0.39(-0.75, 0.00) & -0.57(-1.04, 0.14)  & -0.48(-1.01, 0.03)   \\
+    Race      & 3.72(2.75, 4.80)    & 3.74(2.79, 4.85)   & 3.53(2.52, 5.46)    & 3.90(2.41, 5.43)     \\
     \hline
-    70\%      &                      &                      &                      &                      \\
-    Intercept & 9.70 (7.95, 12.39)   & 9.89 (8.23, 11.70)   & 9.86 (8.79, 11.07)   & 9.60 (8.72, 10.58)   \\
-    Age       & -0.69 (-1.12, 0.20)  & -0.54 (-1.13, 0.07)  & -0.37 (-0.65, -0.11) & 0.06 (-0.12, 0.26)   \\
-    Race      & 4.80 (2.11, 6.61)    & 4.30 (2.46, 5.87)    & 4.32 (3.20, 5.52)    & 3.96 (2.73, 4.92)    \\
+    70\%      &                     &                    &                     &                      \\
+    Intercept & 9.86(8.80, 11.10)   & 10.09(8.96, 11.30) & 9.70(7.95, 12.39)   & 10.04(8.28, 12.04)   \\
+    Age       & -0.32(-0.78, 0.06)  & -0.31(-0.77, 0.11) & -0.69(-1.12, 0.20)  & -0.59(-1.19, 0.04)   \\
+    Race      & 4.25(3.09, 5.41)    & 3.96(2.92, 5.13)   & 4.80(2.11, 6.61)    & 4.16(2.27, 5.90)     \\
     \hline
-    90\%      &                      &                      &                      &                      \\
-    Intercept & 12.61 (11.48, 15.27) & 14.07 (11.75, 17.45) & 12.90 (11.33, 14.67) & 12.91 (11.72, 14.37) \\
-    Age       & -0.71 (-1.59, -0.05) & -0.55 (-1.36, 0.30)  & -0.25 (-0.81, 0.28)  & 0.13 (-0.26, 0.60)   \\
-    Race      & 6.08 (2.48, 6.85)    & 4.30 (1.21, 6.74)    & 5.01 (3.33, 6.71)    & 4.27 (2.73, 5.44)    \\
+    90\%      &                     &                    &                     &                      \\
+    Intercept & 12.91(11.38, 14.81) & 13.48(11.99, 15.10)& 12.61(11.48, 15.27) & 13.86(11.08, 16.26)  \\
+    Age       & -0.21(-0.91, 0.38)  & -0.21(-0.89, 0.34) & -0.71(-1.59, -0.05) & -0.56(-1.55, 0.52)   \\
+    Race      & 4.91(3.25, 6.55)    & 4.22(2.95, 5.57)   & 6.08(2.48, 6.85)    & 4.77(1.78, 7.08)     \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Results appear in Table~\ref{tab:tours}.  Whites generally lose more
-weight than blacks. The difference is not significant for the least
-successful weight loss (10 \% percentile) shown by RQ, but is reported
-as significant by FBQR, PT and PTSS. The differential becomes larger
-when comparing more successful weight losers (30\% - 90\%
-percentile). For example, whites lose 6.08 kg more than blacks among
-people losing most weights (90\%) reported from method RQ (4.30 kg
-from FBQR, 5.01 kg and 4.27 kg from PT and PTSS).
+Results appear in Table~\ref{tab:tours}.  Whites lost more weight than
+blacks for all quantiles.  The differential is reported as significant
+by PT and PTSS, and becomes larger when comparing more successful
+weight losers (70\% - 90\% percentile). For example, whites lost 4.91
+kg more than blacks among people losing the most weight (90\%)
+reported from method PT (4.22 kg from PTSS).
 
-The effect of age on the weight loss is tiny and not significant in
-most cases (only significant in 90\% quantile regression by RQ and
-10\% - 70\% by PT). The trend is negative showing that elder people
-tend to lose less weight. For example, people lose 0.57 kg less weight
-for every 5 years older reported by PT.
+The effect of age on the weight loss is small and not significant in
+most cases (only bare significant in 30\% quantile regression by
+PTSS).  The trend is negative showing that older people tend to lose
+less weight. For example, median weight loss is 0.40 kg less for every
+increase in 5 years reported by PT.
 
-PTSS tends to shrink coefficients toward zero. For example,
-coefficients of AGE were shrunk toward zero, thus was not significant
-for all quantiles. It can help to select variables in Bayesian
-models. For example, we can exclude AGE out of the regressors or
-conclude the variance is homogeneous on the AGE covariates.
+PTSS tends to shrink coefficients toward zero. For example, posterior
+probability that $\beta_{\mbox{AGE}}$ is zero is 6\%.  Moreover,
+posterior probability that the heterogeneity parameters are zero are
+all 100\%, indicating there is no heterogeneity for covariates AGE and
+RACE.  It can help to select variables in Bayesian models. For
+example, we can exclude AGE out of the regressors or conclude the
+variance is homogeneous on the AGE covariates.
+
+\subsection{Comparison to FBQR and RQ}
+
+Results from method RQ and FBQR show similar conclusions as PT and
+PTSS.  But there are still differences on the estimates and
+significance.
+
+For 10\% quantile, FBQR shows that the intercept is a significant
+effect on weight loss, but other three methods do not. RQ reports Race
+is not an significant factor, which contradicts other three methods.
+
+For 30\% quantile, it does not show Age is a significant factor on
+weight loss from RQ and FBQR. However, both PT and PTSS report Age has
+a significant negative effect.
+
+For 50\% and 70\% quantile, four methods have some differences on the
+estimates, but they all have agreements on the significances of the
+covariates.
+
+For 90\% quantile, RQ methods show different results than others. Age
+is reported as significant to affect weight loss, while other methods
+show Age does not affect the 90\% quantile for weight loss.
 
 \section{Discussion}
 \label{sec:discussion}
