@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/06/2013 11:58:42>
+##' Time-stamp: <liuminzhao 09/19/2013 22:56:24>
 ##' 2013/08/31 simulation M1H normal
 ##' 2013/09/03 new
 
@@ -89,7 +89,7 @@ library(xtable)
 ## MSE
 mse <- rep(0, 16)
 for (i in 1:16){
-  mse[i] <- mean((result[,i] - truebetatau[i])^2)*100
+  mse[i] <- mean((result[,i] - truebetatau[i])^2, trim = 0.05)*100
 }
 mse <- matrix(mse, 4, 4)
 colnames(mse) <- c('RQ', 'BQR', 'PT', 'PTSS')
