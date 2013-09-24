@@ -1,9 +1,9 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/06/2013 11:36:19>
+##' Time-stamp: <liuminzhao 09/24/2013 00:25:54>
 ##' 2013/08/31 simulation M1
 ##' 2013/09/03 new
 
-sink('sim-m1-0903.txt')
+sink('sim-m1-0924.txt')
 rm(list = ls())
 library(bqrpt)
 library(quantreg)
@@ -21,7 +21,8 @@ set.seed(1)
 ## PARAMETERS
 ###############
 n <- 500
-mcmc <- list(nburn=20000, nskip=1, nsave=20000, ndisp=30000, arate=0.4)
+tuneinit <- c(0.3, 0.3, 1, 0.3, 0.04, 0.1)
+mcmc <- list(nburn=30000, nskip=5, nsave=30000, ndisp=10000, arate=0.2, tuneinit = tuneinit)
 b1 <- 1
 quan <- c(0.5, 0.9)
 ###############
@@ -33,7 +34,7 @@ start <- proc.time()[3]
 
 result <- foreach(icount(boot), .combine=rbind) %dopar% {
 
-  x1 <- runif(n)
+  x1 <- runif(n, max = 4)
   e1 <- rnorm(n)
 
   y1 <- 1 + x1*b1 + e1
@@ -49,10 +50,10 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
   modbqr9 <- BayesQReg(y1, X, 0.9)
 
   ## pt
-  modpt <- HeterPTlm(y1, X, mcmc = mcmc, quan = quan, prior = list(maxm = 6))
+  modpt <- HeterPTlmMH(y1, X, mcmc = mcmc, quan = quan, prior = list(maxm = 6))
 
   ## pt ss
-  modptss <- HeterPTlm(y1, X, mcmc = mcmc, quan = quan, prior = list(maxm = 6), method = 'ss')
+  modptss <- HeterPTlmMH(y1, X, mcmc = mcmc, quan = quan, prior = list(maxm = 6), method = 'ss')
 
   ## coef
   coefrq5 <- coef(modrq5)
@@ -73,7 +74,7 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
            coefptss5, coefptss9)
 }
 
-write.table(result, file="sim-m1-result-0903.txt", row.names = F, col.names = F)
+write.table(result, file="sim-m1-result-0924.txt", row.names = F, col.names = F)
 sendEmail(subject = "simulation-m1", text = "done", address = "liuminzhao@gmail.com")
 
 
@@ -81,7 +82,7 @@ sendEmail(subject = "simulation-m1", text = "done", address = "liuminzhao@gmail.
 ###############
 ## TRUE VALUE
 ###############
-result <- read.table('sim-m1-result-0903.txt')
+result <- read.table('sim-m1-result-0924.txt')
 truebetatau5 <- c(1,1)
 truebetatau9 <- c(1+qnorm(0.9),1)
 truebetatau <- rep(c(truebetatau5, truebetatau9), 4)
