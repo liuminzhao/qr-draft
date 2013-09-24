@@ -25,7 +25,7 @@ rMN <-function(n){
 ###############
 ## PARAMETERS
 ###############
-n <- 500
+n <- 200
 tuneinit <- c(0.3, 0.3, 1, 0.3, 0.04, 0.1)
 mcmc <- list(nburn=30000, nskip=5, nsave=30000, ndisp=10000, arate=0.2, tuneinit = tuneinit)
 
