@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/14/2013 20:49:06>
+##' Time-stamp: <liuminzhao 09/25/2013 16:28:11>
 ##' manipulate data TOURS
 ##' 2013/06/05 focus on AGE and RACE
 ##' 2013/06/22 add baseline y0 as a covariate
@@ -52,13 +52,15 @@ dev.off()
 ###############
 ## ANALYSIS
 ###############
-mcmc <- list(nburn=30000, nskip=1, nsave=30000, ndisp=10000, arate=0.2)
-## mcmc <- list(nburn=30000, nskip=1, nsave=30000, ndisp=10000, arate=0.4)
+p <- dim(X)[2]
+tuneinit <- c(rep(0.3,p),1, c(0.3, p-1), 0.04, 0.1)
+mcmc <- list(nburn=30000, nskip=5, nsave=30000, ndisp=10000, arate=0.2, tuneinit = tun\
+einit)
 quan <- c(0.1, 0.3, 0.5, 0.7, 0.9)
 
-modss <- HeterPTlm(y, X, mcmc = mcmc, quan = quan, den = TRUE, method = 'ss')
+modss <- HeterPTlmMH(y, X, mcmc = mcmc, quan = quan, den = TRUE, method = 'ss')
 
-mod <- HeterPTlm(y, X, mcmc = mcmc, quan = quan, den = TRUE, method = 'normal')
+mod <- HeterPTlmMH(y, X, mcmc = mcmc, quan = quan, den = TRUE, method = 'normal')
 
 summary(mod)
 summary(modss)
@@ -109,13 +111,13 @@ cimodbqr <- cbind(coefmodbqr, cimodbqrlbd, cimodbqrubd)
 
 ## put together
 
-totalci <- cbind(cimodrq, cimodbqr, cimod, cimodss)
+totalci <- cbind(cimod, cimodss, cimodrq, cimodbqr)
 
 ## posterior prob of coefficient are zero for each quantile
 zero <- rbind(coef(modss)$deltabetaprop, coef(modss)$deltagammaprop)
 
 library(xtable)
-sink('tours-result-0914.txt')
+sink('tours-result-0925.txt')
 print(xtable(totalci))
 print(xtable(zero))
 sink()
