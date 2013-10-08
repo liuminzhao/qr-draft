@@ -96,7 +96,7 @@ mse <- rep(0, msedim)
 for (i in 1:msedim){
   mse[i] <- mean((result[,i] - truebetatau[i])^2)*100
 }
-mse <- matrix(mse, dim(X)[2]*2, 4)
+mse <- matrix(mse, 3*2, 4)
 colnames(mse) <- c('RQ', 'BQR', 'PT', 'PTSS')
 print(xtable(mse))
 print(mse)
@@ -106,13 +106,13 @@ mcse <- rep(0, msedim)
 for (i in 1:msedim){
   mcse[i] <- sd((result[,i] - truebetatau[i])^2)/sqrt(boot) * 100
 }
-mcse <- matrix(mcse, dim(X)[2]*2, 4)
+mcse <- matrix(mcse, 3*2, 4)
 colnames(mcse) <- c('RQ', 'BQR', 'PT', 'PTSS')
 print(xtable(mcse))
 print(mcse)
 
 ## combine mse and MCSE
-msemcse <- matrix(0, dim(X)[2]*2, 8)
+msemcse <- matrix(0, 3*2, 8)
 for (i in 1:4){
   msemcse[, i*2 - 1] <- mse[, i]
   msemcse[, i*2] <- mcse[, i]
@@ -125,7 +125,7 @@ bias <- rep(0, msedim)
 for (i in 1:msedim){
   bias[i] <- mean((result[,i] - truebetatau[i]))*100
 }
-bias <- matrix(bias, dim(X)[2]*2, 4)
+bias <- matrix(bias, 3*2, 4)
 colnames(bias) <- c('RQ', 'BQR', 'PT', 'PTSS')
 print(xtable(bias))
 print(bias)
