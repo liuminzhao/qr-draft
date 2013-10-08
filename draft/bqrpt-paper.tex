@@ -527,7 +527,7 @@ For priors of $\sigma$ and $c$, we use diffuse gamma distributions,
   \pi(c) & \sim \Gamma(1/2, 1/2).
 \end{align*}
 Priors for the parameters $(\bm{\beta}, \bm{\gamma})$ are diffuse
-p-dimensional normal distributions.  Spike priors on ($\bm \beta,
+p-dimensional normal distributions.  Spike and slab priors on ($\bm \beta,
 \bm \gamma$) are an alternative to do variable selection on both
 quantile regression parameters and heterogeneity parameters and
 improve efficiency.
@@ -683,9 +683,9 @@ of freedom. Model 3 (M3) has a bimodal distribution for the error
 term.  Model 4 (M4) uses a skewed mixture of normal distribution error
 introduced in \citet{reich2010}. Model 1H-4H (M1H-M4H) assume
 heterogeneous variances such that the quantiles lines are no long
-parallel to each other. Model 5 (M5) also assumes heterogeneous variance,
-but the heterogeneity comes from the mixture of distributions
-instead of heterogeneous variance from covariates.
+parallel to each other. The heterogeneity in model 5 (M5)
+ comes from the mixture of distributions
+not from heterogeneous covariates.
 
 All covariates and error terms are mutually independent. All
 coefficients are set to be 1. For each model, we generate 100 data
@@ -850,7 +850,7 @@ quantiles and coefficients, may reflect PT and PTSS have advantages
 when error distribution is away from regular unimodal shape as in
 model 3 (M3 and M3H) and model 5 (M5).  Meanwhile, quantile lines do
 not cross using our method.  We also expect to see advantages when
-dimension of responses is bivariate or more.
+dimension of responses is larger than one.
 
 
 \section{Analysis of the Tours Data}
@@ -938,30 +938,10 @@ PTSS tends to shrink coefficients toward zero. For example, the
 posterior probability that the heterogeneity parameters are zero are
 all 100\% for Age and 99\% for Race, indicating there is no
 heterogeneity for covariates AGE and RACE. This can help to select
-variables in Bayesian models. For example, we can exclude AGE out of
-the regressors or conclude the variance is homogeneous on the AGE
-covariate.
+variables and increase efficiency in Bayesian models. For example, we
+can exclude AGE out of the regressors and conclude the variance is
+homogeneous on the AGE covariate.
 
-\subsection{Comparison to FBQR and RQ}
-
-Results from method RQ and FBQR show similar conclusions as PT and
-PTSS.  But there are still differences on the estimates and
-statistical significance.
-
-For 10\% quantile, RQ reports Race is not an significant factor, which
-differs from the other three methods.
-
-For 30\% quantile, Age is not significant factor on weight loss from
-RQ and FBQR. However, both PT and PTSS report Age has a significant
-negative effect.
-
-For 50\% and 70\% quantile, the four methods have some differences on
-the estimates, but they all have agreements on the significances of
-the covariates.
-
-For 90\% quantile, RQ method provides different results than
-others. Age is reported as significant on weight loss, while the other
-methods show Age does not affect the 90\% quantile for weight loss.
 
 \section{Discussion}
 \label{ch2:sec:discussion}
@@ -972,9 +952,12 @@ density function of the \polya{} tree distribution, quantiles of
 interest can be obtained in closed form by inverting the predictive
 cumulative distribution. Exact posterior inference can be made via
 MCMC. Here, quantile lines cannot cross since quantiles are estimated
-through density estimation. The simulations show our method performs
-better than the frequentist approach especially when the error is
-multimodal and highly skewed.  We also applied and illustrated our
+through density estimation. The simulations show advantages of our
+method in some cases especially when the error is multimodal and
+highly skewed.  For multiple quantiles of interest, our method only
+needs one model to fit all and avoid crossing quantile curves, while
+FBQR and RQ need separate models assuming different error distribution
+for each quantile regression.  We also applied and illustrated our
 approach on the Tours data exploring the relationship between
 quantiles of weight loss and age and race.
 
