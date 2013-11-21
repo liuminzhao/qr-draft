@@ -67,3 +67,7 @@ R/sim*.txt
 /image/weight-age-race3.png
 /image/weight-age.png
 /image/weight-race.png
+/R/auto/shrinkage.el
+*.el
+/R/shrinkage.pdf
+/R/shrinkage.tex
