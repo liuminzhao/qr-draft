@@ -368,8 +368,8 @@ marginalizing out $G$, is
 \begin{equation}
   \label{ch2:eq:pred}
   f_Y^{\theta} (y|y_1, \ldots, y_n)  = \lim_{m \to \infty} \left(
-    \prod_{j=2}^m \frac{cj^2 + n_{\epsilon_1 \cdots \epsilon_j(x) }(y_1, \ldots, y_n)}{2cj^2
-      + n_{\epsilon_1 \cdots \epsilon_{j-1}(x)}(y_1, \ldots, y_n)}
+    \prod_{j=2}^m \frac{cj^2 + n_{\epsilon_1 \cdots \epsilon_j(y) }(y_1, \ldots, y_n)}{2cj^2
+      + n_{\epsilon_1 \cdots \epsilon_{j-1}(y)}(y_1, \ldots, y_n)}
   \right)2^{m-1} g_0(y),
 \end{equation}
 where $n_{\epsilon_1 \cdots \epsilon_j(x) }(y_1, \ldots, y_n)$
@@ -386,8 +386,8 @@ the first level.
   \begin{equation}
     \label{ch2:eq:predf}
     f_Y^{\theta, M} (y|y_1, \ldots, y_n)  =  \left(
-      \prod_{j=2}^M \frac{cj^2 + n_{\epsilon_1 \cdots \epsilon_j(x) }(y_1, \ldots, y_n)}{2cj^2
-        + n_{\epsilon_1 \cdots \epsilon_{j-1}(x)}(y_1, \ldots, y_n)}
+      \prod_{j=2}^M \frac{cj^2 + n_{\epsilon_1 \cdots \epsilon_j(y) }(y_1, \ldots, y_n)}{2cj^2
+        + n_{\epsilon_1 \cdots \epsilon_{j-1}(y)}(y_1, \ldots, y_n)}
     \right)2^{M-1} g_0(y).
   \end{equation}
   The rule of thumb for choosing $M$ is to set $M=\log_2n$, where $n$
