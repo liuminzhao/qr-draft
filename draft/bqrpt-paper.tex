@@ -849,8 +849,9 @@ method over multiple quantiles, such as summation of MSE over all
 quantiles and coefficients, may reflect PT and PTSS have advantages
 when error distribution is away from regular unimodal shape as in
 model 3 (M3 and M3H) and model 5 (M5).  Meanwhile, quantile lines do
-not cross using our method.  We also expect to see advantages when
-dimension of responses is larger than one.
+not cross using our method, while we observed crossing quantile lines
+from FBQR method for certain quantiles of interest.  We also expect to
+see advantages when dimension of responses is larger than one.
 
 
 \section{Analysis of the Tours Data}
@@ -951,15 +952,17 @@ estimating heterogeneity parameters. By marginalizing the predictive
 density function of the \polya{} tree distribution, quantiles of
 interest can be obtained in closed form by inverting the predictive
 cumulative distribution. Exact posterior inference can be made via
-MCMC. Here, quantile lines cannot cross since quantiles are estimated
-through density estimation. The simulations show advantages of our
-method in some cases especially when the error is multimodal and
-highly skewed.  For multiple quantiles of interest, our method only
-needs one model to fit all and avoid crossing quantile curves, while
-FBQR and RQ need separate models assuming different error distribution
-for each quantile regression.  We also applied and illustrated our
-approach on the Tours data exploring the relationship between
-quantiles of weight loss and age and race.
+MCMC. In addition, traditional frequentist method and FBQR show
+crossing quantile lines for both simulated data and real data
+set. However, quantile lines from our method cannot cross since
+quantiles are estimated through density estimation. The simulations
+show advantages of our method in some cases especially when the error
+is multimodal and highly skewed.  For multiple quantiles of interest,
+our method only needs one model to fit all and avoid crossing quantile
+curves, while FBQR and RQ need separate models assuming different
+error distribution for each quantile regression.  We also applied and
+illustrated our approach on the Tours data exploring the relationship
+between quantiles of weight loss and age and race.
 
 Further research includes quantile regression for correlated data by
 modelling error as a mixture of multivariate \polya{} tree
