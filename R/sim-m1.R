@@ -1,5 +1,5 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 04/06/2014 10:48:39>
+##' Time-stamp: <liuminzhao 04/06/2014 13:12:21>
 ##' 2013/08/31 simulation M1
 ##' 2013/09/03 new
 ##' 2014/04/06 modify to reich method for gamma
@@ -23,7 +23,7 @@ set.seed(1)
 ###############
 n <- 200
 tuneinit <- c(0.3, 0.3, 1, 0.3, 0.04, 0.1)
-mcmc <- list(nburn=0, nskip=5, nsave=30000, ndisp=10000, arate=0.2, tuneinit = tuneinit)
+mcmc <- list(nburn=0, nskip=5, nsave=30000, ndisp=30000, arate=0.2, tuneinit = tuneinit)
 b1 <- 1
 quan <- c(0.5, 0.9)
 ###############
@@ -35,7 +35,7 @@ start <- proc.time()[3]
 
 result <- foreach(icount(boot), .combine=rbind) %dopar% {
 
-  x1 <- runif(n, max = 4)
+  x1 <- runif(n, min = -1, max = 1)
   e1 <- rnorm(n)
 
   y1 <- 1 + x1*b1 + e1
