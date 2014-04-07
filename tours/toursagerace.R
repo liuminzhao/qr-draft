@@ -1,9 +1,10 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/25/2013 16:28:11>
+##' Time-stamp: <liuminzhao 04/07/2014 15:38:54>
 ##' manipulate data TOURS
 ##' 2013/06/05 focus on AGE and RACE
 ##' 2013/06/22 add baseline y0 as a covariate
 ##' 2013/08/31 using bqrpt package
+##' 2014/04/07 use reich sampling method for gamma, also scale x within [-1, 1]
 
 rm(list=ls())
 library(bqrpt)
@@ -20,7 +21,7 @@ weight2 <- TOURS$wtkg2
 weight3 <- TOURS$wtkg3
 age <- TOURS$AGE
 trt <- TOURS$TREATMENT
-age_center <- (age-50)/5
+age_center <- (age-50)/25
 race3 <- as.numeric(TOURS$RACE == 3)
 
 y <- weight1 - weight2
@@ -32,30 +33,12 @@ X[,3] <- race3
 
 dat <- data.frame(loss = y, weight2, weight3, trt, age_center, age=TOURS$AGE, race = factor(TOURS$RACE), base = weight1)
 
-
-###############
-## PLOT
-###############
-library(ggplot2)
-library(gridExtra)
-
-box1 <- ggplot(data = dat, aes(x = age, y = loss)) + geom_point() + ylab('Weight Loss (Kg)') + xlab('Age') + ggtitle("Weight Loss vs Age")
-
-box2 <- ggplot(data = dat, aes(x = race, y = loss)) + geom_boxplot() + scale_x_discrete(labels=c("Black", "White")) + ylab('Weight Loss (Kg)') + xlab('Race') + ggtitle("Weight Loss vs Race")
-
-box3 <- ggplot(data = dat, aes(x = age, y = loss, color = race)) + geom_point() + ylab('Weight Loss (Kg)') + xlab('Age') + ggtitle("Weight Loss vs Age") + ggtitle('Weight Loss vs Age and Race')
-
-pdf('../image/weight-age-race.pdf', width = 20, height = 7)
-sds <- grid.arrange(box1, box2, box3, nrow = 1, ncol = 3)
-dev.off()
-
 ###############
 ## ANALYSIS
 ###############
 p <- dim(X)[2]
 tuneinit <- c(rep(0.3,p),1, c(0.3, p-1), 0.04, 0.1)
-mcmc <- list(nburn=30000, nskip=5, nsave=30000, ndisp=10000, arate=0.2, tuneinit = tun\
-einit)
+mcmc <- list(nburn=0, nskip=5, nsave=30000, ndisp=10000, arate=0.2, tuneinit = tuneinit)
 quan <- c(0.1, 0.3, 0.5, 0.7, 0.9)
 
 modss <- HeterPTlmMH(y, X, mcmc = mcmc, quan = quan, den = TRUE, method = 'ss')
@@ -92,8 +75,7 @@ modbqr5 <- BayesQReg(y, X, 0.5)
 modbqr7 <- BayesQReg(y, X, 0.7)
 modbqr9 <- BayesQReg(y, X, 0.9)
 
-coefmodbqr <- c(BQRCoef(modbqr1), BQRCoef(modbqr3), BQRCoef(modbqr5),
-                BQRCoef(modbqr7), BQRCoef(modbqr9))
+coefmodbqr <- c(BQRCoef(modbqr1), BQRCoef(modbqr3), BQRCoef(modbqr5), BQRCoef(modbqr7), BQRCoef(modbqr9))
 
 cimodbqrlbd <- c(BQRCIlbd(modbqr1),
                  BQRCIlbd(modbqr3),
@@ -117,7 +99,7 @@ totalci <- cbind(cimod, cimodss, cimodrq, cimodbqr)
 zero <- rbind(coef(modss)$deltabetaprop, coef(modss)$deltagammaprop)
 
 library(xtable)
-sink('tours-result-0925.txt')
+sink('tours-result-0406.txt')
 print(xtable(totalci))
 print(xtable(zero))
 sink()
