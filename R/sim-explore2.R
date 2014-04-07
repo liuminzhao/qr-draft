@@ -1,9 +1,9 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 09/24/2013 00:28:13>
+##' Time-stamp: <liuminzhao 04/06/2014 22:13:31>
 ##' 2013/08/31 simulation M1
 ##' 2013/09/03 new
 
-sink('sim-0924.txt')
+sink('sim-m5-0406.txt')
 rm(list = ls())
 library(bqrpt)
 library(quantreg)
@@ -22,7 +22,7 @@ set.seed(1)
 ###############
 n <- 200
 tuneinit <- c(0.3, 0.3, 1, 0.3, 0.04, 0.1)
-mcmc <- list(nburn=30000, nskip=5, nsave=30000, ndisp=10000, arate=0.2, tuneinit = tuneinit)
+mcmc <- list(nburn=0, nskip=5, nsave=30000, ndisp=30000, arate=0.2, tuneinit = tuneinit)
 b1 <- 1
 quan <- c(0.5,  0.9)
 p <- 0.5
@@ -37,7 +37,7 @@ start <- proc.time()[3]
 
 result <- foreach(icount(boot), .combine=rbind) %dopar% {
   R <- rbinom(n, 1, p)
-  x1 <- runif(n, max = 4)
+  x1 <- runif(n, min = -1, max = 1)
   y1 <- rep(n, 0)
   for (i in 1:n){
     if (R[i] == 1){
@@ -82,7 +82,7 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
            coefptss5, coefptss9)
 }
 
-write.table(result, file="sim-result-0924.txt", row.names = F, col.names = F)
+write.table(result, file="sim-m5-result-0406.txt", row.names = F, col.names = F)
 sendEmail(subject = "simulation", text = "done", address = "liuminzhao@gmail.com")
 
 
@@ -90,7 +90,7 @@ sendEmail(subject = "simulation", text = "done", address = "liuminzhao@gmail.com
 ###############
 ## TRUE VALUE
 ###############
-result <- read.table('sim-result-0924.txt')
+result <- read.table('sim-m5-result-0406.txt')
 
 quan1 <- function(y, x, tau){
   return(tau - .5*pnorm(y, 2+x, 1 + alpha*x) - .5*pnorm(y, -2-x, 1 + alpha*x))
