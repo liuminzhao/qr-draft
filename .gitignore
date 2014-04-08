@@ -70,3 +70,5 @@ R/sim*.txt
 *.el
 /R/shrinkage.pdf
 /R/shrinkage.tex
+/tours/tours-result-1125.txt
+/R/0402-normal-reich.pdf
