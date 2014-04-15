@@ -1,0 +1,56 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage[round]{natbib}
+\usepackage{geometry}
+% \usepackage{times}
+\usepackage{graphicx}
+% \usepackage{courier}
+\usepackage{mathpazo}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage[colorlinks,linkcolor=red,anchorcolor=blue,citecolor=blue]{hyperref}
+\usepackage{amsthm}
+\geometry{verbose,letterpaper,tmargin=1in,bmargin=.75in,lmargin=.75in,rmargin=1in}
+
+\newtheorem{thm}{Theorem}[subsection]
+\newtheorem{deff}[thm]{Definition}
+\newtheorem{rmk}[thm]{Remark}
+% \newtheorem{prf}[thm]{Proof}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{emp}[thm]{Example}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{pps}[thm]{Proposition}
+
+\newcommand{\polya}{P'{o}lya}
+\newcommand{\iid}{\stackrel{\text{i.i.d}}{\sim}}
+\DeclareMathOperator{\pr}{p}
+\DeclareMathOperator{\pt}{PT}
+
+\begin{document}
+
+The posterior distribution of $(\bm{\beta}, \bm{\gamma}, \sigma, c)$
+is given as
+\begin{equation*}
+  \begin{aligned}
+    \pr(\bm{\beta}, \bm{\gamma}, \sigma, c|\bm{Y}) & \propto L(\bm{Y}|
+    \bm{\beta}, \bm{\gamma}, \sigma, c) \pi_{\beta}(\beta)
+    \pi_{\gamma}(\gamma) \pi_{\sigma}(\sigma) \pi_c(c) \\
+    & = \frac{1}{\prod_{i=1}^n (\bm{x_i'\gamma})} \pr \left(
+      \epsilon_1, \ldots, \epsilon_n | \bm{\beta}, \bm{\gamma},
+      \sigma, c\right) \pi_{\beta}(\beta)
+    \pi_{\gamma}(\gamma) \pi_{\sigma}(\sigma) \pi_c(c)
+  \end{aligned}
+\end{equation*}
+where $\epsilon_i = (y_i - \bm{x_i'\beta})/(\bm{x_i'\gamma})$.
+
+And
+
+\begin{align*}
+\pr \left(\epsilon_1, \ldots, \epsilon_n | \bm{\beta}, \bm{\gamma}, \sigma, c\right) &
+ = \prod_{i = 1}^{n} \left( \left(\prod_{j=2}^M \frac{cj^2 + n_{\epsilon_1 \cdots \epsilon_j(\epsilon_{i}) }(\epsilon_1, \ldots, \epsilon_{1:i-1})}{2cj^2+ n_{\epsilon_1 \cdots \epsilon_{j-1}(\epsilon_i)}(\epsilon_1, \ldots, \epsilon_{1:i-1})}    \right) 2^{M-1} g_{\sigma}(\epsilon_i) \right) \\
+& \le 2^{n(M-1)} \prod_{i = 1}^n g_{\sigma}(\epsilon_i)
+\end{align*}
+
+Plug in the previous equation, it can be shown that the posterior is proper as
+long as  it is proper under the parametric model with centering distribution $G_{\theta}$ when using a flat prior $p(\beta) \propto 1$.
+\end{document}
