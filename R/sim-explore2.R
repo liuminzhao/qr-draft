@@ -1,9 +1,9 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 04/06/2014 22:13:31>
+##' Time-stamp: <liuminzhao 04/17/2014 15:41:46>
 ##' 2013/08/31 simulation M1
 ##' 2013/09/03 new
 
-sink('sim-m5-0406.txt')
+sink('sim-m5-0417.txt')
 rm(list = ls())
 library(bqrpt)
 library(quantreg)
@@ -82,7 +82,7 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
            coefptss5, coefptss9)
 }
 
-write.table(result, file="sim-m5-result-0406.txt", row.names = F, col.names = F)
+write.table(result, file="sim-m5-result-0417.txt", row.names = F, col.names = F)
 sendEmail(subject = "simulation", text = "done", address = "liuminzhao@gmail.com")
 
 
@@ -90,7 +90,7 @@ sendEmail(subject = "simulation", text = "done", address = "liuminzhao@gmail.com
 ###############
 ## TRUE VALUE
 ###############
-result <- read.table('sim-m5-result-0406.txt')
+result <- read.table('sim-m5-result-0417.txt')
 
 quan1 <- function(y, x, tau){
   return(tau - .5*pnorm(y, 2+x, 1 + alpha*x) - .5*pnorm(y, -2-x, 1 + alpha*x))

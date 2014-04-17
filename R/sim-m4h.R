@@ -1,8 +1,8 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 04/06/2014 22:10:01>
+##' Time-stamp: <liuminzhao 04/17/2014 15:41:34>
 ##' 2013/08/31 simulation M4H
 
-sink('sim-m4h-0406.txt')
+sink('sim-m4h-0417.txt')
 rm(list = ls())
 library(bqrpt)
 library(quantreg)
@@ -81,7 +81,7 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
            coefptss5, coefptss9)
 }
 
-write.table(result, file="sim-m4h-result-0406.txt", row.names = F, col.names = F)
+write.table(result, file="sim-m4h-result-0417.txt", row.names = F, col.names = F)
 sendEmail(subject = "simulation-m4h", text = "done", address = "liuminzhao@gmail.com")
 
 
@@ -89,7 +89,7 @@ sendEmail(subject = "simulation-m4h", text = "done", address = "liuminzhao@gmail
 ###############
 ## TRUE VALUE
 ###############
-result <- read.table('sim-m4h-result-0406.txt')
+result <- read.table('sim-m4h-result-0417.txt')
 pMN.5 <- function(x){
   0.8*pnorm(x)+0.2*pnorm(x,3,sqrt(3))-0.5
 }
