@@ -507,9 +507,9 @@ In order to not confound the location parameter, $\epsilon_i $ or $G$
 is set to have median 0 by fixing $\alpha_0=\alpha_1 = 1$. For the
 similar reason, the first component of $\bm{\gamma}$ is fixed at 1.
 
-As to the monotonicity of quantile lines, $\bm x_i\prime \bm \gamma > 0$ is required for all $\bm x_i$.
-We introduce a latent variable approach borrowing idea in \citet{reich2011, reich2012, reich2013}.
-We scale $X_{ij} \in [-1, 1]$, therefore $\bm x_i\prime \bm \gamma$ is minimized as $1 - \sum_{i = 2}^{p} |\gamma_i|$ for the worst case ("WC").
+For monotonicity of quantile lines, $\bm x_i\prime \bm \gamma > 0$ is required for all $\bm x_i$.
+We use a latent variable approach as in \citet{reich2011}.
+We scale $X_{ij} \in [-1, 1]$; therefore $\bm x_i\prime \bm \gamma$ is minimized at $1 - \sum_{i = 2}^{p} |\gamma_i|$ for the worst case ("WC").
 To meet the constraints for all $\bm x_i$, we introduce latent coefficients $\bm \gamma^{*} = (1, \gamma_2^{*}, \ldots, \gamma_p^{*})$ such that
 \begin{displaymath}
 \gamma_i =
@@ -584,11 +584,19 @@ $\hat{\sigma}^2 \bm{(X^TX)^{-1}}$, where $\hat{\sigma}^2 = \sum_i^n
 (y_i - \bm{x_i\beta}^p)^2/(n - p)$.
 
 The priors for $\bm \gamma^{*}$ are similar to priors for $\bm \beta$.
-But we choose $\bm \gamma^p$ and $\bm \sigma_{\gamma}$ to be $\bm 0$ and $\bm{100}$.
+We use the similar approach in \citet{he1998} to assign values to $\bm \gamma^p$ and $\bm \sigma_{\gamma}$.
+Denote $r_i = y_i - \bm{x_i\beta^p}$ as the residuals, then regress $|r_i|$ on $\bm x_i$ to get the median regression coefficient $\hat{\gamma}$ as $\bm \gamma^p$, and its corresponding standard deviation as $\sigma_{\gamma}$.
+The regression of $|r_i|$ requires an intercept offset, because $\bm \gamma_1$ is fixed at 1.
+
 The parameters $\pi_{\beta_j}$ and $\pi_{\gamma_j}$ control the belief that the corresponding regressors are needed in the model and we assign Beta(1,1) priors for them.
 
+\begin{thm}
+The posterior distribution of $(\bm{\beta}, \bm{\gamma^{*}}, \sigma, c)$ is proper as long as it is proper under the parametric model with centering distribution $G_{\theta}$.
+\end{thm}
+
+\begin{proof}
 The posterior distribution of $(\bm{\beta}, \bm{\gamma^{*}}, \sigma, c)$ is given as
-\begin{equation*}
+\begin{equation}\label{eq:post}
   \begin{aligned}
     \pr(\bm{\beta}, \bm{\gamma^{*}}, \sigma, c|\bm{Y}) & \propto L(\bm{Y}|
     \bm{\beta}, \bm{\gamma^{*}}, \sigma, c) \pi_{\beta}(\beta)
@@ -598,17 +606,15 @@ The posterior distribution of $(\bm{\beta}, \bm{\gamma^{*}}, \sigma, c)$ is give
       \sigma, c\right) \pi_{\beta}(\beta)
     \pi_{\gamma^{*}}(\gamma^{*}) \pi_{\sigma}(\sigma) \pi_c(c)
   \end{aligned}
-\end{equation*}
-where $\epsilon_i = (y_i - \bm{x_i'\beta})/(\bm{x_i'\gamma})$.
-
-And
+\end{equation}
+where $\epsilon_i = (y_i - \bm{x_i'\beta})/(\bm{x_i'\gamma})$. And we also have
 \begin{align*}
 \pr \left(\epsilon_1, \ldots, \epsilon_n | \bm{\beta}, \bm{\gamma}, \sigma, c\right) &
  = \prod_{i = 1}^{n} \left( \left(\prod_{j=2}^M \frac{cj^2 + n_{\epsilon_1 \cdots \epsilon_j(\epsilon_{i}) }(\epsilon_1, \ldots, \epsilon_{1:i-1})}{2cj^2+ n_{\epsilon_1 \cdots \epsilon_{j-1}(\epsilon_i)}(\epsilon_1, \ldots, \epsilon_{1:i-1})}    \right) 2^{M-1} g_{\sigma}(\epsilon_i) \right) \\
 & \le 2^{n(M-1)} \prod_{i = 1}^n g_{\sigma}(\epsilon_i)
 \end{align*}
-
-Plug in the previous equation, it can be shown that the posterior is proper as long as it is proper under the parametric model with centering distribution $G_{\theta}$ when using a flat prior $p(\beta) \propto 1$.
+Plug in (\ref{eq:post}), it can be shown that the posterior is proper as long as it is proper under the parametric model with centering distribution $G_{\theta}$.
+\end{proof}
 
 \subsection{Computational Details}\label{ch2:sec:computation}
 
@@ -633,9 +639,9 @@ t_{\gamma_j}(\bm{X'X})^{-1}_{jj})$ as candidate distribution for
 $\gamma_j^{*}$ in $l$-th iteration.  For baseline (centering) normal
 distribution parameter $\sigma$ ($\mu$ is fixed at 0 due to not
 confound with location parameter $\bm \beta$), we use the lognormal
-candidate distribution $\sigma^* \sim \LN(\log \sigma^{l-1},
+candidate distribution $\sigma^c \sim \LN(\log \sigma^{l-1},
 t_{\sigma})$. The same strategy is applied for \polya{} tree weight
-parameter $c$, where $c^* \sim \LN(\log c^{l-1}, t_c)$.
+parameter $c$, where $c^c \sim \LN(\log c^{l-1}, t_c)$.
 
 When using spike and slab priors,
 $(\bm \delta_{\beta}|\bm \beta, \bm \pi_{\beta})$, $(\bm \delta_{\gamma}|\bm
@@ -844,7 +850,7 @@ $\mbox{Bias} = \hat{\beta}_{j}(\tau) - \beta_{j}(\tau)$.
 The simulation results are shown in Table~\ref{ch2:tab:m1}.
 In model 1 (M1), when the error is homogeneous and distributed as standard normal distribution, which coincides with \polya{} tree baseline measure, RQ has a larger MSE than FBQR and PT.
 PTSS performed best since its prior shrunk the heterogeneity parameters toward zero.
-When considering heterogeneity in model 1 (M1H), PT and PTSS still perform as well as FBQR and better than RQ.
+When considering heterogeneity in model 1 (M1H), PT and PTSS performs as well as FBQR and better than RQ.
 
 In model 2, 3, 4 and 2H, 3H, 4H, when error is homogeneous or heterogeneous, and is from a mixture of normals (student t distribution can be regarded as a mixture of normals), which is away from \polya{} tree baseline measure,
 PT and PTSS show competitive performance to FBQR and they all beat RQ from overall performance.
@@ -956,7 +962,7 @@ homogeneous on the AGE covariate.
 This paper introduced a Bayesian approach for simultaneous linear quantile regression by introducing mixture of \polya{} tree priors and estimating heterogeneity parameters.
 By marginalizing the predictive density function of the \polya{} tree distribution, quantiles of interest can be obtained in closed form by inverting the predictive cumulative distribution.
 Exact posterior inference can be made via MCMC.
-In addition, traditional frequentist method and FBQR show crossing quantile lines for both simulated and real data.
+In addition, the traditional frequentist method and FBQR show crossing quantile lines for both simulated and real data.
 However, quantile lines from our method cannot cross since quantiles are estimated through density estimation.
 The simulations show advantages of our method in some cases especially when the error is multimodal and highly skewed.
 For multiple quantiles of interest, our method only needs one model and avoids crossing quantile curves, while FBQR and RQ need separate models assuming different error distributions for each quantile.
