@@ -1,8 +1,8 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 04/17/2014 15:41:34>
+##' Time-stamp: <liuminzhao 04/20/2014 18:58:00>
 ##' 2013/08/31 simulation M4H
 
-sink('sim-m4h-0417.txt')
+sink('sim-m4h-0420.txt')
 rm(list = ls())
 library(bqrpt)
 library(quantreg)
@@ -25,8 +25,8 @@ rMN <-function(n){
 ## PARAMETERS
 ###############
 n <- 200
-tuneinit <- c(0.3, 0.3, 1, 0.3, 0.04, 0.1)
-mcmc <- list(nburn=0, nskip=5, nsave=30000, ndisp=30000, arate=0.2, tuneinit = tuneinit)
+tuneinit <- c(0.3, 0.3, 1, 0.3, 0.3, 0.3)
+mcmc <- list(nburn = 10000, nskip=5, nsave=30000, ndisp=30000, arate=0.2, tuneinit = tuneinit)
 
 
 b1 <- 1
@@ -57,10 +57,10 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
   modbqr9 <- BayesQReg(y1, X, 0.9)
 
   ## pt
-  modpt <- HeterPTlmMH(y1, X, mcmc = mcmc, quan = quan, prior = list(maxm = 6))
+  modpt <- HeterPTlmMH(y1, X, mcmc = mcmc, quan = quan, prior = list(maxm = 6), den = T)
 
   ## pt ss
-  modptss <- HeterPTlmMH(y1, X, mcmc = mcmc, quan = quan, prior = list(maxm = 6), method = 'ss')
+  modptss <- HeterPTlmMH(y1, X, mcmc = mcmc, quan = quan, prior = list(maxm = 6), method = 'ss', den = T)
 
   ## coef
   coefrq5 <- coef(modrq5)
@@ -81,7 +81,7 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
            coefptss5, coefptss9)
 }
 
-write.table(result, file="sim-m4h-result-0417.txt", row.names = F, col.names = F)
+write.table(result, file="sim-m4h-result-0420.txt", row.names = F, col.names = F)
 sendEmail(subject = "simulation-m4h", text = "done", address = "liuminzhao@gmail.com")
 
 
@@ -89,7 +89,7 @@ sendEmail(subject = "simulation-m4h", text = "done", address = "liuminzhao@gmail
 ###############
 ## TRUE VALUE
 ###############
-result <- read.table('sim-m4h-result-0417.txt')
+result <- read.table('sim-m4h-result-0420.txt')
 pMN.5 <- function(x){
   0.8*pnorm(x)+0.2*pnorm(x,3,sqrt(3))-0.5
 }
