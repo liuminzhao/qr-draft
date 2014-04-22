@@ -1,8 +1,8 @@
 #!/bin/Rscript
-##' Time-stamp: <liuminzhao 04/20/2014 18:57:45>
+##' Time-stamp: <liuminzhao 04/22/2014 00:52:44>
 ##' 2013/08/31 simulation M3
 
-sink('sim-m3h-0420.txt')
+sink('sim-m3h-0422.txt')
 rm(list = ls())
 library(bqrpt)
 library(quantreg)
@@ -79,7 +79,7 @@ result <- foreach(icount(boot), .combine=rbind) %dopar% {
            coefptss5, coefptss9)
 }
 
-write.table(result, file="sim-m3h-result-0420.txt", row.names = F, col.names = F)
+write.table(result, file="sim-m3h-result-0422.txt", row.names = F, col.names = F)
 sendEmail(subject = "simulation-m3h", text = "done", address = "liuminzhao@gmail.com")
 
 
@@ -87,7 +87,7 @@ sendEmail(subject = "simulation-m3h", text = "done", address = "liuminzhao@gmail
 ###############
 ## TRUE VALUE
 ###############
-result <- read.table('sim-m3h-result-0420.txt')
+result <- read.table('sim-m3h-result-0422.txt')
 truebetatau5 <- c(1,1)
 truebetatau9 <- c(1,1) + c(1 , g1)*(2 + qnorm(0.8))
 truebetatau <- rep(c(truebetatau5, truebetatau9), 4)
