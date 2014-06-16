@@ -11,10 +11,30 @@
 \usepackage[verbose,letterpaper,tmargin=1in,bmargin=.75in,lmargin=.75in,rmargin=1in]{geometry}
 \usepackage{amsthm}
 \usepackage{pdflscape}
+\usepackage{authblk}
 
-\title{Bayesian Quantile Regression using a  Mixture of P\'{o}lya Tree Prior}
+\title{Bayesian Quantile Regression using a Mixture of P\'{o}lya Tree Prior}
 \date{\today}
-\author{Minzhao Liu, Michael J. Daniels, Michael G. Perri}
+% \author{Minzhao Liu, Michael J. Daniels, Michael G. Perri}
+\author[1]{Minzhao Liu\thanks{liuminzhao@ufl.edu}}
+\author[2]{Michael J. Daniels\thanks{mjdaniels@austin.utexas.edu}}
+\author[3]{Michael G. Perri\thanks{mperri@phhp.ufl.edu}}
+\affil[1]{Department of Statistics, University of Florida, FL 32601, USA}
+\affil[2]{Department of Integrative Biology, Division of Statistics and Scientific Computation\\
+The University of Texas at Austin, 141MC Patterson Hall, Austin, TX 78712, USA}
+\affil[3]{Department of Clinical and Health Psychology, University of Florida, Gainesville, FL 32611, USA}
+
+% \author{Minzhao Liu$^{1,*}$\email{liuminzhao@ufl.edu},
+%   Michael J. Daniels$^{2,**}$\email{mjdaniels@austin.utexas.edu}, and
+% Michael G. Perri$^{3,***}$\email{mperri@phhp.ufl.edu} \\
+%   $^1$Department of Statistics, University of Florida, FL 32601, USA.\\
+%   $^2$Department of Integrative Biology, Division of Statistics and Scientific
+%   Computation\\
+% The University of Texas at Austin, 141MC Patterson Hall,
+%   Austin, TX 78712, USA.\\
+% $^3$Department of Clinical and Health Psychology,
+%  University of Florida, Gainesville, FL 32611, USA.
+% }
 
 \newtheorem{thm}{Theorem}[section]
 \newtheorem{deff}[thm]{Definition}
@@ -30,6 +50,8 @@
 \DeclareMathOperator{\pt}{PT}
 \DeclareMathOperator{\LN}{LN}
 \usepackage{booktabs}
+\usepackage{setspace}
+\linespread{2}
 
 \begin{document}
 % \setlength\parindent{0pt}
@@ -64,7 +86,7 @@ review of quantile regression was presented by \citet{koenker2005}.
 The traditional frequentist approach was proposed by
 \citet{koenker1978} for a single quantile ($\tau$) with estimators
 derived by minimizing a loss check function $\sum_{i=1}^n
-\rho_{\tau}(y_i - \bm{x_i\prime\beta})$, where $\rho_{\tau}(\epsilon) =
+\rho_{\tau}(y_i - \bm{x_i}^{\prime}\bm\beta)$, where $\rho_{\tau}(\epsilon) =
 \epsilon (\tau- \mathrm{I}(\epsilon < 0))$. They do not make any
 distributional assumptions for residuals and use linear programming
 techniques for estimation.  The popularity of this approach is due to
@@ -98,7 +120,7 @@ It is not coherent to pool from every individual quantile regression, because th
 
 In order to solve those problems, simultaneous linear quantile regressions have been proposed by \citet{tokdar2011},
 in which an interpolation of two monotone curves was introduced to put constraints on monotonicity of quantile lines.
-\citet{hjort2007, hjort2009} proposed the Bayes estimator for the quantile function as a smooth curve using the Dirichlet process and quantile pyramids.
+\citet{hjort2007} and \citet{hjort2009} proposed the Bayes estimator for the quantile function as a smooth curve using the Dirichlet process and quantile pyramids, respectively.
 Another popular approach is to assign a nonparametric model for the error term to
 avoid the monotonicity problem.
 \citet{scaccia2003} used mixture of normal distributions with an unknown number of components to model the distribution by B-splines.
@@ -488,7 +510,7 @@ similar reason, the first component of $\bm{\gamma}$ is fixed at 1.
 
 For monotonicity of quantile lines, $\bm x_i^{\prime} \bm \gamma > 0$ is required for all $\bm x_i$.
 We use a latent variable approach as in \citet{reich2011}.
-We scale $X_{ij} \in [-1, 1]$; therefore $\bm x_i\prime \bm \gamma$ is minimized at $1 - \sum_{i = 2}^{p} |\gamma_i|$ for the worst case ("WC").
+We scale $X_{ij} \in [-1, 1]$; therefore $\bm x_i^{\prime} \bm \gamma$ is minimized at $1 - \sum_{i = 2}^{p} |\gamma_i|$ for the worst case ("WC").
 To meet the constraints for all $\bm x_i$, we introduce latent coefficients $\bm \gamma^{*} = (1, \gamma_2^{*}, \ldots, \gamma_p^{*})$ such that
 \begin{displaymath}
 \gamma_i =
@@ -788,7 +810,7 @@ We fitted regression models for quantiles (10\%, 30\%, 50\%, 70\%,
 credible intervals.
 
 \begin{figure}[htbp]
-  \centerline{\includegraphics[scale = 0.4]{../image/weight-age-race}}
+  \centerline{\includegraphics[scale = 0.4]{weight-age-race}}
   \caption[]{\label{ch2:fig:tours} Scatterplots of weight loss vs age and
     Boxplots of weight loss for each race.  The boxplots use the
     default settings: (0.75, 0.5, 0.25) quantile for box and
@@ -863,6 +885,9 @@ Further research includes quantile regression for correlated data by modelling e
 Our approach allows for quantile regression with missing data under ignorability by adding a data augmentation step.
 We are exploring extending our approach to allow for nonignorable missingness.
 Also it might be possible to use a slightly more complex baseline distribution in \polya{} tree adaptively to improve the estimation.
+
+\section*{Acknowledgments}
+Daniels was partially supported by NIH grants CA85295 and CA183854.
 
 \bibliographystyle{plainnat} \bibliography{qr-draft-reference}
 
